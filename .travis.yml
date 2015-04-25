@@ -1,0 +1,11 @@
+language: java
+jdk:
+  - oraclejdk8
+
+#validate javadoc
+before_install:
+  - sh -c 'mvn -B -q javadoc:javadoc -Dshow=package'
+install:
+  - sh -c 'mvn -B -q install -DskipTests=true'
+script:
+  - sh -c 'mvn -B test'

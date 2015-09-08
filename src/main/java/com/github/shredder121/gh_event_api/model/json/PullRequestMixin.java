@@ -20,9 +20,10 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.shredder121.gh_event_api.model.Commit;
+import com.github.shredder121.gh_event_api.model.GitCommit;
 import com.github.shredder121.gh_event_api.model.Link;
 import com.github.shredder121.gh_event_api.model.PullRequest;
+import com.github.shredder121.gh_event_api.model.Ref;
 
 /**
  * Mirror object for {@link PullRequest}.
@@ -33,10 +34,10 @@ class PullRequestMixin {
 
     /**
      * {@link #PullRequestMixin(
-     * java.lang.String, java.lang.Integer, java.lang.String, java.lang.Boolean, java.lang.String, java.time.ZonedDateTime, com.github.shredder121.gh_event_api.model.Commit, java.util.Map)}
+     * java.lang.String, java.lang.Integer, java.lang.String, java.lang.Boolean, java.lang.String, java.time.ZonedDateTime, com.github.shredder121.gh_event_api.model.Ref, java.util.Map)}
      * is a mirrored constructor for
      * {@link PullRequest#PullRequest(
-     * java.lang.String, java.lang.Integer, java.lang.String, java.lang.Boolean, java.lang.String, java.time.ZonedDateTime, com.github.shredder121.gh_event_api.model.Commit, java.util.Map)}.
+     * java.lang.String, java.lang.Integer, java.lang.String, java.lang.Boolean, java.lang.String, java.time.ZonedDateTime, com.github.shredder121.gh_event_api.model.Ref, java.util.Map)}.
      *
      * @param url the url of the pull request
      * @param number the pull request number
@@ -55,7 +56,7 @@ class PullRequestMixin {
             @JsonProperty("locked") Boolean locked,
             @JsonProperty("title") String title,
             @JsonProperty("created_at") ZonedDateTime created_at,
-            @JsonProperty("head") Commit head,
+            @JsonProperty("head") Ref head,
             @JsonProperty("_links") Map<String, Link> _links) {
     }
 }

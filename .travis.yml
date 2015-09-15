@@ -3,12 +3,11 @@ jdk:
   - oraclejdk8
 
 #validate javadoc
-before_install:
-  - sh -c 'mvn -B -q javadoc:javadoc -Dshow=package'
-install:
-  - sh -c 'mvn -B -q install -DskipTests=true'
-script:
-  - sh -c 'mvn -B test'
+before_install: mvn -B -q javadoc:javadoc -Dshow=package
+
+install: mvn -B -q install -DskipTests=true
+script: mvn -B test
+
 cache:
   directories:
     - $HOME/.m2

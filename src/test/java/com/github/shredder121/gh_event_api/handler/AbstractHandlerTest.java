@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.handler.push;
+package com.github.shredder121.gh_event_api.handler;
 
 import java.util.Map;
 
@@ -27,7 +27,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebIntegrationTest
+@WebIntegrationTest({"spring.main.show-banner=false"})
 @DirtiesContext
 public abstract class AbstractHandlerTest {
 

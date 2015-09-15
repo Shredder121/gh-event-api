@@ -26,10 +26,10 @@ public class PullRequest {
     private final Boolean locked;
     private final String title;
     private final ZonedDateTime created_at;
-    private final Commit head;
+    private final Ref head;
     private final Map<String, Link> _links;
 
-    public PullRequest(String url, Integer number, String state, Boolean locked, String title, ZonedDateTime created_at, Commit head, Map<String, Link> _links) {
+    public PullRequest(String url, Integer number, String state, Boolean locked, String title, ZonedDateTime created_at, Ref head, Map<String, Link> _links) {
         this.url = url;
         this.number = number;
         this.state = state;
@@ -64,7 +64,7 @@ public class PullRequest {
         return created_at;
     }
 
-    public Commit getHead() {
+    public Ref getHead() {
         return head;
     }
 

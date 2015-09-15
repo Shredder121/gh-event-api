@@ -33,10 +33,13 @@ class GHEventApiModule extends SimpleModule {
     public GHEventApiModule() {
         super("GHEventApiServer");
 
+        setMixInAnnotation(Branch.class, BranchMixin.class);
         setMixInAnnotation(Commit.class, CommitMixin.class);
+        setMixInAnnotation(GitCommit.class, GitCommitMixin.class);
         setMixInAnnotation(Label.class, LabelMixin.class);
         setMixInAnnotation(Link.class, LinkMixin.class);
         setMixInAnnotation(PullRequest.class, PullRequestMixin.class);
+        setMixInAnnotation(Ref.class, RefMixin.class);
         setMixInAnnotation(Repository.class, RepositoryMixin.class);
         setMixInAnnotation(User.class, UserMixin.class);
     }

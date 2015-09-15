@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.handler.push;
+package com.github.shredder121.gh_event_api.handler.status;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,40 +26,43 @@ import org.springframework.context.annotation.Bean;
 
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
+import com.github.shredder121.gh_event_api.model.Repository;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Queues;
 
-@SpringApplicationConfiguration(classes = {PushHandlerTest.class, GHEventApiServer.class})
-public class PushHandlerTest extends AbstractHandlerTest {
+@SpringApplicationConfiguration(classes = {StatusHandlerTest.class, GHEventApiServer.class})
+public class StatusHandlerTest extends AbstractHandlerTest {
 
     private static final BlockingQueue<String> exchange = Queues.newSynchronousQueue();
 
-    public PushHandlerTest() {
-        super("push");
+    public StatusHandlerTest() {
+        super("status");
     }
 
     @Override
     protected Map<String, Object> getBody() {
-        return ImmutableMap.of(
-                "head", "1ab334",
-                "ref", "test-branch",
-                "before", "first",
-                "after", "second",
-                "commits", Collections.emptyList());
+        return ImmutableMap.<String, Object>builder()
+                .put("sha", "1ab334")
+                .put("name", "anything")
+                .put("context", "test")
+                .put("state", "pending")
+                .put("branches", Collections.emptyList())
+                .put("repository", new Repository("something", null))
+                .build();
     }
 
     @Override
     public void doTest() throws InterruptedException {
         String output = exchange.take();
-        assertEquals("1ab334", output);
+        assertEquals("pending", output);
     }
 
     @Bean
-    public PushHandler handlerBean() {
+    public StatusHandler handlerBean() {
         return payload -> {
             try {
-                exchange.put(payload.getHead());
+                exchange.put(payload.getState());
             } catch (InterruptedException ex) {
                 throw Throwables.propagate(ex);
             }

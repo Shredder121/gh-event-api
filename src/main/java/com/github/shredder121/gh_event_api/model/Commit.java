@@ -15,48 +15,60 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-/**
- * GitHub's
- *
- * @author Shredder121
- */
+import java.util.Collection;
+import java.util.Collections;
+
 public class Commit {
 
-    private final String label;
-
-    private final String ref;
-
     private final String sha;
+    private final GitCommit commit;
+    private final String url;
+    private final String html_url;
+    private final String comments_url;
+    private final User author;
+    private final User committer;
+    private final Collection<Commit> parents;
 
-    private final String message;
-
-    private final Repository repo;
-
-    public Commit(String label, String ref, String sha, String message, Repository repo) {
-        this.label = label;
-        this.ref = ref;
+    public Commit(String sha, GitCommit commit, String url, String html_url, String comments_url, User author, User committer, Collection<Commit> parents) {
         this.sha = sha;
-        this.message = message;
-        this.repo = repo;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public String getRef() {
-        return ref;
+        this.commit = commit;
+        this.url = url;
+        this.html_url = html_url;
+        this.comments_url = comments_url;
+        this.author = author;
+        this.committer = committer;
+        this.parents = Collections.unmodifiableCollection(parents);
     }
 
     public String getSha() {
         return sha;
     }
 
-    public String getMessage() {
-        return message;
+    public GitCommit getCommit() {
+        return commit;
     }
 
-    public Repository getRepo() {
-        return repo;
+    public String getUrl() {
+        return url;
+    }
+
+    public String getHtml_url() {
+        return html_url;
+    }
+
+    public String getComments_url() {
+        return comments_url;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public User getCommitter() {
+        return committer;
+    }
+
+    public Collection<Commit> getParents() {
+        return parents;
     }
 }

@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.shredder121.gh_event_api.model.Commit;
+import com.github.shredder121.gh_event_api.model.GitCommit;
 
 public class PushPayload {
 
@@ -30,7 +30,7 @@ public class PushPayload {
     @NotNull private final String ref;
     @NotNull private final String before;
     @NotNull private final String after;
-    @NotNull private final Collection<Commit> commits;
+    @NotNull private final Collection<GitCommit> commits;
 
     @JsonCreator
     public PushPayload(
@@ -38,7 +38,7 @@ public class PushPayload {
             @JsonProperty("ref") String ref,
             @JsonProperty("before") String before,
             @JsonProperty("after") String after,
-            @JsonProperty("commits") Collection<Commit> commits) {
+            @JsonProperty("commits") Collection<GitCommit> commits) {
 
         this.head = head;
         this.ref = ref;
@@ -63,7 +63,7 @@ public class PushPayload {
         return after;
     }
 
-    public Collection<Commit> getCommits() {
+    public Collection<GitCommit> getCommits() {
         return commits;
     }
 }

@@ -15,54 +15,37 @@
  */
 package com.github.shredder121.gh_event_api.handler.push;
 
-import static org.junit.Assert.assertEquals;
+import static com.google.common.collect.Iterables.getOnlyElement;
+import static org.hamcrest.CoreMatchers.is;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.concurrent.BlockingQueue;
+import java.util.Collection;
 
 import org.springframework.boot.test.*;
 import org.springframework.context.annotation.Bean;
 
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
-import com.google.common.base.Throwables;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Queues;
+import com.github.shredder121.gh_event_api.model.GitCommit;
 
 @SpringApplicationConfiguration(classes = {PushHandlerTest.class, GHEventApiServer.class})
 public class PushHandlerTest extends AbstractHandlerTest {
-
-    private static final BlockingQueue<String> exchange = Queues.newSynchronousQueue();
 
     public PushHandlerTest() {
         super("push");
     }
 
-    @Override
-    protected Map<String, Object> getBody() {
-        return ImmutableMap.of(
-                "head", "1ab334",
-                "ref", "test-branch",
-                "before", "first",
-                "after", "second",
-                "commits", Collections.emptyList());
-    }
-
-    @Override
-    public void doTest() throws InterruptedException {
-        String output = exchange.take();
-        assertEquals("1ab334", output);
-    }
-
     @Bean
     public PushHandler handlerBean() {
         return payload -> {
-            try {
-                exchange.put(payload.getHead());
-            } catch (InterruptedException ex) {
-                throw Throwables.propagate(ex);
-            }
+            errorCollector.checkThat(payload.getRef(), is("refs/heads/changes"));
+            errorCollector.checkThat(payload.getBefore(), is("9049f1265b7d61be4a8904a9a27120d2064dab3b"));
+            errorCollector.checkThat(payload.getAfter(), is("0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c"));
+
+            Collection<GitCommit> commits = payload.getCommits();
+            GitCommit commit = getOnlyElement(commits);
+            errorCollector.checkThat(commit.getMessage(), is("Update README.md"));
+
+            completion.countDown();
         };
     }
 }

@@ -8,7 +8,10 @@ env:
 before_install: mvn -B -q javadoc:javadoc -Dshow=package
 
 install: mvn -B -q install -DskipTests=true
-script: mvn -B test
+script: mvn -B test jacoco:report
+
+after_success:
+  - mvn coveralls:report
 
 cache:
   directories:

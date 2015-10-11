@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.shredder121.gh_event_api.model.Label;
 import com.github.shredder121.gh_event_api.model.PullRequest;
+import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.User;
 
 /**
@@ -33,6 +34,8 @@ public class PullRequestPayload {
     @NotNull private final String action;
     @NotNull private final Integer number;
     @NotNull private final PullRequest pull_request;
+    @NotNull private final Repository repository;
+    @NotNull private final User sender;
 
     //contextual properties
     private Label label;
@@ -42,11 +45,15 @@ public class PullRequestPayload {
     public PullRequestPayload(
             @JsonProperty("action") String action,
             @JsonProperty("number") Integer number,
-            @JsonProperty("pull_request") PullRequest pull_request) {
+            @JsonProperty("pull_request") PullRequest pull_request,
+            @JsonProperty("repository") Repository repository,
+            @JsonProperty("sender") User sender) {
 
         this.action = action;
         this.number = number;
         this.pull_request = pull_request;
+        this.repository = repository;
+        this.sender = sender;
     }
 
     public String getAction() {
@@ -61,11 +68,19 @@ public class PullRequestPayload {
         return pull_request;
     }
 
+    public Repository getRepository() {
+        return repository;
+    }
+
+    public User getSender() {
+        return sender;
+    }
+
     /**
-     * If the {@link #action} of the event is
-     * {@link PullRequestEvent#LABELED}
+     * If the {@link #action action} of the event is
+     * {@link PullRequestEvent#LABELED labeled}
      * or
-     * {@link PullRequestEvent#UNLABELED}
+     * {@link PullRequestEvent#UNLABELED unlabeled}
      * the label is included.
      *
      * @return the label if included, else {@code null}.
@@ -79,10 +94,10 @@ public class PullRequestPayload {
     }
 
     /**
-     * If the {@link #action} of the event is
-     * {@link PullRequestEvent#ASSIGNED}
+     * If the {@link #action action} of the event is
+     * {@link PullRequestEvent#ASSIGNED assigned}
      * or
-     * {@link PullRequestEvent#UNASSIGNED}
+     * {@link PullRequestEvent#UNASSIGNED unassigned}
      * the user is included.
      *
      * @return the user if included, else {@code null}.

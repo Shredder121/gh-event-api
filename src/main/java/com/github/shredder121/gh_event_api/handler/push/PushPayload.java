@@ -26,7 +26,6 @@ import com.github.shredder121.gh_event_api.model.GitCommit;
 
 public class PushPayload {
 
-    @NotNull private final String head;
     @NotNull private final String ref;
     @NotNull private final String before;
     @NotNull private final String after;
@@ -34,21 +33,15 @@ public class PushPayload {
 
     @JsonCreator
     public PushPayload(
-            @JsonProperty("head") String head,
             @JsonProperty("ref") String ref,
             @JsonProperty("before") String before,
             @JsonProperty("after") String after,
             @JsonProperty("commits") Collection<GitCommit> commits) {
 
-        this.head = head;
         this.ref = ref;
         this.before = before;
         this.after = after;
         this.commits = Collections.unmodifiableCollection(commits);
-    }
-
-    public String getHead() {
-        return head;
     }
 
     public String getRef() {

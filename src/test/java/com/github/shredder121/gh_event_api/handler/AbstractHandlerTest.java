@@ -16,6 +16,7 @@
 package com.github.shredder121.gh_event_api.handler;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
@@ -24,16 +25,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
 import org.kohsuke.github.*;
 import org.springframework.boot.test.*;
 import org.springframework.http.*;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.util.MinimalPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 
@@ -75,20 +79,24 @@ public abstract class AbstractHandlerTest {
     private final TestRestTemplate restTemplate = new TestRestTemplate();
     private HttpEntity<String> request;
     private final String event;
+    private final String hmac;
 
     @ClassRule
     public static final ErrorCollector errorCollector = new ErrorCollector();
 
     protected static CountDownLatch completion;
 
-    public AbstractHandlerTest(String event) {
+    protected AbstractHandlerTest(String event, String hmac) {
         this.event = event;
+        /* This will be the HMAC as reported by https://www.freeformatter.com/hmac-generator.html */
+        this.hmac = hmac;
     }
 
     @Before
-    public final void prepareRequest() throws IOException {
+    public final void prepareRequest() throws IOException, Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-GitHub-Event", event);
+        headers.add("X-Hub-Signature", "sha1=" + hmac);
         headers.setContentType(MediaType.APPLICATION_JSON);
         request = new HttpEntity<>(getBody(), headers);
     }
@@ -96,7 +104,9 @@ public abstract class AbstractHandlerTest {
     @Test
     public void test() throws Exception {
         completion = new CountDownLatch(1);
-        restTemplate.postForEntity("http://127.0.0.1:8080", request, null);
+        ResponseEntity<?> response = restTemplate.postForEntity("http://127.0.0.1:8080", request, null);
+        assertTrue(String.format("Expected success, got %s", response.getStatusCode()),
+                response.getStatusCode().is2xxSuccessful());
         awaitCompletion();
     }
 
@@ -109,7 +119,15 @@ public abstract class AbstractHandlerTest {
     private String getBody() throws IOException {
         GHContent payloadFile = eventPayloadMap.get(event);
         try (InputStream stream = payloadFile.read()) {
-            return IOUtils.toString(stream);
+            return minimize(stream);
+        } catch (IOException ex) {
+            throw Throwables.propagate(ex);
         }
+    }
+
+    public String minimize(final InputStream stream) throws JsonProcessingException, IOException {
+        ObjectMapper mapper = Jackson2ObjectMapperBuilder.json().build();
+        Map<String, Object> content = mapper.reader().withType(Map.class).readValue(stream);
+        return mapper.writer(new MinimalPrettyPrinter(null/*minimizes*/)).writeValueAsString(content);
     }
 }

@@ -31,7 +31,7 @@ import com.github.shredder121.gh_event_api.model.GitCommit;
 public class PushHandlerTest extends AbstractHandlerTest {
 
     public PushHandlerTest() {
-        super("push");
+        super("push", "88287b2946307610bf94056a349b269ed5878982");
     }
 
     @Bean

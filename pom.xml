@@ -142,6 +142,9 @@
                         <mainClass>com/github/shredder121/gh_event_api/GHEventApiServer.class</mainClass>
                         <mixins>com/github/shredder121/gh_event_api/model/json/*</mixins>
                         <innerClass>com/github/shredder121/gh_event_api/filter/GithubMACChecker$*</innerClass>
+
+                        <!-- Only an informational filter -->
+                        <filter>com/github/shredder121/gh_event_api/filter/GithubMDCInsertingServletFilter.class</filter>
                     </excludes>
                 </configuration>
                 <executions>

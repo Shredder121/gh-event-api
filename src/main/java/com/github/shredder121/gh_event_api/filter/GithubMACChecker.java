@@ -20,6 +20,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.*;
+import java.util.function.Supplier;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -54,22 +55,23 @@ public class GithubMACChecker extends OncePerRequestFilter {
     private static final String GITHUB_SIGNATURE_HEADER = "X-Hub-Signature";
     private static final String HMAC_SHA1 = "HmacSHA1";
 
-    private final Key key;
+    private final Supplier<Mac> macProvider;
 
     @Autowired
     public GithubMACChecker(Environment env) {
         String secret = env.getProperty("secret");
         if (secret != null) {
-            this.key = new SecretKeySpec(secret.getBytes(UTF_8), HMAC_SHA1);
+            Key key = new SecretKeySpec(secret.getBytes(UTF_8), HMAC_SHA1);
+            this.macProvider = new MacProvider(key);
         } else {
-            this.key = null;
+            this.macProvider = null;
         }
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         String signatureHeader = request.getHeader(GITHUB_SIGNATURE_HEADER);
-        if (key != null) {
+        if (macProvider != null) {
             if (signatureHeader != null) {
                 HttpServletRequest preReadRequest = new PreReadRequest(request);
                 byte[] requestBytes = ByteStreams.toByteArray(preReadRequest.getInputStream());
@@ -91,17 +93,28 @@ public class GithubMACChecker extends OncePerRequestFilter {
     }
 
     private String hexDigest(byte[] requestBytes) throws IllegalStateException {
-        byte[] digest = getMacInstance().doFinal(requestBytes);
+        byte[] digest = macProvider.get().doFinal(requestBytes);
         return ByteArrayUtil.toHexString(digest);
     }
 
-    private Mac getMacInstance() {
-        try {
-            Mac theMac = Mac.getInstance(HMAC_SHA1);
-            theMac.init(key);
-            return theMac;
-        } catch (InvalidKeyException | NoSuchAlgorithmException ex) {
-            throw Throwables.propagate(ex);
+    // Extracted since the HmacSHA1 implementation is present, this allows JaCoCo to ignore the catch
+    private static final class MacProvider implements Supplier<Mac> {
+
+        private final Key key;
+
+        private MacProvider(Key key) {
+            this.key = key;
+        }
+
+        @Override
+        public Mac get() {
+            try {
+                Mac theMac = Mac.getInstance(HMAC_SHA1);
+                theMac.init(key);
+                return theMac;
+            } catch (InvalidKeyException | NoSuchAlgorithmException ex) {
+                throw Throwables.propagate(ex);
+            }
         }
     }
 

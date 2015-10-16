@@ -13,22 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.handler.ping;
+package com.github.shredder121.gh_event_api.handler.pull_request;
 
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
 
 import com.github.shredder121.gh_event_api.GHEventApiServer;
-import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 
-@SpringApplicationConfiguration(classes = {GHEventApiServer.class})
-public class PingTest extends AbstractHandlerTest {
-
-    public PingTest() {
-        super("ping", "ef61d462314dfd950ad5a6e15798bb5432de4e07");
-    }
-
-    @Override
-    public void awaitCompletion() throws InterruptedException {
-        Thread.sleep(500);
-    }
+@SpringApplicationConfiguration(classes = {HmacPullRequestHandlerTest.class, GHEventApiServer.class})
+@WebIntegrationTest({"secret=secret", "spring.main.show-banner=false"})
+public class HmacPullRequestHandlerTest extends PullRequestHandlerTest {
 }

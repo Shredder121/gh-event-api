@@ -33,7 +33,7 @@ import com.github.shredder121.gh_event_api.model.Repository;
 public class StatusHandlerTest extends AbstractHandlerTest {
 
     public StatusHandlerTest() {
-        super("status");
+        super("status", "fd376122b76bbda8e57c81a53d82b91c8389c28b");
     }
 
     @Bean

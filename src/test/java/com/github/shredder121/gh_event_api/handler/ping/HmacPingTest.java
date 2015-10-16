@@ -15,20 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.ping;
 
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
 
-import com.github.shredder121.gh_event_api.GHEventApiServer;
-import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
-
-@SpringApplicationConfiguration(classes = {GHEventApiServer.class})
-public class PingTest extends AbstractHandlerTest {
-
-    public PingTest() {
-        super("ping", "ef61d462314dfd950ad5a6e15798bb5432de4e07");
-    }
-
-    @Override
-    public void awaitCompletion() throws InterruptedException {
-        Thread.sleep(500);
-    }
+@WebIntegrationTest({"secret=secret", "spring.main.show-banner=false"})
+public class HmacPingTest extends PingTest {
 }

@@ -19,10 +19,17 @@ public class Repository {
 
     private final String name;
     private final String full_name;
+    private final User owner;
 
-    public Repository(String name, String full_name) {
+    private final Long forksCount;
+    private final Long forks;
+
+    public Repository(String name, String full_name, User owner, Long forksCount, Long forks) {
         this.name = name;
         this.full_name = full_name;
+        this.owner = owner;
+        this.forksCount = forksCount;
+        this.forks = forks;
     }
 
     public String getName() {
@@ -31,5 +38,17 @@ public class Repository {
 
     public String getFullName() {
         return full_name;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public Long getForksCount() {
+        return forksCount;
+    }
+
+    public Long getForks() {
+        return forks;
     }
 }

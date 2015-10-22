@@ -18,6 +18,7 @@ package com.github.shredder121.gh_event_api.model.json;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.shredder121.gh_event_api.model.Repository;
+import com.github.shredder121.gh_event_api.model.User;
 
 /**
  * Mirror object for {@link Repository}.
@@ -27,16 +28,22 @@ import com.github.shredder121.gh_event_api.model.Repository;
 class RepositoryMixin {
 
     /**
-     * {@link #RepositoryMixin(java.lang.String, java.lang.String)}
+     * {@link #RepositoryMixin(java.lang.String, java.lang.String, com.github.shredder121.gh_event_api.model.User, java.lang.Long, java.lang.Long)}
      * is a mirrored constructor for
-     * {@link Repository#Repository(java.lang.String, java.lang.String)}.
+     * {@link Repository#Repository(java.lang.String, java.lang.String, com.github.shredder121.gh_event_api.model.User, java.lang.Long, java.lang.Long)}.
      *
      * @param name the name to inject
      * @param full_name the full name to inject
+     * @param owner the owner to inject
+     * @param forksCount the forks_count to inject
+     * @param forks the forks to inject
      */
     @JsonCreator
     public RepositoryMixin(
             @JsonProperty("name") String name,
-            @JsonProperty("full_name") String full_name) {
+            @JsonProperty("full_name") String full_name,
+            @JsonProperty("owner") User owner,
+            @JsonProperty("forks_count") Long forksCount,
+            @JsonProperty("forks") Long forks) {
     }
 }

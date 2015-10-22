@@ -16,7 +16,7 @@
 package com.github.shredder121.gh_event_api.handler.push;
 
 import static com.google.common.collect.Iterables.getOnlyElement;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.is;
 
 import java.util.Collection;
 

@@ -15,8 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.pull_request;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

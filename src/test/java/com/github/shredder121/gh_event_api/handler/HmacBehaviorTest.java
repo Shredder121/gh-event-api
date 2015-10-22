@@ -15,13 +15,15 @@
  */
 package com.github.shredder121.gh_event_api.handler;
 
-import static org.junit.Assert.assertEquals;
+import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.http.ContentType.JSON;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.*;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -34,35 +36,32 @@ import com.github.shredder121.gh_event_api.handler.create.CreateHandler;
 @DirtiesContext
 public class HmacBehaviorTest {
 
-    private final TestRestTemplate restTemplate = new TestRestTemplate();
-
     @Test
     public void testHmacIncorrect() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("X-GitHub-Event", "create");
-        headers.add("X-Hub-Signature", "bogus");
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        ResponseEntity<?> response = restTemplate.postForEntity("http://127.0.0.1:8080", new HttpEntity<>("{}", headers), null);
-        assertEquals("Known party, but Hmac incorrect", HttpStatus.FORBIDDEN, response.getStatusCode());
+        given().headers(
+                "X-GitHub-Event", "create",
+                "X-Hub-Signature", "bogus")
+        .and().body("{}").with().contentType(JSON)
+        .expect().statusCode(HttpStatus.FORBIDDEN.value())
+        .when().post();
     }
 
     @Test
     public void testHmacMissing() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("X-GitHub-Event", "create");
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        ResponseEntity<?> response = restTemplate.postForEntity("http://127.0.0.1:8080", new HttpEntity<>("{}", headers), null);
-        assertEquals("Unknown party, return 404", HttpStatus.NOT_FOUND, response.getStatusCode());
+        given().headers("X-GitHub-Event", "create")
+        .and().body("{}").with().contentType(JSON)
+        .expect().statusCode(HttpStatus.NOT_FOUND.value())
+        .when().post();
     }
 
     @Test
     public void testHmacOkay() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("X-GitHub-Event", "create");
-        headers.add("X-Hub-Signature", "sha1=5d61605c3feea9799210ddcb71307d4ba264225f");
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        ResponseEntity<?> response = restTemplate.postForEntity("http://127.0.0.1:8080", new HttpEntity<>("{}", headers), null);
-        assertEquals("Hmac fine, return 200", HttpStatus.OK, response.getStatusCode());
+        given().headers(
+                "X-GitHub-Event", "create",
+                "X-Hub-Signature", "sha1=5d61605c3feea9799210ddcb71307d4ba264225f")
+        .and().body("{}").with().contentType(JSON)
+        .expect().statusCode(HttpStatus.OK.value())
+        .when().post();
     }
 
     @Bean

@@ -30,6 +30,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 import com.github.shredder121.gh_event_api.model.PullRequest;
 import com.github.shredder121.gh_event_api.model.Ref;
 import com.github.shredder121.gh_event_api.model.Repository;
+import com.github.shredder121.gh_event_api.model.User;
 
 @SpringApplicationConfiguration(classes = {PullRequestHandlerTest.class, GHEventApiServer.class})
 public class PullRequestHandlerTest extends AbstractHandlerTest {
@@ -66,6 +67,13 @@ public class PullRequestHandlerTest extends AbstractHandlerTest {
             Repository repo = head.getRepo();
             errorCollector.checkThat(repo.getName(), is("public-repo"));
             errorCollector.checkThat(repo.getFullName(), is("baxterthehacker/public-repo"));
+
+            Repository repository = payload.getRepository();
+            errorCollector.checkThat(repository.getFullName(), is(repo.getFullName()));
+            errorCollector.checkThat(repository.getName(), is(repo.getName()));
+
+            User sender = payload.getSender();
+            errorCollector.checkThat(sender.getLogin(), is("baxterthehacker"));
 
             completion.countDown();
         };

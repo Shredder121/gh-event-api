@@ -15,7 +15,7 @@
  */
 package com.github.shredder121.gh_event_api.handler.create;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.is;
 
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Bean;

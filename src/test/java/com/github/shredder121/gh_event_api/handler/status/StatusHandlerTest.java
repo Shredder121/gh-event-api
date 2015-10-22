@@ -16,10 +16,9 @@
 package com.github.shredder121.gh_event_api.handler.status;
 
 import static com.google.common.collect.Iterables.transform;
+import static org.hamcrest.Matchers.*;
 
 import java.util.Collection;
-
-import static org.hamcrest.CoreMatchers.*;
 
 import org.springframework.boot.test.*;
 import org.springframework.context.annotation.Bean;

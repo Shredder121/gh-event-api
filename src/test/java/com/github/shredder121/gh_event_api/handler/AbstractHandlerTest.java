@@ -15,8 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.handler;
 
-import static java.util.concurrent.TimeUnit.MINUTES;
-import static org.junit.Assert.assertTrue;
+import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.http.ContentType.JSON;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
 import org.kohsuke.github.*;
 import org.springframework.boot.test.*;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -76,13 +77,11 @@ public abstract class AbstractHandlerTest {
         return fileName.substring(0, fileName.indexOf('.'));
     }
 
-    private final TestRestTemplate restTemplate = new TestRestTemplate();
-    private HttpEntity<String> request;
     private final String event;
     private final String hmac;
 
     @ClassRule
-    public static final ErrorCollector errorCollector = new ErrorCollector();
+    public static ErrorCollector errorCollector;
 
     protected static CountDownLatch completion;
 
@@ -92,31 +91,30 @@ public abstract class AbstractHandlerTest {
         this.hmac = hmac;
     }
 
-    @Before
-    public final void prepareRequest() throws IOException, Exception {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("X-GitHub-Event", event);
-        headers.add("X-Hub-Signature", "sha1=" + hmac);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        request = new HttpEntity<>(getBody(), headers);
+    @BeforeClass
+    public static final void prepareTest() {
+        completion = new CountDownLatch(1);
+        errorCollector = new ErrorCollector();
     }
 
     @Test
-    public void test() throws Exception {
-        completion = new CountDownLatch(1);
-        ResponseEntity<?> response = restTemplate.postForEntity("http://127.0.0.1:8080", request, null);
-        assertTrue(String.format("Expected success, got %s", response.getStatusCode()),
-                response.getStatusCode().is2xxSuccessful());
-        awaitCompletion();
+    public void test() {
+        given().headers(
+                "X-GitHub-Event", event,
+                "X-Hub-Signature", "sha1=" + hmac)
+        .and().body(getBody()).with().contentType(JSON)
+        .expect().statusCode(HttpStatus.OK.value())
+        .when().post();
     }
 
+    @After
     public void awaitCompletion() throws InterruptedException {
-        if (!completion.await(1, MINUTES)) {
+        if (!completion.await(10, SECONDS)) {
             fail("Timeout during execution");
         }
     }
 
-    private String getBody() throws IOException {
+    private String getBody() {
         GHContent payloadFile = eventPayloadMap.get(event);
         try (InputStream stream = payloadFile.read()) {
             return minimize(stream);

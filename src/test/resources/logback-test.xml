@@ -9,7 +9,6 @@
     </appender>
 
     <logger name="com.github.shredder121"       level="INFO" />
-    <logger name="org.springframework.boot"     level="WARN" />
 
     <!-- set to 'DEBUG' for more granularity -->
     <root level="WARN">

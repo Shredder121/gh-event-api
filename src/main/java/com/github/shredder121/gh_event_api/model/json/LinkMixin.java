@@ -24,7 +24,7 @@ import com.github.shredder121.gh_event_api.model.Link;
  *
  * @author Shredder121
  */
-class LinkMixin {
+abstract class LinkMixin {
 
     /**
      * {@link #LinkMixin(java.lang.String)}
@@ -34,7 +34,7 @@ class LinkMixin {
      * @param href the href to inject
      */
     @JsonCreator
-    public LinkMixin(
+    LinkMixin(
             @JsonProperty("href") String href) {
     }
 }

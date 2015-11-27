@@ -34,9 +34,9 @@ public class CreateHandlerTest extends AbstractHandlerTest {
     public CreateHandler handlerBean() {
         return payload -> {
             errorCollector.checkThat(payload.getDescription(), is(""));
-            errorCollector.checkThat(payload.getRef_type(), is("tag"));
+            errorCollector.checkThat(payload.getRefType(), is("tag"));
             errorCollector.checkThat(payload.getRef(), is("0.0.1"));
-            errorCollector.checkThat(payload.getMaster_branch(), is("master"));
+            errorCollector.checkThat(payload.getMasterBranch(), is("master"));
 
             completion.countDown();
         };

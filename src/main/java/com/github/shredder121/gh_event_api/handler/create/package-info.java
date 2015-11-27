@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 /**
- * The <a href="https://developer.github.com/v3/activity/events/types/#createevent">'create'</a>
- * handler interface that can be implemented.
+ * The {@code create} handler interface that can be implemented.
+ *
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#createevent">The create event on GitHub</a>
  */
 package com.github.shredder121.gh_event_api.handler.create;

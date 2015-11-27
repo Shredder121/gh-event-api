@@ -24,7 +24,7 @@ import com.github.shredder121.gh_event_api.model.User;
  *
  * @author Shredder121
  */
-class UserMixin {
+abstract class UserMixin {
 
     /**
      * {@link #UserMixin(java.lang.String)}
@@ -34,7 +34,7 @@ class UserMixin {
      * @param login the user's login name to inject
      */
     @JsonCreator
-    public UserMixin(
+    UserMixin(
             @JsonProperty("login") String login) {
     }
 }

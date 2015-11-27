@@ -16,59 +16,54 @@
 package com.github.shredder121.gh_event_api.model;
 
 import java.time.ZonedDateTime;
-import java.util.Map;
 
+import com.google.common.collect.ImmutableMap;
+
+/**
+ * A pull request is a way of suggesting to merge back changes.
+ *
+ * @author Shredder121
+ */
+@lombok.Value
 public class PullRequest {
 
-    private final String url;
-    private final Integer number;
-    private final String state;
-    private final Boolean locked;
-    private final String title;
-    private final ZonedDateTime created_at;
-    private final Ref head;
-    private final Map<String, Link> _links;
+    /**
+     * The (API) URL to fetch this Pull Request.
+     */
+    String url;
 
-    public PullRequest(String url, Integer number, String state, Boolean locked, String title, ZonedDateTime created_at, Ref head, Map<String, Link> _links) {
-        this.url = url;
-        this.number = number;
-        this.state = state;
-        this.locked = locked;
-        this.title = title;
-        this.created_at = created_at;
-        this.head = head;
-        this._links = _links;
-    }
+    /**
+     * The pull request number.
+     */
+    Integer number;
 
-    public String getUrl() {
-        return url;
-    }
+    /**
+     * The state of the Pull Request.
+     */
+    String state;
 
-    public Integer getNumber() {
-        return number;
-    }
+    /**
+     * Whether the Pull Request has been locked to collaborators only.
+     */
+    Boolean locked;
 
-    public String getState() {
-        return state;
-    }
+    /**
+     * The Pull Request title.
+     */
+    String title;
 
-    public Boolean getLocked() {
-        return locked;
-    }
+    /**
+     * The creation date of the pull request.
+     */
+    ZonedDateTime createdAt;
 
-    public String getTitle() {
-        return title;
-    }
+    /**
+     * A pointer to the head commit.
+     */
+    Ref head;
 
-    public ZonedDateTime getCreated_at() {
-        return created_at;
-    }
-
-    public Ref getHead() {
-        return head;
-    }
-
-    public Map<String, Link> getLinks() {
-        return _links;
-    }
+    /**
+     * Additional links included in the Pull Request.
+     */
+    ImmutableMap<String, Link> links;
 }

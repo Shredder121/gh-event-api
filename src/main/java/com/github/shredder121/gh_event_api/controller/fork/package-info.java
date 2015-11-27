@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * The endpoint for the 'fork' event.
+ * The endpoint for the {@code fork} event.
  */
 package com.github.shredder121.gh_event_api.controller.fork;

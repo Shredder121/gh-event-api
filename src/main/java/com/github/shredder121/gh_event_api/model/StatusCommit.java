@@ -16,15 +16,30 @@
 package com.github.shredder121.gh_event_api.model;
 
 /**
- * A GitHub User object.
+ * A commit object that is used in the status event.
  *
  * @author Shredder121
  */
 @lombok.Value
-public class User {
+public class StatusCommit {
 
     /**
-     * The username of this user.
+     * The SHA hash of the commit.
      */
-    String login;
+    String sha;
+
+    /**
+     * The (API) URL to fetch the commit.
+     */
+    String url;
+
+    /**
+     * The (GitHub Web UI) URL to view the commit.
+     */
+    String htmlUrl;
+
+    /**
+     * The underlying commit details.
+     */
+    GitCommit commit;
 }

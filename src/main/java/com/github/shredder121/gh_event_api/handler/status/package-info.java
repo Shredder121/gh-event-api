@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 /**
- * The <a href="https://developer.github.com/v3/activity/events/types/#statusevent">'status'</a>
- * handler interface that can be implemented.
+ * The {@code status} handler interface that can be implemented.
+ *
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#statusevent">The status event on GitHub</a>
  */
 package com.github.shredder121.gh_event_api.handler.status;

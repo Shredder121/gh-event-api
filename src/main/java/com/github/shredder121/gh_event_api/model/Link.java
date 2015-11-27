@@ -15,15 +15,13 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+/**
+ * A link is a piece of metadata that tells where to find more information.
+ *
+ * @author Shredder121
+ */
+@lombok.Value
 public class Link {
 
-    private final String href;
-
-    public Link(String href) {
-        this.href = href;
-    }
-
-    public String getHref() {
-        return href;
-    }
+    String href;
 }

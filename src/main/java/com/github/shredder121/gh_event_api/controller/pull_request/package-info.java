@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * The endpoint for the 'pull_request' event.
+ * The endpoint for the {@code pull_request} event.
  */
 package com.github.shredder121.gh_event_api.controller.pull_request;

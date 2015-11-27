@@ -15,16 +15,48 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+import com.google.common.collect.ImmutableList;
+
 /**
- * A GitHub User object.
+ * A commit object that is included in PushPayloads.
  *
  * @author Shredder121
  */
 @lombok.Value
-public class User {
+public class PushCommit {
 
     /**
-     * The username of this user.
+     * Commit id of the commit.
      */
-    String login;
+    String id;
+
+    /**
+     * Label of the commit.
+     */
+    String label;
+
+    /**
+     * Ref
+     */
+    String ref;
+
+    /**
+     * Message
+     */
+    String message;
+
+    /**
+     * Files that were added
+     */
+    ImmutableList<String> added;
+
+    /**
+     * Files that were removed
+     */
+    ImmutableList<String> removed;
+
+    /**
+     * Files that were modified
+     */
+    ImmutableList<String> modified;
 }

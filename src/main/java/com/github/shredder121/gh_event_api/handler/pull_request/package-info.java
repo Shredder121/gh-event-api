@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 /**
- * The <a href="https://developer.github.com/v3/activity/events/types/#pullrequestevent">'pull_request'</a>
- * handler interface that can be implemented.
+ * The {@code pull_request} handler interface that can be implemented.
+ *
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#pullrequestevent">The pull_request event on GitHub</a>
  */
 package com.github.shredder121.gh_event_api.handler.pull_request;

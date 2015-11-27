@@ -15,37 +15,76 @@
  */
 package com.github.shredder121.gh_event_api.handler.status;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.shredder121.gh_event_api.model.Branch;
+import com.github.shredder121.gh_event_api.model.StatusBranch;
 import com.github.shredder121.gh_event_api.model.Repository;
+import com.google.common.collect.ImmutableList;
 
+/**
+ * The payload passed when a {@code status} event is received.
+ *
+ * @author Shredder121
+ */
+@lombok.Value
 public class StatusPayload {
 
-    @NotNull private final String sha;
-    @NotNull private final String name;
-    @NotNull private final String context;
-    @NotNull private final String state;
-    private final String description;
-    private final String target_url;
-    @NotNull private final Collection<Branch> branches;
-    @NotNull private final Repository repository;
+    /**
+     * The Commit SHA.
+     */
+    @NotNull String sha;
+
+    /**
+     * The name of the repository.
+     */
+    @NotNull String name;
+
+    /**
+     * The context of the status.
+     */
+    @NotNull String context;
+
+    /**
+     * The new state.
+     */
+    @NotNull String state;
+
+    /**
+     * The optional human-readable description added to the status.
+     */
+    String description;
+
+    /**
+     * The optional link added to the status.
+     *
+     */
+    String targetUrl;
+
+    /**
+     * A list of branch objects containing the status' SHA.
+     * 
+     * <p>Each branch contains the given SHA, but the SHA may or may not be the head of the branch.</p>
+     *
+     * <p>The list includes a maximum of 10 branches.</p>
+     */
+    @NotNull ImmutableList<StatusBranch> branches;
+
+    /**
+     * The repository of the status.
+     */
+    @NotNull Repository repository;
 
     @JsonCreator
-    public StatusPayload(
+    StatusPayload(
             @JsonProperty("sha") String sha,
             @JsonProperty("name") String name,
             @JsonProperty("context") String context,
             @JsonProperty("state") String state,
             @JsonProperty("description") String description,
-            @JsonProperty("target_url") String target_url,
-            @JsonProperty("branches") Collection<Branch> branches,
+            @JsonProperty("target_url") String targetUrl,
+            @JsonProperty("branches") ImmutableList<StatusBranch> branches,
             @JsonProperty("repository") Repository repository) {
 
         this.sha = sha;
@@ -53,40 +92,8 @@ public class StatusPayload {
         this.context = context;
         this.state = state;
         this.description = description;
-        this.target_url = target_url;
-        this.branches = Collections.unmodifiableCollection(branches);
+        this.targetUrl = targetUrl;
+        this.branches = branches;
         this.repository = repository;
-    }
-
-    public String getSha() {
-        return sha;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getContext() {
-        return context;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getTarget_url() {
-        return target_url;
-    }
-
-    public Collection<Branch> getBranches() {
-        return branches;
-    }
-
-    public Repository getRepository() {
-        return repository;
     }
 }

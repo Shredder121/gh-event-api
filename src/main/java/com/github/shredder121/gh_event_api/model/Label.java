@@ -15,15 +15,16 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+/**
+ * A label is a piece of text that tells something about an issue/pull request.
+ *
+ * @author Shredder121
+ */
+@lombok.Value
 public class Label {
 
-    private final String name;
-
-    public Label(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
+    /**
+     * The name of the label.
+     */
+    String name;
 }

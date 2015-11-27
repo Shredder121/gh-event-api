@@ -23,5 +23,5 @@ package com.github.shredder121.gh_event_api.handler.status;
 @FunctionalInterface
 public interface StatusHandler {
 
-    public void handle(StatusPayload payload);
+    void handle(StatusPayload payload);
 }

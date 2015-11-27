@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.model.User;
  *
  * @author Shredder121
  */
-class RepositoryMixin {
+abstract class RepositoryMixin {
 
     /**
      * {@link #RepositoryMixin(java.lang.String, java.lang.String, com.github.shredder121.gh_event_api.model.User, java.lang.Long, java.lang.Long)}
@@ -33,15 +33,15 @@ class RepositoryMixin {
      * {@link Repository#Repository(java.lang.String, java.lang.String, com.github.shredder121.gh_event_api.model.User, java.lang.Long, java.lang.Long)}.
      *
      * @param name the name to inject
-     * @param full_name the full name to inject
+     * @param fullName the full name to inject
      * @param owner the owner to inject
      * @param forksCount the forks_count to inject
      * @param forks the forks to inject
      */
     @JsonCreator
-    public RepositoryMixin(
+    RepositoryMixin(
             @JsonProperty("name") String name,
-            @JsonProperty("full_name") String full_name,
+            @JsonProperty("full_name") String fullName,
             @JsonProperty("owner") User owner,
             @JsonProperty("forks_count") Long forksCount,
             @JsonProperty("forks") Long forks) {

@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Bean;
 
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
-import com.github.shredder121.gh_event_api.model.GitCommit;
+import com.github.shredder121.gh_event_api.model.PushCommit;
 
 @SpringApplicationConfiguration(classes = {PushHandlerTest.class, GHEventApiServer.class})
 public class PushHandlerTest extends AbstractHandlerTest {
@@ -41,8 +41,8 @@ public class PushHandlerTest extends AbstractHandlerTest {
             errorCollector.checkThat(payload.getBefore(), is("9049f1265b7d61be4a8904a9a27120d2064dab3b"));
             errorCollector.checkThat(payload.getAfter(), is("0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c"));
 
-            Collection<GitCommit> commits = payload.getCommits();
-            GitCommit commit = getOnlyElement(commits);
+            Collection<PushCommit> commits = payload.getCommits();
+            PushCommit commit = getOnlyElement(commits);
             errorCollector.checkThat(commit.getMessage(), is("Update README.md"));
 
             completion.countDown();

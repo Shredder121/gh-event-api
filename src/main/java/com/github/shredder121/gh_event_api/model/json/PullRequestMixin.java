@@ -16,47 +16,46 @@
 package com.github.shredder121.gh_event_api.model.json;
 
 import java.time.ZonedDateTime;
-import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.shredder121.gh_event_api.model.GitCommit;
 import com.github.shredder121.gh_event_api.model.Link;
 import com.github.shredder121.gh_event_api.model.PullRequest;
 import com.github.shredder121.gh_event_api.model.Ref;
+import com.google.common.collect.ImmutableMap;
 
 /**
  * Mirror object for {@link PullRequest}.
  *
  * @author Shredder121
  */
-class PullRequestMixin {
+abstract class PullRequestMixin {
 
     /**
      * {@link #PullRequestMixin(
-     * java.lang.String, java.lang.Integer, java.lang.String, java.lang.Boolean, java.lang.String, java.time.ZonedDateTime, com.github.shredder121.gh_event_api.model.Ref, java.util.Map)}
+     * java.lang.String, java.lang.Integer, java.lang.String, java.lang.Boolean, java.lang.String, java.time.ZonedDateTime, com.github.shredder121.gh_event_api.model.Ref, com.google.common.collect.ImmutableMap)}
      * is a mirrored constructor for
      * {@link PullRequest#PullRequest(
-     * java.lang.String, java.lang.Integer, java.lang.String, java.lang.Boolean, java.lang.String, java.time.ZonedDateTime, com.github.shredder121.gh_event_api.model.Ref, java.util.Map)}.
+     * java.lang.String, java.lang.Integer, java.lang.String, java.lang.Boolean, java.lang.String, java.time.ZonedDateTime, com.github.shredder121.gh_event_api.model.Ref, com.google.common.collect.ImmutableMap)}.
      *
      * @param url the url of the pull request
      * @param number the pull request number
      * @param state the pull request state
      * @param locked whether the pull request is locked
      * @param title the pull request title
-     * @param created_at the pull request's creation date
+     * @param createdAt the pull request's creation date
      * @param head the tip of the pull request's branch
-     * @param _links navigational links
+     * @param links navigational links
      */
     @JsonCreator
-    public PullRequestMixin(
+    PullRequestMixin(
             @JsonProperty("url") String url,
             @JsonProperty("number") Integer number,
             @JsonProperty("state") String state,
             @JsonProperty("locked") Boolean locked,
             @JsonProperty("title") String title,
-            @JsonProperty("created_at") ZonedDateTime created_at,
+            @JsonProperty("created_at") ZonedDateTime createdAt,
             @JsonProperty("head") Ref head,
-            @JsonProperty("_links") Map<String, Link> _links) {
+            @JsonProperty("_links") ImmutableMap<String, Link> links) {
     }
 }

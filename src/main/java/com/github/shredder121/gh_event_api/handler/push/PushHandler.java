@@ -23,5 +23,5 @@ package com.github.shredder121.gh_event_api.handler.push;
 @FunctionalInterface
 public interface PushHandler {
 
-    public void handle(PushPayload payload);
+    void handle(PushPayload payload);
 }

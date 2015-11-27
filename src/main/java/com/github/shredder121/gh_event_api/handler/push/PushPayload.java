@@ -15,48 +15,51 @@
  */
 package com.github.shredder121.gh_event_api.handler.push;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.shredder121.gh_event_api.model.GitCommit;
+import com.github.shredder121.gh_event_api.model.PushCommit;
+import com.google.common.collect.ImmutableList;
 
+/**
+ * The payload passed when a {@code push} event is received.
+ *
+ * @author Shredder121
+ */
+@lombok.Value
 public class PushPayload {
 
-    @NotNull private final String ref;
-    @NotNull private final String before;
-    @NotNull private final String after;
-    @NotNull private final Collection<GitCommit> commits;
+    /**
+     * The name of the branch that is pushed
+     */
+    @NotNull String ref;
+
+    /**
+     * The SHA hash before the push
+     */
+    @NotNull String before;
+
+    /**
+     * The SHA hash after the push
+     */
+    @NotNull String after;
+
+    /**
+     * The commits being pushed
+     */
+    @NotNull ImmutableList<PushCommit> commits;
 
     @JsonCreator
-    public PushPayload(
+    PushPayload(
             @JsonProperty("ref") String ref,
             @JsonProperty("before") String before,
             @JsonProperty("after") String after,
-            @JsonProperty("commits") Collection<GitCommit> commits) {
+            @JsonProperty("commits") ImmutableList<PushCommit> commits) {
 
         this.ref = ref;
         this.before = before;
         this.after = after;
-        this.commits = Collections.unmodifiableCollection(commits);
-    }
-
-    public String getRef() {
-        return ref;
-    }
-
-    public String getBefore() {
-        return before;
-    }
-
-    public String getAfter() {
-        return after;
-    }
-
-    public Collection<GitCommit> getCommits() {
-        return commits;
+        this.commits = commits;
     }
 }

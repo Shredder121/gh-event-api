@@ -51,7 +51,7 @@ public class PullRequestHandlerTest extends AbstractHandlerTest {
 
             PullRequest pullRequest = payload.getPullRequest();
             errorCollector.checkThat(pullRequest.getNumber(), is(payload.getNumber()));
-            errorCollector.checkThat(pullRequest.getCreated_at(), is(LocalDateTime.parse("2015-05-05T23:40:27").atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC))));
+            errorCollector.checkThat(pullRequest.getCreatedAt(), is(LocalDateTime.parse("2015-05-05T23:40:27").atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC))));
             errorCollector.checkThat(pullRequest.getLocked(), is(false));
             errorCollector.checkThat(pullRequest.getState(), is("open"));
             errorCollector.checkThat(pullRequest.getTitle(), is("Update the README with new information"));

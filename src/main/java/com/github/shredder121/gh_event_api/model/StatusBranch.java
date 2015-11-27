@@ -15,21 +15,21 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-public class Branch {
+/**
+ * A branch object that is included in StatusPayloads.
+ *
+ * @author Shredder121
+ */
+@lombok.Value
+public class StatusBranch {
 
-    private final String name;
-    private final GitCommit commit;
+    /**
+     * The name of the branch.
+     */
+    String name;
 
-    public Branch(String name, GitCommit commit) {
-        this.name = name;
-        this.commit = commit;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public GitCommit getCommit() {
-        return commit;
-    }
+    /**
+     * The head commit of the branch.
+     */
+    StatusCommit commit;
 }

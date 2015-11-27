@@ -15,39 +15,37 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+/**
+ * A ref is a GitHub pointer to a commit.
+ *
+ * @author Shredder121
+ */
+@lombok.Value
 public class Ref {
 
-    private final String label;
-    private final String ref;
-    private final String sha;
-    private final User user;
-    private final Repository repo;
+    /**
+     * The {owner:repo} label of the ref.
+     */
+    String label;
 
-    public Ref(String label, String ref, String sha, User user, Repository repo) {
-        this.label = label;
-        this.ref = ref;
-        this.sha = sha;
-        this.user = user;
-        this.repo = repo;
-    }
+    /**
+     * The (git) name of the ref.
+     */
+    String ref;
 
-    public String getLabel() {
-        return label;
-    }
+    /**
+     * The SHA hash of the commit.
+     */
+    String sha;
 
-    public String getRef() {
-        return ref;
-    }
+    /**
+     * The user of the repo.
+     */
+    User user;
 
-    public String getSha() {
-        return sha;
-    }
+    /**
+     * The repository the commit resides.
+     */
+    Repository repo;
 
-    public User getUser() {
-        return user;
-    }
-
-    public Repository getRepo() {
-        return repo;
-    }
 }

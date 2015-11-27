@@ -16,25 +16,30 @@
 package com.github.shredder121.gh_event_api.model.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.shredder121.gh_event_api.model.Branch;
-import com.github.shredder121.gh_event_api.model.GitCommit;
+import com.github.shredder121.gh_event_api.model.StatusBranch;
+import com.github.shredder121.gh_event_api.model.StatusCommit;
 
 /**
+ * Mirror object for {@link StatusBranch}.
  *
  * @author Shredder121
  */
-public class BranchMixin {
+abstract class StatusBranchMixin {
 
     /**
-     * {@link #BranchMixin(java.lang.String, com.github.shredder121.gh_event_api.model.GitCommit)}
+     * {@link #StatusBranchMixin(
+     * java.lang.String, com.github.shredder121.gh_event_api.model.StatusCommit)}
+     *
      * is a mirrored constructor for
-     * {@link Branch#Branch(java.lang.String, com.github.shredder121.gh_event_api.model.GitCommit)}
+     *
+     * {@link StatusBranch#StatusBranch(
+     * java.lang.String, com.github.shredder121.gh_event_api.model.StatusCommit)}.
      *
      * @param name the name to inject
      * @param commit the commit object to inject
      */
-    public BranchMixin(
+    StatusBranchMixin(
             @JsonProperty("name") String name,
-            @JsonProperty("commit") GitCommit commit) {
+            @JsonProperty("commit") StatusCommit commit) {
     }
 }

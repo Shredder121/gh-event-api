@@ -60,13 +60,13 @@ public class PullRequestEndpointController {
     }
 
     @RequestMapping
-    public void handle(@Valid @RequestBody PullRequestPayload pullRequestPayload) {
-        String action = pullRequestPayload.getAction();
+    public void handle(@Valid @RequestBody PullRequestPayload payload) {
+        String action = payload.getAction();
         List<PullRequestHandler> actionHandlers = handlers.getOrDefault(action, emptyList());
         logger.debug("{} handlers for {}", actionHandlers.size(), action);
-        actionHandlers.stream()
-                .map(handler -> runnableHandler(handler, pullRequestPayload))
-                .forEach(executor::execute);
+        for (PullRequestHandler handler : actionHandlers) {
+            executor.execute(runnableHandler(handler, payload));
+        }
     }
 
     private Runnable runnableHandler(PullRequestHandler handler, PullRequestPayload pullRequestPayload) {

@@ -54,9 +54,9 @@ public class PushEndpointController {
     @RequestMapping
     public void handle(@Valid @RequestBody PushPayload payload) {
         logger.debug("{} handlers", handlers.size());
-        handlers.stream()
-                .map(handler -> runnableHandler(handler, payload))
-                .forEach(executor::execute);
+        for (PushHandler handler : handlers) {
+            executor.execute(runnableHandler(handler, payload));
+        }
     }
 
     private Runnable runnableHandler(PushHandler handler, PushPayload payload) {

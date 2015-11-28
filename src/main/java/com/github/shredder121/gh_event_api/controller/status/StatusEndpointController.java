@@ -54,9 +54,9 @@ public class StatusEndpointController {
     @RequestMapping
     public void handle(@Valid @RequestBody StatusPayload payload) {
         logger.debug("{} handlers", handlers.size());
-        handlers.stream()
-                .map(handler -> runnableHandler(handler, payload))
-                .forEach(executor::execute);
+        for (StatusHandler handler : handlers) {
+            executor.execute(runnableHandler(handler, payload));
+        }
     }
 
     private Runnable runnableHandler(StatusHandler handler, StatusPayload payload) {

@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * The endpoint for the 'create' event.
+ * The endpoint for the {@code create} event.
  */
 package com.github.shredder121.gh_event_api.controller.create;

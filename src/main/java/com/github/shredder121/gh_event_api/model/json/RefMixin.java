@@ -25,25 +25,28 @@ import com.github.shredder121.gh_event_api.model.User;
  *
  * @author Shredder121
  */
-class RefMixin {
+abstract class RefMixin {
 
     /**
-     * {@link #RefMixin(java.lang.String, java.lang.String, java.lang.String, com.github.shredder121.gh_event_api.model.User, com.github.shredder121.gh_event_api.model.Repository)}
+     * {@link #RefMixin(
+     * java.lang.String, java.lang.String, java.lang.String, com.github.shredder121.gh_event_api.model.User, com.github.shredder121.gh_event_api.model.Repository)}
+     *
      * is a mirrored constructor for
-     * {@link Ref#Ref(java.lang.String, java.lang.String, java.lang.String, com.github.shredder121.gh_event_api.model.User, com.github.shredder121.gh_event_api.model.Repository)}
+     *
+     * {@link Ref#Ref(
+     * java.lang.String, java.lang.String, java.lang.String, com.github.shredder121.gh_event_api.model.User, com.github.shredder121.gh_event_api.model.Repository)}
      *
      * @param label the label to inject
      * @param ref the ref to inject
-     * @param sha the sha hash to inject
+     * @param sha the SHA hash to inject
      * @param user the user to inject
      * @param repo the repo to inject
      */
-    public RefMixin(
+    RefMixin(
             @JsonProperty("label") String label,
             @JsonProperty("ref") String ref,
             @JsonProperty("sha") String sha,
             @JsonProperty("user") User user,
             @JsonProperty("repo") Repository repo) {
     }
-
 }

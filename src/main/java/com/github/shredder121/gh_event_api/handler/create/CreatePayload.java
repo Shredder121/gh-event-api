@@ -23,39 +23,40 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author Shredder121
  */
+@lombok.Value
 public class CreatePayload {
 
-    private final String ref_type;
-    private final String ref;
-    private final String master_branch;
-    private final String description;
+    /**
+     * The type of the object being created.
+     * Can be one of 'repository', 'branch' or 'tag'.
+     */
+    String refType;
+
+    /**
+     * The git ref (or null if only a repository was created).
+     */
+    String ref;
+
+    /**
+     * The name of the repository's default branch.
+     */
+    String masterBranch;
+
+    /**
+     * The repository's current description.
+     */
+    String description;
 
     @JsonCreator
-    public CreatePayload(
-            @JsonProperty("ref_type") String ref_type,
+    CreatePayload(
+            @JsonProperty("ref_type") String refType,
             @JsonProperty("ref") String ref,
-            @JsonProperty("master_branch") String master_branch,
+            @JsonProperty("master_branch") String masterBranch,
             @JsonProperty("description") String description) {
 
-        this.ref_type = ref_type;
+        this.refType = refType;
         this.ref = ref;
-        this.master_branch = master_branch;
+        this.masterBranch = masterBranch;
         this.description = description;
-    }
-
-    public String getRef_type() {
-        return ref_type;
-    }
-
-    public String getRef() {
-        return ref;
-    }
-
-    public String getMaster_branch() {
-        return master_branch;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }

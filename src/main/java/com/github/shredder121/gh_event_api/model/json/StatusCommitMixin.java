@@ -18,32 +18,34 @@ package com.github.shredder121.gh_event_api.model.json;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.shredder121.gh_event_api.model.GitCommit;
-import com.github.shredder121.gh_event_api.model.Repository;
+import com.github.shredder121.gh_event_api.model.StatusCommit;
 
 /**
- * Mirror object for {@link GitCommit}.
+ * Mirror object for {@link StatusCommit}.
  *
  * @author Shredder121
  */
-class GitCommitMixin {
+abstract class StatusCommitMixin {
 
     /**
-     * {@link #GitCommitMixin(java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.github.shredder121.gh_event_api.model.Repository)}
-     * is a mirrored constructor for
-     * {@link GitCommit#GitCommit(java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.github.shredder121.gh_event_api.model.Repository)}.
+     * {@link #StatusCommitMixin(
+     * java.lang.String, java.lang.String, java.lang.String, com.github.shredder121.gh_event_api.model.GitCommit)}
      *
-     * @param label the label
-     * @param ref the ref of the label
-     * @param sha the sha hash of the ref
-     * @param message the message of the commit
-     * @param repo the repository of the commit
+     * is a mirrored constructor for
+     *
+     * {@link StatusCommit#StatusCommit(
+     * java.lang.String, java.lang.String, java.lang.String, com.github.shredder121.gh_event_api.model.GitCommit)}.
+     *
+     * @param sha
+     * @param url
+     * @param htmlUrl
+     * @param commit
      */
     @JsonCreator
-    public GitCommitMixin(
-            @JsonProperty("label") String label,
-            @JsonProperty("ref") String ref,
+    StatusCommitMixin(
             @JsonProperty("sha") String sha,
-            @JsonProperty("message") String message,
-            @JsonProperty("repo") Repository repo) {
+            @JsonProperty("url") String url,
+            @JsonProperty("html_url") String htmlUrl,
+            @JsonProperty("commit") GitCommit commit) {
     }
 }

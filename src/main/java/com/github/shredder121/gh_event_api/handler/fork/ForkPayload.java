@@ -22,14 +22,31 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.User;
 
+/**
+ * The payload passed when a {@code fork} event is received.
+ *
+ * @author Shredder121
+ */
+@lombok.Value
 public class ForkPayload {
 
-    @NotNull private final Repository forkee;
-    @NotNull private final Repository repository;
-    @NotNull private final User sender;
+    /**
+     * The target Repository.
+     */
+    @NotNull Repository forkee;
+
+    /**
+     * The source Repository.
+     */
+    @NotNull Repository repository;
+
+    /**
+     * The actor forking the Repository.
+     */
+    @NotNull User sender;
 
     @JsonCreator
-    public ForkPayload(
+    ForkPayload(
             @JsonProperty("forkee") Repository forkee,
             @JsonProperty("repository") Repository repository,
             @JsonProperty("sender") User sender) {
@@ -37,17 +54,5 @@ public class ForkPayload {
         this.forkee = forkee;
         this.repository = repository;
         this.sender = sender;
-    }
-
-    public Repository getForkee() {
-        return forkee;
-    }
-
-    public Repository getRepository() {
-        return repository;
-    }
-
-    public User getSender() {
-        return sender;
     }
 }

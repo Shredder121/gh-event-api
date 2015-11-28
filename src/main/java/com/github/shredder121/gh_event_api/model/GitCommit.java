@@ -15,39 +15,50 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+import java.time.ZonedDateTime;
+
+/**
+ * A GitCommit is an underlying commit object, with git metadata.
+ *
+ * @author Shredder121
+ */
+@lombok.Value
 public class GitCommit {
 
-    private final String label;
-    private final String ref;
-    private final String sha;
-    private final String message;
-    private final Repository repo;
+    /**
+     * The person who authored the commit.
+     */
+    UserData author;
 
-    public GitCommit(String label, String ref, String sha, String message, Repository repo) {
-        this.label = label;
-        this.ref = ref;
-        this.sha = sha;
-        this.message = message;
-        this.repo = repo;
-    }
+    /**
+     * The person who applied the commit.
+     */
+    UserData committer;
 
-    public String getLabel() {
-        return label;
-    }
+    /**
+     * The commit's message.
+     */
+    String message;
 
-    public String getRef() {
-        return ref;
-    }
+    /**
+     * Details on author/committer data.
+     */
+    @lombok.Value
+    public static class UserData {
 
-    public String getSha() {
-        return sha;
-    }
+        /**
+         * The name as it shows up in the git log.
+         */
+        String name;
 
-    public String getMessage() {
-        return message;
-    }
+        /**
+         * The email address the user uses.
+         */
+        String email;
 
-    public Repository getRepo() {
-        return repo;
+        /**
+         * The date of the commit.
+         */
+        ZonedDateTime date;
     }
 }

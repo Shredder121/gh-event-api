@@ -20,18 +20,26 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * The payload passed when a {@code ping} event is received.
+ *
+ * <p>Only for internal use.</p>
+ *
+ * @author Shredder121
+ */
+@lombok.Value
 public class PingPayload {
 
-    @NotNull private final String zen;
+    /**
+     * A random piece of GitHub zen.
+     * Will be echoed back to GitHub to indicate successful configuration.
+     */
+    @NotNull String zen;
 
     @JsonCreator
-    private PingPayload(
+    PingPayload(
             @JsonProperty("zen") String zen) {
 
         this.zen = zen;
-    }
-
-    public String getZen() {
-        return zen;
     }
 }

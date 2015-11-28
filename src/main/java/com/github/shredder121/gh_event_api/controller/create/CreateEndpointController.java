@@ -59,10 +59,10 @@ public class CreateEndpointController {
 
     @RequestMapping
     public void handle(@Valid @RequestBody CreatePayload createPayload) {
-        String ref_type = createPayload.getRef_type();
-        List<CreateHandler> ref_typeHandlers = handlers.getOrDefault(ref_type, emptyList());
-        logger.debug("{} handlers for {}", ref_typeHandlers.size(), ref_type);
-        ref_typeHandlers.stream()
+        String refType = createPayload.getRefType();
+        List<CreateHandler> refTypeHandlers = handlers.getOrDefault(refType, emptyList());
+        logger.debug("{} handlers for {}", refTypeHandlers.size(), refType);
+        refTypeHandlers.stream()
                 .map(handler -> runnableHandler(handler, createPayload))
                 .forEach(executor::execute);
     }

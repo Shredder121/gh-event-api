@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * The endpoint for the 'status' event.
+ * The endpoint for the {@code status} event.
  */
 package com.github.shredder121.gh_event_api.controller.status;

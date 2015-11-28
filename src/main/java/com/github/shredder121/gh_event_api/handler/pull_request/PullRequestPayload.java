@@ -24,57 +24,44 @@ import com.github.shredder121.gh_event_api.model.PullRequest;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.User;
 
+import lombok.AccessLevel;
+import lombok.Setter;
+import lombok.experimental.NonFinal;
+
 /**
  * The payload passed when a {@code pull_request} event is received.
  *
  * @author Shredder121
  */
+@lombok.Value
 public class PullRequestPayload {
 
-    @NotNull private final String action;
-    @NotNull private final Integer number;
-    @NotNull private final PullRequest pull_request;
-    @NotNull private final Repository repository;
-    @NotNull private final User sender;
+    /**
+     * The Pull Request action that took place.
+     */
+    @NotNull String action;
+
+    /**
+     * The Pull Request number.
+     */
+    @NotNull Integer number;
+
+    /**
+     * The Pull Request that was affected.
+     */
+    @NotNull PullRequest pullRequest;
+
+    /**
+     * The Repository the Pull Request belongs to.
+     */
+    @NotNull Repository repository;
+
+    /**
+     * The User that invoked the action.
+     */
+    @NotNull User sender;
 
     //contextual properties
-    private Label label;
-    private User user;
-
-    @JsonCreator
-    public PullRequestPayload(
-            @JsonProperty("action") String action,
-            @JsonProperty("number") Integer number,
-            @JsonProperty("pull_request") PullRequest pull_request,
-            @JsonProperty("repository") Repository repository,
-            @JsonProperty("sender") User sender) {
-
-        this.action = action;
-        this.number = number;
-        this.pull_request = pull_request;
-        this.repository = repository;
-        this.sender = sender;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public PullRequest getPullRequest() {
-        return pull_request;
-    }
-
-    public Repository getRepository() {
-        return repository;
-    }
-
-    public User getSender() {
-        return sender;
-    }
 
     /**
      * If the {@link #action action} of the event is
@@ -85,13 +72,9 @@ public class PullRequestPayload {
      *
      * @return the label if included, else {@code null}.
      */
-    public Label getLabel() {
-        return label;
-    }
-
-    private void setLabel(Label label) {
-        this.label = label;
-    }
+    @NonFinal
+    @Setter(AccessLevel.PRIVATE)
+    Label label;
 
     /**
      * If the {@link #action action} of the event is
@@ -102,11 +85,22 @@ public class PullRequestPayload {
      *
      * @return the user if included, else {@code null}.
      */
-    public User getUser() {
-        return user;
-    }
+    @NonFinal
+    @Setter(AccessLevel.PRIVATE)
+    User user;
 
-    private void setUser(User user) {
-        this.user = user;
+    @JsonCreator
+    PullRequestPayload(
+            @JsonProperty("action") String action,
+            @JsonProperty("number") Integer number,
+            @JsonProperty("pull_request") PullRequest pullRequest,
+            @JsonProperty("repository") Repository repository,
+            @JsonProperty("sender") User sender) {
+
+        this.action = action;
+        this.number = number;
+        this.pullRequest = pullRequest;
+        this.repository = repository;
+        this.sender = sender;
     }
 }

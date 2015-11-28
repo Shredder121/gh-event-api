@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Bean;
 
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
-import com.github.shredder121.gh_event_api.model.Branch;
+import com.github.shredder121.gh_event_api.model.StatusBranch;
 import com.github.shredder121.gh_event_api.model.Repository;
 
 @SpringApplicationConfiguration(classes = {StatusHandlerTest.class, GHEventApiServer.class})
@@ -43,10 +43,10 @@ public class StatusHandlerTest extends AbstractHandlerTest {
             errorCollector.checkThat(payload.getSha(), is("9049f1265b7d61be4a8904a9a27120d2064dab3b"));
             errorCollector.checkThat(payload.getName(), is("baxterthehacker/public-repo"));
             errorCollector.checkThat(payload.getDescription(), is(nullValue()));
-            errorCollector.checkThat(payload.getTarget_url(), is(nullValue()));
+            errorCollector.checkThat(payload.getTargetUrl(), is(nullValue()));
 
-            Collection<Branch> branches = payload.getBranches();
-            errorCollector.checkThat(transform(branches, Branch::getName),
+            Collection<StatusBranch> branches = payload.getBranches();
+            errorCollector.checkThat(transform(branches, StatusBranch::getName),
                     everyItem(either(is("master")).or(is("changes")).or(is("gh-pages"))));
 
             Repository repository = payload.getRepository();

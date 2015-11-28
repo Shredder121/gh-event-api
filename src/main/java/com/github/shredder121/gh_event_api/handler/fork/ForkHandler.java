@@ -23,5 +23,5 @@ package com.github.shredder121.gh_event_api.handler.fork;
 @FunctionalInterface
 public interface ForkHandler {
 
-    public void handle(ForkPayload payload);
+    void handle(ForkPayload payload);
 }

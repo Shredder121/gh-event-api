@@ -30,6 +30,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 import com.github.shredder121.gh_event_api.model.PullRequest;
 import com.github.shredder121.gh_event_api.model.Ref;
 import com.github.shredder121.gh_event_api.model.Repository;
+import com.github.shredder121.gh_event_api.model.User;
 
 @SpringApplicationConfiguration(classes = {PullRequestHandlerTest.class, GHEventApiServer.class})
 public class PullRequestHandlerTest extends AbstractHandlerTest {
@@ -50,7 +51,7 @@ public class PullRequestHandlerTest extends AbstractHandlerTest {
 
             PullRequest pullRequest = payload.getPullRequest();
             errorCollector.checkThat(pullRequest.getNumber(), is(payload.getNumber()));
-            errorCollector.checkThat(pullRequest.getCreated_at(), is(LocalDateTime.parse("2015-05-05T23:40:27").atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC))));
+            errorCollector.checkThat(pullRequest.getCreatedAt(), is(LocalDateTime.parse("2015-05-05T23:40:27").atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC))));
             errorCollector.checkThat(pullRequest.getLocked(), is(false));
             errorCollector.checkThat(pullRequest.getState(), is("open"));
             errorCollector.checkThat(pullRequest.getTitle(), is("Update the README with new information"));
@@ -66,6 +67,13 @@ public class PullRequestHandlerTest extends AbstractHandlerTest {
             Repository repo = head.getRepo();
             errorCollector.checkThat(repo.getName(), is("public-repo"));
             errorCollector.checkThat(repo.getFullName(), is("baxterthehacker/public-repo"));
+
+            Repository repository = payload.getRepository();
+            errorCollector.checkThat(repository.getFullName(), is(repo.getFullName()));
+            errorCollector.checkThat(repository.getName(), is(repo.getName()));
+
+            User sender = payload.getSender();
+            errorCollector.checkThat(sender.getLogin(), is("baxterthehacker"));
 
             completion.countDown();
         };

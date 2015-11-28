@@ -24,7 +24,7 @@ import com.github.shredder121.gh_event_api.model.Label;
  *
  * @author Shredder121
  */
-class LabelMixin {
+abstract class LabelMixin {
 
     /**
      * {@link #LabelMixin(java.lang.String)}
@@ -34,7 +34,7 @@ class LabelMixin {
      * @param name the name to inject
      */
     @JsonCreator
-    public LabelMixin(
+    LabelMixin(
             @JsonProperty("name") String name) {
     }
 }

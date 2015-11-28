@@ -32,7 +32,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.push.*;
+import com.github.shredder121.gh_event_api.handler.push.PushHandler;
+import com.github.shredder121.gh_event_api.handler.push.PushPayload;
 import com.google.common.collect.Sets;
 
 @RestController

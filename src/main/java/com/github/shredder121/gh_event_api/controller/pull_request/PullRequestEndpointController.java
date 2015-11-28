@@ -36,7 +36,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.pull_request.*;
+import com.github.shredder121.gh_event_api.handler.pull_request.PullRequestEvent;
+import com.github.shredder121.gh_event_api.handler.pull_request.PullRequestHandler;
+import com.github.shredder121.gh_event_api.handler.pull_request.PullRequestPayload;
 
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=pull_request")

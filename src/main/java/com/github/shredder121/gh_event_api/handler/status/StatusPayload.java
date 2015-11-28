@@ -19,8 +19,8 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.shredder121.gh_event_api.model.StatusBranch;
 import com.github.shredder121.gh_event_api.model.Repository;
+import com.github.shredder121.gh_event_api.model.StatusBranch;
 import com.google.common.collect.ImmutableList;
 
 /**

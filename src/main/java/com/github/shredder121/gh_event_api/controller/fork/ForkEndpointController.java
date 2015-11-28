@@ -32,7 +32,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.fork.*;
+import com.github.shredder121.gh_event_api.handler.fork.ForkHandler;
+import com.github.shredder121.gh_event_api.handler.fork.ForkPayload;
 import com.google.common.collect.Sets;
 
 @RestController

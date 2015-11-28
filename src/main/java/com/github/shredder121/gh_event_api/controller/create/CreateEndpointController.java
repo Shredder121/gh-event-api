@@ -36,7 +36,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.create.*;
+import com.github.shredder121.gh_event_api.handler.create.CreateEvent;
+import com.github.shredder121.gh_event_api.handler.create.CreateHandler;
+import com.github.shredder121.gh_event_api.handler.create.CreatePayload;
 
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=create")

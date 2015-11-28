@@ -34,6 +34,7 @@ class GHEventApiModule extends SimpleModule {
     public GHEventApiModule() {
         super("GHEventApiServer");
 
+        setMixInAnnotation(CommitComment.class, CommitCommentMixin.class);
         setMixInAnnotation(Label.class, LabelMixin.class);
         setMixInAnnotation(Link.class, LinkMixin.class);
         setMixInAnnotation(PullRequest.class, PullRequestMixin.class);

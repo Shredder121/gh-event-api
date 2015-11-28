@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.shredder121.gh_event_api.handler.commit_comment.CommitCommentHandler;
 import com.github.shredder121.gh_event_api.handler.commit_comment.CommitCommentPayload;
-import com.google.common.collect.Sets;
+import com.google.common.collect.ImmutableSet;
 
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=commit_comment")
@@ -44,11 +44,11 @@ public class CommitCommentEndpointController {
     private static final Logger logger = LoggerFactory.getLogger(CommitCommentEndpointController.class);
 
     private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Collection<CommitCommentHandler> handlers = Sets.newLinkedHashSet();
+    private final Collection<? extends CommitCommentHandler> handlers;
 
     @Autowired
     public CommitCommentEndpointController(Collection<? extends CommitCommentHandler> beans) {
-        this.handlers.addAll(beans);
+        this.handlers = ImmutableSet.copyOf(beans);
     }
 
     @RequestMapping

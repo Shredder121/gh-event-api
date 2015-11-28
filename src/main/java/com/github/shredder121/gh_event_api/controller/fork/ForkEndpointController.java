@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.shredder121.gh_event_api.handler.fork.ForkHandler;
 import com.github.shredder121.gh_event_api.handler.fork.ForkPayload;
-import com.google.common.collect.Sets;
+import com.google.common.collect.ImmutableSet;
 
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=fork")
@@ -44,11 +44,11 @@ public class ForkEndpointController {
     private static final Logger logger = LoggerFactory.getLogger(ForkEndpointController.class);
 
     private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Collection<ForkHandler> handlers = Sets.newLinkedHashSet();
+    private final Collection<? extends ForkHandler> handlers;
 
     @Autowired
     public ForkEndpointController(Collection<? extends ForkHandler> beans) {
-        this.handlers.addAll(beans);
+        this.handlers = ImmutableSet.copyOf(beans);
     }
 
     @RequestMapping

@@ -15,11 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.controller.create;
 
-import static java.util.Collections.emptyList;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 
 import javax.validation.Valid;
@@ -30,8 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.core.task.support.TaskExecutorAdapter;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +35,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.shredder121.gh_event_api.handler.create.CreateEvent;
 import com.github.shredder121.gh_event_api.handler.create.CreateHandler;
 import com.github.shredder121.gh_event_api.handler.create.CreatePayload;
+import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.Multimap;
 
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=create")
@@ -48,21 +47,23 @@ public class CreateEndpointController {
     private static final Logger logger = LoggerFactory.getLogger(CreateEndpointController.class);
 
     private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final MultiValueMap<String, CreateHandler> handlers = new LinkedMultiValueMap<>();
+    private final Multimap<String, ? extends CreateHandler> handlers;
 
     @Autowired
     public CreateEndpointController(Collection<? extends CreateHandler> beans) {
+        Multimap<String, CreateHandler> createHandlers = LinkedHashMultimap.create();
         for (CreateHandler bean : beans) {
             for (CreateEvent event : bean.getEvents()) {
-                handlers.add(event.getName(), bean);
+                createHandlers.put(event.getName(), bean);
             }
         }
+        this.handlers = ImmutableSetMultimap.copyOf(createHandlers);
     }
 
     @RequestMapping
     public void handle(@Valid @RequestBody CreatePayload payload) {
         String refType = payload.getRefType();
-        List<CreateHandler> refTypeHandlers = handlers.getOrDefault(refType, emptyList());
+        Collection<? extends CreateHandler> refTypeHandlers = handlers.get(refType);
         logger.debug("{} handlers for {}", refTypeHandlers.size(), refType);
         for (CreateHandler handler : refTypeHandlers) {
             executor.execute(runnableHandler(handler, payload));

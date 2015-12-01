@@ -15,9 +15,13 @@
  */
 package com.github.shredder121.gh_event_api.handler.status;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
 import static com.google.common.collect.Iterables.transform;
 import static org.hamcrest.Matchers.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Collection;
 
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -25,8 +29,11 @@ import org.springframework.context.annotation.Bean;
 
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
+import com.github.shredder121.gh_event_api.model.GitCommit;
+import com.github.shredder121.gh_event_api.model.GitCommit.UserData;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.StatusBranch;
+import com.github.shredder121.gh_event_api.model.StatusCommit;
 
 @SpringApplicationConfiguration(classes = {StatusHandlerTest.class, GHEventApiServer.class})
 public class StatusHandlerTest extends AbstractHandlerTest {
@@ -48,6 +55,24 @@ public class StatusHandlerTest extends AbstractHandlerTest {
             Collection<StatusBranch> branches = payload.getBranches();
             errorCollector.checkThat(transform(branches, StatusBranch::getName),
                     everyItem(either(is("master")).or(is("changes")).or(is("gh-pages"))));
+
+            StatusCommit commit = payload.getCommit();
+            errorCollector.checkThat(commit.getSha(), is("9049f1265b7d61be4a8904a9a27120d2064dab3b"));
+            errorCollector.checkThat(commit.getUrl(), containsString("9049f1265b7d61be4a8904a9a27120d2064dab3b"));
+            errorCollector.checkThat(commit.getHtmlUrl(), containsString("9049f1265b7d61be4a8904a9a27120d2064dab3b"));
+            errorCollector.checkThat(commit.getCommit(), allOf(
+                    property(GitCommit::getMessage, is("Initial commit")),
+                    property(GitCommit::getAuthor, allOf(
+                            property(UserData::getName, is("baxterthehacker")),
+                            property(UserData::getEmail, is("baxterthehacker@users.noreply.github.com")),
+                            property(UserData::getDate, is(LocalDateTime.parse("2015-05-05T23:40:12").atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC))))
+                    )),
+                    property(GitCommit::getCommitter, allOf(
+                            property(UserData::getName, is("baxterthehacker")),
+                            property(UserData::getEmail, is("baxterthehacker@users.noreply.github.com")),
+                            property(UserData::getDate, is(LocalDateTime.parse("2015-05-05T23:40:12").atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC))))
+                    ))
+            ));
 
             Repository repository = payload.getRepository();
             errorCollector.checkThat(repository.getName(), is("public-repo"));

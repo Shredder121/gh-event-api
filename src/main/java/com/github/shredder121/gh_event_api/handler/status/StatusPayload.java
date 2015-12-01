@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.StatusBranch;
+import com.github.shredder121.gh_event_api.model.StatusCommit;
 import com.google.common.collect.ImmutableList;
 
 /**
@@ -63,9 +64,14 @@ public class StatusPayload {
     String targetUrl;
 
     /**
-     * A list of branch objects containing the status' SHA.
-     * 
-     * <p>Each branch contains the given SHA, but the SHA may or may not be the head of the branch.</p>
+     * The commit that the status is for.
+     */
+    @NotNull StatusCommit commit;
+
+    /**
+     * A list of branch objects containing the commit.
+     *
+     * <p>Each branch contains the given commit, but the commit may or may not be the head of the branch.</p>
      *
      * <p>The list includes a maximum of 10 branches.</p>
      */
@@ -84,6 +90,7 @@ public class StatusPayload {
             @JsonProperty("state") String state,
             @JsonProperty("description") String description,
             @JsonProperty("target_url") String targetUrl,
+            @JsonProperty("commit") StatusCommit commit,
             @JsonProperty("branches") ImmutableList<StatusBranch> branches,
             @JsonProperty("repository") Repository repository) {
 
@@ -93,6 +100,7 @@ public class StatusPayload {
         this.state = state;
         this.description = description;
         this.targetUrl = targetUrl;
+        this.commit = commit;
         this.branches = branches;
         this.repository = repository;
     }

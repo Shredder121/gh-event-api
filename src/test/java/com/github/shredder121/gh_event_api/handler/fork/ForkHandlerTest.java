@@ -17,7 +17,7 @@ package com.github.shredder121.gh_event_api.handler.fork;
 
 import static org.hamcrest.Matchers.*;
 
-import org.springframework.boot.test.*;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import com.github.shredder121.gh_event_api.GHEventApiServer;

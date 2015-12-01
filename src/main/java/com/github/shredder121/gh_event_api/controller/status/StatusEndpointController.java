@@ -28,10 +28,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.core.task.support.TaskExecutorAdapter;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.status.*;
-import com.google.common.collect.Sets;
+import com.github.shredder121.gh_event_api.handler.status.StatusHandler;
+import com.github.shredder121.gh_event_api.handler.status.StatusPayload;
+import com.google.common.collect.ImmutableSet;
 
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=status")
@@ -41,19 +44,19 @@ public class StatusEndpointController {
     private static final Logger logger = LoggerFactory.getLogger(StatusEndpointController.class);
 
     private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Collection<StatusHandler> handlers = Sets.newLinkedHashSet();
+    private final Collection<? extends StatusHandler> handlers;
 
     @Autowired
     public StatusEndpointController(Collection<? extends StatusHandler> beans) {
-        this.handlers.addAll(beans);
+        this.handlers = ImmutableSet.copyOf(beans);
     }
 
     @RequestMapping
     public void handle(@Valid @RequestBody StatusPayload payload) {
         logger.debug("{} handlers", handlers.size());
-        handlers.stream()
-                .map(handler -> runnableHandler(handler, payload))
-                .forEach(executor::execute);
+        for (StatusHandler handler : handlers) {
+            executor.execute(runnableHandler(handler, payload));
+        }
     }
 
     private Runnable runnableHandler(StatusHandler handler, StatusPayload payload) {

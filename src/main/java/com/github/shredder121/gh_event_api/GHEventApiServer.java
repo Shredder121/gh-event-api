@@ -17,6 +17,8 @@ package com.github.shredder121.gh_event_api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.ObjectArrays;
@@ -55,9 +57,10 @@ public class GHEventApiServer {
      *
      * @param app the app that will be included
      * @param args the optional (command-line) arguments
+     * @return the running {@link ApplicationContext}
      */
-    public static void start(Class<?> app, String... args) {
-        start(new Class<?>[]{app}, args);
+    public static ConfigurableApplicationContext start(Class<?> app, String... args) {
+        return start(new Class<?>[]{app}, args);
     }
 
     /**
@@ -65,9 +68,10 @@ public class GHEventApiServer {
      *
      * @param app multiple apps that will be included
      * @param args the optional (command-line) arguments
+     * @return the running {@link ApplicationContext}
      */
-    public static void start(Class<?>[] app, String... args) {
+    public static ConfigurableApplicationContext start(Class<?>[] app, String... args) {
         Class<?>[] apps = ObjectArrays.concat(app, GHEventApiServer.class);
-        SpringApplication.run(apps, args);
+        return SpringApplication.run(apps, args);
     }
 }

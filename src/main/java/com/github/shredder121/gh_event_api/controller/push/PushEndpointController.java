@@ -32,8 +32,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.push.*;
-import com.google.common.collect.Sets;
+import com.github.shredder121.gh_event_api.handler.push.PushHandler;
+import com.github.shredder121.gh_event_api.handler.push.PushPayload;
+import com.google.common.collect.ImmutableSet;
 
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=push")
@@ -43,19 +44,19 @@ public class PushEndpointController {
     private static final Logger logger = LoggerFactory.getLogger(PushEndpointController.class);
 
     private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Collection<PushHandler> handlers = Sets.newLinkedHashSet();
+    private final Collection<? extends PushHandler> handlers;
 
     @Autowired
     public PushEndpointController(Collection<? extends PushHandler> beans) {
-        this.handlers.addAll(beans);
+        this.handlers = ImmutableSet.copyOf(beans);
     }
 
     @RequestMapping
     public void handle(@Valid @RequestBody PushPayload payload) {
         logger.debug("{} handlers", handlers.size());
-        handlers.stream()
-                .map(handler -> runnableHandler(handler, payload))
-                .forEach(executor::execute);
+        for (PushHandler handler : handlers) {
+            executor.execute(runnableHandler(handler, payload));
+        }
     }
 
     private Runnable runnableHandler(PushHandler handler, PushPayload payload) {

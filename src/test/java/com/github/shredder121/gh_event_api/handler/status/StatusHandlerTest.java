@@ -20,13 +20,13 @@ import static org.hamcrest.Matchers.*;
 
 import java.util.Collection;
 
-import org.springframework.boot.test.*;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
-import com.github.shredder121.gh_event_api.model.StatusBranch;
 import com.github.shredder121.gh_event_api.model.Repository;
+import com.github.shredder121.gh_event_api.model.StatusBranch;
 
 @SpringApplicationConfiguration(classes = {StatusHandlerTest.class, GHEventApiServer.class})
 public class StatusHandlerTest extends AbstractHandlerTest {

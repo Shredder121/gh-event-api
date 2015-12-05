@@ -129,7 +129,7 @@ public abstract class AbstractHandlerTest {
 
     public String minimize(final InputStream stream) throws JsonProcessingException, IOException {
         ObjectMapper mapper = Jackson2ObjectMapperBuilder.json().build();
-        Map<String, Object> content = mapper.reader().withType(Map.class).readValue(stream);
+        Map<String, Object> content = mapper.reader().forType(Map.class).readValue(stream);
         return mapper.writer(new MinimalPrettyPrinter(null/*minimizes*/)).writeValueAsString(content);
     }
 }

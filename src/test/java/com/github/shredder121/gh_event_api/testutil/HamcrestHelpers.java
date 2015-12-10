@@ -17,9 +17,9 @@ package com.github.shredder121.gh_event_api.testutil;
 
 import java.util.function.Function;
 
-import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 
 /**
  * Helpers to get more out of Hamcrest's matchers.
@@ -38,11 +38,9 @@ public class HamcrestHelpers {
      * @return the composed matcher
      */
     public static <O, T> Matcher<O> property(Function<? super O, ? extends T> selector, Matcher<? super T> predicate) {
-        return new BaseMatcher<O>() {
+        return new TypeSafeMatcher<O>() {
             @Override
-            public boolean matches(Object item) {
-                @SuppressWarnings("unchecked") // should be valid, client code otherwise wouldn't compile
-                O original = (O) item;
+            public boolean matchesSafely(O original) {
                 return predicate.matches(selector.apply(original));
             }
 
@@ -52,9 +50,7 @@ public class HamcrestHelpers {
             }
 
             @Override
-            public void describeMismatch(Object item, Description description) {
-                @SuppressWarnings("unchecked") // is not really valid, but is safe enough
-                O original = (O) item;
+            public void describeMismatchSafely(O original, Description description) {
                 predicate.describeMismatch(selector.apply(original), description);
             }
         };

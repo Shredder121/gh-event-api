@@ -27,13 +27,14 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.After;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GitHub;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -84,10 +85,13 @@ public abstract class AbstractHandlerTest {
     private final String event;
     private final String hmac;
 
-    @ClassRule
-    public static ErrorCollector errorCollector;
+    @Rule
+    public final ErrorCollector errorCollector = new ErrorCollector();
 
-    protected static CountDownLatch completion;
+    protected final CountDownLatch completion = new CountDownLatch(1);
+
+    @Autowired
+    private AbstractTestHandlerBean handlerBean;
 
     protected AbstractHandlerTest(String event, String hmac) {
         this.event = event;
@@ -95,10 +99,10 @@ public abstract class AbstractHandlerTest {
         this.hmac = hmac;
     }
 
-    @BeforeClass
-    public static final void prepareTest() {
-        completion = new CountDownLatch(1);
-        errorCollector = new ErrorCollector();
+    @Before
+    public final void prepareTest() {
+        handlerBean.setCountDownLatch(completion);
+        handlerBean.setErrorCollector(errorCollector);
     }
 
     @Test

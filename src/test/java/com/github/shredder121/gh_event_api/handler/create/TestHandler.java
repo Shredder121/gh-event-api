@@ -15,21 +15,19 @@
  */
 package com.github.shredder121.gh_event_api.handler.create;
 
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.context.annotation.Bean;
+import static org.hamcrest.Matchers.is;
 
-import com.github.shredder121.gh_event_api.GHEventApiServer;
-import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
+import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 
-@SpringApplicationConfiguration(classes = {CreateHandlerTest.class, GHEventApiServer.class})
-public class CreateHandlerTest extends AbstractHandlerTest {
+class TestHandler extends AbstractTestHandlerBean implements CreateHandler {
 
-    public CreateHandlerTest() {
-        super("create", "692767e05058a25010d4aa30f2c5f324350c9a4c");
-    }
+    @Override
+    public void handle(CreatePayload payload) {
+        errorCollector.checkThat(payload.getDescription(), is(""));
+        errorCollector.checkThat(payload.getRefType(), is("tag"));
+        errorCollector.checkThat(payload.getRef(), is("0.0.1"));
+        errorCollector.checkThat(payload.getMasterBranch(), is("master"));
 
-    @Bean
-    private TestHandler handlerBean() {
-        return new TestHandler();
+        countDownLatch.countDown();
     }
 }

@@ -13,26 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.handler.pull_request;
+package com.github.shredder121.gh_event_api.testutil;
 
-import java.util.EnumSet;
-import java.util.Set;
+import org.junit.rules.ErrorCollector;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.Aware;
 
-/**
- * The handler interface for receiving {@code pull_request} events.
- *
- * @author Shredder121
- */
-@FunctionalInterface
-public interface PullRequestHandler {
+public interface ErrorCollectorAware extends Aware {
 
-    /**
-     * 
-     * @return the events you want to subscribe to, defaults to all to make the handler target for lambdas
-     */
-    default Set<PullRequestEvent> getEvents() {
-        return EnumSet.allOf(PullRequestEvent.class);
-    }
-
-    void handle(PullRequestPayload payload);
+    void setErrorCollector(ErrorCollector errorCollector) throws BeansException;
 }

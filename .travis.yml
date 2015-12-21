@@ -1,8 +1,6 @@
 language: java
 jdk:
   - oraclejdk8
-env:
-  global: JAVA_TOOL_OPTIONS="-XX:+TieredCompilation -XX:ReservedCodeCacheSize=150m -XX:+UseCodeCacheFlushing -XX:-DontCompileHugeMethods"
 
 #validate javadoc
 before_install: mvn -B -q lombok:delombok javadoc:javadoc -Dshow=package

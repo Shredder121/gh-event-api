@@ -13,26 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.handler.pull_request;
+package com.github.shredder121.gh_event_api.handler.delete;
 
-import java.util.EnumSet;
-import java.util.Set;
+import static org.hamcrest.Matchers.is;
 
-/**
- * The handler interface for receiving {@code pull_request} events.
- *
- * @author Shredder121
- */
-@FunctionalInterface
-public interface PullRequestHandler {
+import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 
-    /**
-     * 
-     * @return the events you want to subscribe to, defaults to all to make the handler target for lambdas
-     */
-    default Set<PullRequestEvent> getEvents() {
-        return EnumSet.allOf(PullRequestEvent.class);
+class TestHandler extends AbstractTestHandlerBean implements DeleteHandler {
+
+    @Override
+    public void handle(DeletePayload payload) {
+        errorCollector.checkThat(payload.getRefType(), is("tag"));
+        errorCollector.checkThat(payload.getRef(), is("simple-tag"));
+
+        countDownLatch.countDown();
     }
-
-    void handle(PullRequestPayload payload);
 }

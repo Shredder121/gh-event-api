@@ -15,21 +15,11 @@
  */
 package com.github.shredder121.gh_event_api.handler.commit_comment;
 
-import static org.hamcrest.Matchers.*;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
-import com.github.shredder121.gh_event_api.model.CommitComment;
-import com.github.shredder121.gh_event_api.model.Repository;
-import com.github.shredder121.gh_event_api.model.User;
 
 @SpringApplicationConfiguration(classes = {CommitCommentHandlerTest.class, GHEventApiServer.class})
 public class CommitCommentHandlerTest extends AbstractHandlerTest {
@@ -39,30 +29,7 @@ public class CommitCommentHandlerTest extends AbstractHandlerTest {
     }
 
     @Bean
-    public CommitCommentHandler handlerBean() {
-        return payload -> {
-            errorCollector.checkThat(payload.getAction(), is("created"));
-
-            CommitComment comment = payload.getComment();
-            errorCollector.checkThat(comment.getId(), is(11056394));
-            errorCollector.checkThat("This is a comment on the overall commit", comment.getPath(), is(nullValue()));
-            errorCollector.checkThat("This is a comment on the overall commit", comment.getPosition(), is(nullValue()));
-            errorCollector.checkThat(comment.getUrl(), containsString(String.valueOf(comment.getId())));
-            errorCollector.checkThat(comment.getHtmlUrl(), containsString(comment.getCommitId()));
-            errorCollector.checkThat(comment.getBody(), is("This is a really good change! :+1:"));
-
-            ZonedDateTime commentTime = LocalDateTime.parse("2015-05-05T23:40:29").atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC));
-            errorCollector.checkThat(comment.getCreatedAt(), is(commentTime));
-            errorCollector.checkThat(comment.getUpdatedAt(), is(commentTime));
-
-            Repository repository = payload.getRepository();
-            errorCollector.checkThat(repository.getFullName(), is("baxterthehacker/public-repo"));
-            errorCollector.checkThat(repository.getName(), is("public-repo"));
-
-            User sender = payload.getSender();
-            errorCollector.checkThat(sender.getLogin(), is("baxterthehacker"));
-
-            completion.countDown();
-        };
+    private TestHandler handlerBean() {
+        return new TestHandler();
     }
 }

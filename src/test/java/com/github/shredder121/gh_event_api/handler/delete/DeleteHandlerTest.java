@@ -15,8 +15,6 @@
  */
 package com.github.shredder121.gh_event_api.handler.delete;
 
-import static org.hamcrest.Matchers.is;
-
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Bean;
 
@@ -31,12 +29,7 @@ public class DeleteHandlerTest extends AbstractHandlerTest {
     }
 
     @Bean
-    public DeleteHandler handlerBean() {
-        return payload -> {
-            errorCollector.checkThat(payload.getRefType(), is("tag"));
-            errorCollector.checkThat(payload.getRef(), is("simple-tag"));
-
-            completion.countDown();
-        };
+    private TestHandler handlerBean() {
+        return new TestHandler();
     }
 }

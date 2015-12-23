@@ -15,21 +15,14 @@
  */
 package com.github.shredder121.gh_event_api.handler.ping;
 
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.context.annotation.Bean;
+import java.util.concurrent.CountDownLatch;
 
-import com.github.shredder121.gh_event_api.GHEventApiServer;
-import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
+import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 
-@SpringApplicationConfiguration(classes = {PingTest.class, GHEventApiServer.class})
-public class PingTest extends AbstractHandlerTest {
+class TestHandler extends AbstractTestHandlerBean {
 
-    public PingTest() {
-        super("ping", "ef61d462314dfd950ad5a6e15798bb5432de4e07");
-    }
-
-    @Bean
-    private TestHandler handlerBean() {
-        return new TestHandler();
+    @Override
+    public void setCountDownLatch(CountDownLatch countDownLatch) {
+        countDownLatch.countDown(); // immediate completion
     }
 }

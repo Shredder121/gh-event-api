@@ -15,15 +15,11 @@
  */
 package com.github.shredder121.gh_event_api.handler.fork;
 
-import static org.hamcrest.Matchers.*;
-
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
-import com.github.shredder121.gh_event_api.model.Repository;
-import com.github.shredder121.gh_event_api.model.User;
 
 @SpringApplicationConfiguration(classes = {ForkHandlerTest.class, GHEventApiServer.class})
 public class ForkHandlerTest extends AbstractHandlerTest {
@@ -33,23 +29,7 @@ public class ForkHandlerTest extends AbstractHandlerTest {
     }
 
     @Bean
-    public ForkHandler handlerBean() {
-        return payload -> {
-            User sender = payload.getSender();
-            errorCollector.checkThat(sender.getLogin(), is("baxterandthehackers"));
-
-            Repository repository = payload.getRepository();
-            errorCollector.checkThat(repository.getOwner().getLogin(), is("baxterthehacker"));
-            errorCollector.checkThat(repository.getForks(), is(1L));
-
-            Repository forkee = payload.getForkee();
-            errorCollector.checkThat(forkee.getName(), is(repository.getName()));
-            errorCollector.checkThat(forkee.getForksCount(), is(0L));
-
-            errorCollector.checkThat(forkee.getFullName(), containsString(sender.getLogin()));
-            errorCollector.checkThat(forkee.getForksCount(), is(lessThan(repository.getForksCount())));
-
-            completion.countDown();
-        };
+    private TestHandler handlerBean() {
+        return new TestHandler();
     }
 }

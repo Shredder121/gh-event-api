@@ -45,6 +45,6 @@ abstract class CommitCommentMixin {
             @JsonProperty("url") String url,
             @JsonProperty("html_url") String htmlUrl,
             @JsonProperty("created_at") ZonedDateTime createdAt,
-            @JsonProperty("updated_at") ZonedDateTime updated_at) {
+            @JsonProperty("updated_at") ZonedDateTime updatedAt) {
     }
 }

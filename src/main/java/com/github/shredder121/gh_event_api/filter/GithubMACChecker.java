@@ -99,7 +99,7 @@ public class GithubMACChecker extends OncePerRequestFilter {
         }
     }
 
-    private String hexDigest(byte[] requestBytes) throws IllegalStateException {
+    private String hexDigest(byte[] requestBytes) {
         byte[] digest = macProvider.get().doFinal(requestBytes);
         return ByteArrayUtil.toHexString(digest);
     }

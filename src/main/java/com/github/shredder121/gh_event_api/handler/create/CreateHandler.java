@@ -15,9 +15,6 @@
  */
 package com.github.shredder121.gh_event_api.handler.create;
 
-import java.util.EnumSet;
-import java.util.Set;
-
 /**
  * The handler interface for receiving {@code create} events.
  *
@@ -25,14 +22,6 @@ import java.util.Set;
  */
 @FunctionalInterface
 public interface CreateHandler {
-
-    /**
-     *
-     * @return the events you want to subscribe to, defaults to all to make the handler target for lambdas
-     */
-    default Set<CreateEvent> getEvents() {
-        return EnumSet.allOf(CreateEvent.class);
-    }
 
     void handle(CreatePayload payload);
 }

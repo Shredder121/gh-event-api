@@ -32,12 +32,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.pull_request.PullRequestEvent;
 import com.github.shredder121.gh_event_api.handler.pull_request.PullRequestHandler;
 import com.github.shredder121.gh_event_api.handler.pull_request.PullRequestPayload;
-import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.ImmutableSet;
 
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=pull_request")
@@ -47,25 +44,17 @@ public class PullRequestEndpointController {
     private static final Logger logger = LoggerFactory.getLogger(PullRequestEndpointController.class);
 
     private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Multimap<String, ? extends PullRequestHandler> handlers;
+    private final Collection<? extends PullRequestHandler> handlers;
 
     @Autowired
     public PullRequestEndpointController(Collection<? extends PullRequestHandler> beans) {
-        Multimap<String, PullRequestHandler> pullRequestHandlers = LinkedHashMultimap.create();
-        for (PullRequestHandler bean : beans) {
-            for (PullRequestEvent event : bean.getEvents()) {
-                pullRequestHandlers.put(event.getName(), bean);
-            }
-        }
-        this.handlers = ImmutableSetMultimap.copyOf(pullRequestHandlers);
+        this.handlers = ImmutableSet.copyOf(beans);
     }
 
     @RequestMapping
     public void handle(@Valid @RequestBody PullRequestPayload payload) {
-        String action = payload.getAction();
-        Collection<? extends PullRequestHandler> actionHandlers = handlers.get(action);
-        logger.debug("{} handlers for {}", actionHandlers.size(), action);
-        for (PullRequestHandler handler : actionHandlers) {
+        logger.debug("{} handlers", handlers.size());
+        for (PullRequestHandler handler : handlers) {
             executor.execute(runnableHandler(handler, payload));
         }
     }

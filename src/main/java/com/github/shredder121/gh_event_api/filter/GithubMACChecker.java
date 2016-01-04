@@ -99,7 +99,7 @@ public class GithubMACChecker extends OncePerRequestFilter {
         }
     }
 
-    private String hexDigest(byte[] requestBytes) throws IllegalStateException {
+    private String hexDigest(byte[] requestBytes) {
         byte[] digest = macProvider.get().doFinal(requestBytes);
         return ByteArrayUtil.toHexString(digest);
     }
@@ -136,30 +136,38 @@ public class GithubMACChecker extends OncePerRequestFilter {
 
         @Override
         public ServletInputStream getInputStream() throws IOException {
-            final InputStream backingInputStream = ByteSource.wrap(input).openStream();
-            return new ServletInputStream() {
+            return new PreReadServletInputStream(input);
+        }
+    }
 
-                @Override
-                public int read() throws IOException {
-                    return backingInputStream.read();
-                }
+    private static class PreReadServletInputStream extends ServletInputStream {
 
-                // Servlet 3.1
-                @Override
-                public boolean isFinished() {
-                    throw new UnsupportedOperationException("Not supported.");
-                }
+        private final InputStream backingInputStream;
 
-                @Override
-                public boolean isReady() {
-                    throw new UnsupportedOperationException("Not supported.");
-                }
+        public PreReadServletInputStream(byte[] input) throws IOException {
+            this.backingInputStream = ByteSource.wrap(input).openStream();
+        }
 
-                @Override
-                public void setReadListener(ReadListener listener) {
-                    throw new UnsupportedOperationException("Not supported.");
-                }
-            };
+        @Override
+        public int read() throws IOException {
+            return backingInputStream.read();
+        }
+
+        // Servlet 3.1
+        @Override public boolean isFinished() {
+            return unsupported();
+        }
+
+        @Override public boolean isReady() {
+            return unsupported();
+        }
+
+        @Override public void setReadListener(ReadListener listener) {
+            unsupported();
+        }
+
+        private static <T> T unsupported() {
+            throw new UnsupportedOperationException("Not supported.");
         }
     }
 }

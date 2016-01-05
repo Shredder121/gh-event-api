@@ -15,6 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @lombok.Value
 public class Repository {
 
@@ -42,4 +45,19 @@ public class Repository {
      * How many forks there are currently.
      */
     Long forks;
+
+    @JsonCreator
+    Repository(
+            @JsonProperty("name") String name,
+            @JsonProperty("full_name") String fullName,
+            @JsonProperty("owner") User owner,
+            @JsonProperty("forks_count") Long forksCount,
+            @JsonProperty("forks") Long forks) {
+
+        this.name = name;
+        this.fullName = fullName;
+        this.owner = owner;
+        this.forksCount = forksCount;
+        this.forks = forks;
+    }
 }

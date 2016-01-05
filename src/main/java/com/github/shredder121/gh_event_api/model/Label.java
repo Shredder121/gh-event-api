@@ -15,6 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A label is a piece of text that tells something about an issue/pull request.
  *
@@ -27,4 +30,11 @@ public class Label {
      * The name of the label.
      */
     String name;
+
+    @JsonCreator
+    Label(
+            @JsonProperty("name") String name) {
+
+        this.name = name;
+    }
 }

@@ -13,14 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.handler.pull_request;
-
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
-
-import com.github.shredder121.gh_event_api.GHEventApiServer;
-
-@SpringApplicationConfiguration(classes = {HmacPullRequestHandlerTest.class, GHEventApiServer.class})
-@WebIntegrationTest({"secret=secret", "spring.main.show-banner=false"})
-public class HmacPullRequestHandlerTest extends PullRequestHandlerTest {
-}
+/**
+ * The endpoint for the {@code commit_comment} event.
+ */
+package com.github.shredder121.gh_event_api.controller.commit_comment;

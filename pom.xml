@@ -11,6 +11,8 @@
 
     <name>GitHub Event API Server</name>
 
+    <inceptionYear>2015</inceptionYear>
+
     <url>https://github.com/Shredder121/gh-event-api</url>
     <description>A Server that bootstraps custom handlers for the GitHub Event API</description>
 

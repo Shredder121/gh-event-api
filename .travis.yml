@@ -5,7 +5,7 @@ jdk:
 #validate javadoc
 before_install:
   - echo $MAVEN_OPTS
-  - mvn --debug -v lombok:delombok javadoc:javadoc -Dshow=package
+  - mvn --debug lombok:delombok javadoc:javadoc -Dshow=package
 
 install: mvn -B -q install -DskipTests=true
 script: mvn -B -Ptravis test jacoco:report

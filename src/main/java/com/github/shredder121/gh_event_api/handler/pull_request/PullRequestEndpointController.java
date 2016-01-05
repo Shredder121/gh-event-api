@@ -18,48 +18,26 @@ package com.github.shredder121.gh_event_api.handler.pull_request;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.Collection;
-import java.util.concurrent.ForkJoinPool;
 
-import javax.validation.Valid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.core.task.TaskExecutor;
-import org.springframework.core.task.support.TaskExecutorAdapter;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.pull_request.PullRequestHandler;
-import com.github.shredder121.gh_event_api.handler.pull_request.PullRequestPayload;
-import com.google.common.collect.ImmutableSet;
+import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=pull_request")
 @ConditionalOnBean(PullRequestHandler.class)
-public class PullRequestEndpointController {
-
-    private static final Logger logger = LoggerFactory.getLogger(PullRequestEndpointController.class);
-
-    private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Collection<? extends PullRequestHandler> handlers;
+public class PullRequestEndpointController extends AbstractEndpointController<PullRequestHandler, PullRequestPayload> {
 
     @Autowired
     public PullRequestEndpointController(Collection<? extends PullRequestHandler> beans) {
-        this.handlers = ImmutableSet.copyOf(beans);
+        super(beans);
     }
 
-    @RequestMapping
-    public void handle(@Valid @RequestBody PullRequestPayload payload) {
-        logger.debug("{} handlers", handlers.size());
-        for (PullRequestHandler handler : handlers) {
-            executor.execute(runnableHandler(handler, payload));
-        }
-    }
-
-    private Runnable runnableHandler(PullRequestHandler handler, PullRequestPayload pullRequestPayload) {
+    @Override
+    protected Runnable runnableHandler(PullRequestHandler handler, PullRequestPayload pullRequestPayload) {
         return () -> handler.handle(pullRequestPayload);
     }
 }

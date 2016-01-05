@@ -18,48 +18,26 @@ package com.github.shredder121.gh_event_api.handler.push;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.Collection;
-import java.util.concurrent.ForkJoinPool;
 
-import javax.validation.Valid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.core.task.TaskExecutor;
-import org.springframework.core.task.support.TaskExecutorAdapter;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.push.PushHandler;
-import com.github.shredder121.gh_event_api.handler.push.PushPayload;
-import com.google.common.collect.ImmutableSet;
+import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=push")
 @ConditionalOnBean(PushHandler.class)
-public class PushEndpointController {
-
-    private static final Logger logger = LoggerFactory.getLogger(PushEndpointController.class);
-
-    private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Collection<? extends PushHandler> handlers;
+public class PushEndpointController extends AbstractEndpointController<PushHandler, PushPayload> {
 
     @Autowired
     public PushEndpointController(Collection<? extends PushHandler> beans) {
-        this.handlers = ImmutableSet.copyOf(beans);
+        super(beans);
     }
 
-    @RequestMapping
-    public void handle(@Valid @RequestBody PushPayload payload) {
-        logger.debug("{} handlers", handlers.size());
-        for (PushHandler handler : handlers) {
-            executor.execute(runnableHandler(handler, payload));
-        }
-    }
-
-    private Runnable runnableHandler(PushHandler handler, PushPayload payload) {
+    @Override
+    protected Runnable runnableHandler(PushHandler handler, PushPayload payload) {
         return () -> handler.handle(payload);
     }
 }

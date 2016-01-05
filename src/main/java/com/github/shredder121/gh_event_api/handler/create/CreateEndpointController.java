@@ -18,48 +18,26 @@ package com.github.shredder121.gh_event_api.handler.create;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.Collection;
-import java.util.concurrent.ForkJoinPool;
 
-import javax.validation.Valid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.core.task.TaskExecutor;
-import org.springframework.core.task.support.TaskExecutorAdapter;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.create.CreateHandler;
-import com.github.shredder121.gh_event_api.handler.create.CreatePayload;
-import com.google.common.collect.ImmutableSet;
+import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=create")
 @ConditionalOnBean(CreateHandler.class)
-public class CreateEndpointController {
-
-    private static final Logger logger = LoggerFactory.getLogger(CreateEndpointController.class);
-
-    private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Collection<? extends CreateHandler> handlers;
+public class CreateEndpointController extends AbstractEndpointController<CreateHandler, CreatePayload> {
 
     @Autowired
     public CreateEndpointController(Collection<? extends CreateHandler> beans) {
-        this.handlers = ImmutableSet.copyOf(beans);
+        super(beans);
     }
 
-    @RequestMapping
-    public void handle(@Valid @RequestBody CreatePayload payload) {
-        logger.debug("{} handlers", handlers.size());
-        for (CreateHandler handler : handlers) {
-            executor.execute(runnableHandler(handler, payload));
-        }
-    }
-
-    private Runnable runnableHandler(CreateHandler handler, CreatePayload createPayload) {
+    @Override
+    protected Runnable runnableHandler(CreateHandler handler, CreatePayload createPayload) {
         return () -> handler.handle(createPayload);
     }
 }

@@ -18,48 +18,26 @@ package com.github.shredder121.gh_event_api.handler.delete;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.Collection;
-import java.util.concurrent.ForkJoinPool;
 
-import javax.validation.Valid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.core.task.TaskExecutor;
-import org.springframework.core.task.support.TaskExecutorAdapter;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.delete.DeleteHandler;
-import com.github.shredder121.gh_event_api.handler.delete.DeletePayload;
-import com.google.common.collect.ImmutableSet;
+import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=delete")
 @ConditionalOnBean(DeleteHandler.class)
-public class DeleteEndpointController {
-
-    private static final Logger logger = LoggerFactory.getLogger(DeleteEndpointController.class);
-
-    private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Collection<? extends DeleteHandler> handlers;
+public class DeleteEndpointController extends AbstractEndpointController<DeleteHandler, DeletePayload> {
 
     @Autowired
     public DeleteEndpointController(Collection<? extends DeleteHandler> beans) {
-        this.handlers = ImmutableSet.copyOf(beans);
+        super(beans);
     }
 
-    @RequestMapping
-    public void handle(@Valid @RequestBody DeletePayload payload) {
-        logger.debug("{} handlers", handlers.size());
-        for (DeleteHandler handler : handlers) {
-            executor.execute(runnableHandler(handler, payload));
-        }
-    }
-
-    private Runnable runnableHandler(DeleteHandler handler, DeletePayload createPayload) {
+    @Override
+    protected Runnable runnableHandler(DeleteHandler handler, DeletePayload createPayload) {
         return () -> handler.handle(createPayload);
     }
 }

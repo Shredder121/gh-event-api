@@ -65,9 +65,9 @@ public class PullRequestPayload {
 
     /**
      * If the {@link #action action} of the event is
-     * {@link PullRequestEvent#LABELED labeled}
+     * {@code labeled}
      * or
-     * {@link PullRequestEvent#UNLABELED unlabeled}
+     * {@code unlabeled}
      * the label is included.
      *
      * @return the label if included, else {@code null}.
@@ -78,9 +78,9 @@ public class PullRequestPayload {
 
     /**
      * If the {@link #action action} of the event is
-     * {@link PullRequestEvent#ASSIGNED assigned}
+     * {@code assigned}
      * or
-     * {@link PullRequestEvent#UNASSIGNED unassigned}
+     * {@code unassigned}
      * the user is included.
      *
      * @return the user if included, else {@code null}.

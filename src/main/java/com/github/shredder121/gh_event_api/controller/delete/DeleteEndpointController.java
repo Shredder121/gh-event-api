@@ -32,12 +32,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.delete.DeleteEvent;
 import com.github.shredder121.gh_event_api.handler.delete.DeleteHandler;
 import com.github.shredder121.gh_event_api.handler.delete.DeletePayload;
-import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.ImmutableSet;
 
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=delete")
@@ -47,25 +44,17 @@ public class DeleteEndpointController {
     private static final Logger logger = LoggerFactory.getLogger(DeleteEndpointController.class);
 
     private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Multimap<String, ? extends DeleteHandler> handlers;
+    private final Collection<? extends DeleteHandler> handlers;
 
     @Autowired
     public DeleteEndpointController(Collection<? extends DeleteHandler> beans) {
-        Multimap<String, DeleteHandler> createHandlers = LinkedHashMultimap.create();
-        for (DeleteHandler bean : beans) {
-            for (DeleteEvent event : bean.getEvents()) {
-                createHandlers.put(event.getName(), bean);
-            }
-        }
-        this.handlers = ImmutableSetMultimap.copyOf(createHandlers);
+        this.handlers = ImmutableSet.copyOf(beans);
     }
 
     @RequestMapping
     public void handle(@Valid @RequestBody DeletePayload payload) {
-        String refType = payload.getRefType();
-        Collection<? extends DeleteHandler> refTypeHandlers = handlers.get(refType);
-        logger.debug("{} handlers for {}", refTypeHandlers.size(), refType);
-        for (DeleteHandler handler : refTypeHandlers) {
+        logger.debug("{} handlers", handlers.size());
+        for (DeleteHandler handler : handlers) {
             executor.execute(runnableHandler(handler, payload));
         }
     }

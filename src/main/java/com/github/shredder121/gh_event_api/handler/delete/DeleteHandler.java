@@ -15,9 +15,6 @@
  */
 package com.github.shredder121.gh_event_api.handler.delete;
 
-import java.util.EnumSet;
-import java.util.Set;
-
 /**
  * The handler interface for receiving {@code delete} events.
  *
@@ -25,14 +22,6 @@ import java.util.Set;
  */
 @FunctionalInterface
 public interface DeleteHandler {
-
-    /**
-     *
-     * @return the events you want to subscribe to, defaults to all to make the handler target for lambdas
-     */
-    default Set<DeleteEvent> getEvents() {
-        return EnumSet.allOf(DeleteEvent.class);
-    }
 
     void handle(DeletePayload payload);
 }

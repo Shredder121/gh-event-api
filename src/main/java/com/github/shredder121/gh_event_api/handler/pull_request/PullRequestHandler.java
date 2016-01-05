@@ -15,9 +15,6 @@
  */
 package com.github.shredder121.gh_event_api.handler.pull_request;
 
-import java.util.EnumSet;
-import java.util.Set;
-
 /**
  * The handler interface for receiving {@code pull_request} events.
  *
@@ -25,14 +22,6 @@ import java.util.Set;
  */
 @FunctionalInterface
 public interface PullRequestHandler {
-
-    /**
-     * 
-     * @return the events you want to subscribe to, defaults to all to make the handler target for lambdas
-     */
-    default Set<PullRequestEvent> getEvents() {
-        return EnumSet.allOf(PullRequestEvent.class);
-    }
 
     void handle(PullRequestPayload payload);
 }

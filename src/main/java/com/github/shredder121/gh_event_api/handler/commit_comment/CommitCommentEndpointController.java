@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.controller.create;
+package com.github.shredder121.gh_event_api.handler.commit_comment;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -32,34 +32,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.create.CreateHandler;
-import com.github.shredder121.gh_event_api.handler.create.CreatePayload;
+import com.github.shredder121.gh_event_api.handler.commit_comment.CommitCommentHandler;
+import com.github.shredder121.gh_event_api.handler.commit_comment.CommitCommentPayload;
 import com.google.common.collect.ImmutableSet;
 
 @RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=create")
-@ConditionalOnBean(CreateHandler.class)
-public class CreateEndpointController {
+@RequestMapping(method = POST, headers = "X-GitHub-Event=commit_comment")
+@ConditionalOnBean(CommitCommentHandler.class)
+public class CommitCommentEndpointController {
 
-    private static final Logger logger = LoggerFactory.getLogger(CreateEndpointController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CommitCommentEndpointController.class);
 
     private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Collection<? extends CreateHandler> handlers;
+    private final Collection<? extends CommitCommentHandler> handlers;
 
     @Autowired
-    public CreateEndpointController(Collection<? extends CreateHandler> beans) {
+    public CommitCommentEndpointController(Collection<? extends CommitCommentHandler> beans) {
         this.handlers = ImmutableSet.copyOf(beans);
     }
 
     @RequestMapping
-    public void handle(@Valid @RequestBody CreatePayload payload) {
+    public void handle(@Valid @RequestBody CommitCommentPayload payload) {
         logger.debug("{} handlers", handlers.size());
-        for (CreateHandler handler : handlers) {
+        for (CommitCommentHandler handler : handlers) {
             executor.execute(runnableHandler(handler, payload));
         }
     }
 
-    private Runnable runnableHandler(CreateHandler handler, CreatePayload createPayload) {
-        return () -> handler.handle(createPayload);
+    private Runnable runnableHandler(CommitCommentHandler handler, CommitCommentPayload payload) {
+        return () -> handler.handle(payload);
     }
 }

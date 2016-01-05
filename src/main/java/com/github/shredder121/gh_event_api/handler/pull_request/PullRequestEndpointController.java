@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.controller.fork;
+package com.github.shredder121.gh_event_api.handler.pull_request;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -32,34 +32,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.fork.ForkHandler;
-import com.github.shredder121.gh_event_api.handler.fork.ForkPayload;
+import com.github.shredder121.gh_event_api.handler.pull_request.PullRequestHandler;
+import com.github.shredder121.gh_event_api.handler.pull_request.PullRequestPayload;
 import com.google.common.collect.ImmutableSet;
 
 @RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=fork")
-@ConditionalOnBean(ForkHandler.class)
-public class ForkEndpointController {
+@RequestMapping(method = POST, headers = "X-GitHub-Event=pull_request")
+@ConditionalOnBean(PullRequestHandler.class)
+public class PullRequestEndpointController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ForkEndpointController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PullRequestEndpointController.class);
 
     private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Collection<? extends ForkHandler> handlers;
+    private final Collection<? extends PullRequestHandler> handlers;
 
     @Autowired
-    public ForkEndpointController(Collection<? extends ForkHandler> beans) {
+    public PullRequestEndpointController(Collection<? extends PullRequestHandler> beans) {
         this.handlers = ImmutableSet.copyOf(beans);
     }
 
     @RequestMapping
-    public void handle(@Valid @RequestBody ForkPayload payload) {
+    public void handle(@Valid @RequestBody PullRequestPayload payload) {
         logger.debug("{} handlers", handlers.size());
-        for (ForkHandler handler : handlers) {
+        for (PullRequestHandler handler : handlers) {
             executor.execute(runnableHandler(handler, payload));
         }
     }
 
-    private Runnable runnableHandler(ForkHandler handler, ForkPayload payload) {
-        return () -> handler.handle(payload);
+    private Runnable runnableHandler(PullRequestHandler handler, PullRequestPayload pullRequestPayload) {
+        return () -> handler.handle(pullRequestPayload);
     }
 }

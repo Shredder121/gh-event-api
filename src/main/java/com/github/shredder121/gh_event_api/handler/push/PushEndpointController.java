@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.controller.commit_comment;
+package com.github.shredder121.gh_event_api.handler.push;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -32,34 +32,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.commit_comment.CommitCommentHandler;
-import com.github.shredder121.gh_event_api.handler.commit_comment.CommitCommentPayload;
+import com.github.shredder121.gh_event_api.handler.push.PushHandler;
+import com.github.shredder121.gh_event_api.handler.push.PushPayload;
 import com.google.common.collect.ImmutableSet;
 
 @RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=commit_comment")
-@ConditionalOnBean(CommitCommentHandler.class)
-public class CommitCommentEndpointController {
+@RequestMapping(method = POST, headers = "X-GitHub-Event=push")
+@ConditionalOnBean(PushHandler.class)
+public class PushEndpointController {
 
-    private static final Logger logger = LoggerFactory.getLogger(CommitCommentEndpointController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PushEndpointController.class);
 
     private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Collection<? extends CommitCommentHandler> handlers;
+    private final Collection<? extends PushHandler> handlers;
 
     @Autowired
-    public CommitCommentEndpointController(Collection<? extends CommitCommentHandler> beans) {
+    public PushEndpointController(Collection<? extends PushHandler> beans) {
         this.handlers = ImmutableSet.copyOf(beans);
     }
 
     @RequestMapping
-    public void handle(@Valid @RequestBody CommitCommentPayload payload) {
+    public void handle(@Valid @RequestBody PushPayload payload) {
         logger.debug("{} handlers", handlers.size());
-        for (CommitCommentHandler handler : handlers) {
+        for (PushHandler handler : handlers) {
             executor.execute(runnableHandler(handler, payload));
         }
     }
 
-    private Runnable runnableHandler(CommitCommentHandler handler, CommitCommentPayload payload) {
+    private Runnable runnableHandler(PushHandler handler, PushPayload payload) {
         return () -> handler.handle(payload);
     }
 }

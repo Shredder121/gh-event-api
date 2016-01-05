@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.controller.push;
+package com.github.shredder121.gh_event_api.handler.fork;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -32,34 +32,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.shredder121.gh_event_api.handler.push.PushHandler;
-import com.github.shredder121.gh_event_api.handler.push.PushPayload;
+import com.github.shredder121.gh_event_api.handler.fork.ForkHandler;
+import com.github.shredder121.gh_event_api.handler.fork.ForkPayload;
 import com.google.common.collect.ImmutableSet;
 
 @RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=push")
-@ConditionalOnBean(PushHandler.class)
-public class PushEndpointController {
+@RequestMapping(method = POST, headers = "X-GitHub-Event=fork")
+@ConditionalOnBean(ForkHandler.class)
+public class ForkEndpointController {
 
-    private static final Logger logger = LoggerFactory.getLogger(PushEndpointController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ForkEndpointController.class);
 
     private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Collection<? extends PushHandler> handlers;
+    private final Collection<? extends ForkHandler> handlers;
 
     @Autowired
-    public PushEndpointController(Collection<? extends PushHandler> beans) {
+    public ForkEndpointController(Collection<? extends ForkHandler> beans) {
         this.handlers = ImmutableSet.copyOf(beans);
     }
 
     @RequestMapping
-    public void handle(@Valid @RequestBody PushPayload payload) {
+    public void handle(@Valid @RequestBody ForkPayload payload) {
         logger.debug("{} handlers", handlers.size());
-        for (PushHandler handler : handlers) {
+        for (ForkHandler handler : handlers) {
             executor.execute(runnableHandler(handler, payload));
         }
     }
 
-    private Runnable runnableHandler(PushHandler handler, PushPayload payload) {
+    private Runnable runnableHandler(ForkHandler handler, ForkPayload payload) {
         return () -> handler.handle(payload);
     }
 }

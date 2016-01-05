@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.controller.ping;
+package com.github.shredder121.gh_event_api.handler.ping;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 

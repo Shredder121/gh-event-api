@@ -205,10 +205,6 @@
                             </group>
                             <group>
                                 <title>API Endpoints</title>
-                                <packages>com.github.shredder121.gh_event_api.controller*</packages>
-                            </group>
-                            <group>
-                                <title>Handlers</title>
                                 <packages>com.github.shredder121.gh_event_api.handler*</packages>
                             </group>
                             <group>

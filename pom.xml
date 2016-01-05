@@ -171,16 +171,15 @@
                             <goals>
                                 <goal>delombok</goal>
                             </goals>
-                            <configuration>
-                                <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
-                                <addOutputDirectory>false</addOutputDirectory>
-                                <formatPreferences>
-                                    <javaLangAsFQN>skip</javaLangAsFQN>
-                                </formatPreferences>
-                            </configuration>
                         </execution>
                     </executions>
-
+                    <configuration>
+                        <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+                        <addOutputDirectory>false</addOutputDirectory>
+                        <formatPreferences>
+                            <javaLangAsFQN>skip</javaLangAsFQN>
+                        </formatPreferences>
+                    </configuration>
                     <dependencies>
                         <dependency>
                             <groupId>sun.jdk</groupId>

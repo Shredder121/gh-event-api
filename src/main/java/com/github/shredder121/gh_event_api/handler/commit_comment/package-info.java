@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 /**
- * The {@code push} handler interface that can be implemented.
+ * The {@code commit_comment} handler interface that can be implemented.
  *
- * @see <a href="https://developer.github.com/v3/activity/events/types/#pushevent">The push event on GitHub</a>
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#commitcommentevent">The commit_comment event on GitHub</a>
  */
-package com.github.shredder121.gh_event_api.handler.push;
+package com.github.shredder121.gh_event_api.handler.commit_comment;

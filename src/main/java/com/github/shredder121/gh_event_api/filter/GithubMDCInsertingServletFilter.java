@@ -59,7 +59,7 @@ public class GithubMDCInsertingServletFilter extends MDCInsertingServletFilter {
         return closer;
     }
 
-    private Closeable closeableHeader(HttpServletRequest request, String headerName) {
+    private static Closeable closeableHeader(HttpServletRequest request, String headerName) {
         return MDC.putCloseable(headerName, request.getHeader(headerName));
     }
 }

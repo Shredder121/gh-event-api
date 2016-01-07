@@ -15,6 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A branch object that is included in StatusPayloads.
  *
@@ -32,4 +35,13 @@ public class StatusBranch {
      * The head commit of the branch.
      */
     StatusCommit commit;
+
+    @JsonCreator
+    StatusBranch(
+            @JsonProperty("name") String name,
+            @JsonProperty("commit") StatusCommit commit) {
+
+        this.name = name;
+        this.commit = commit;
+    }
 }

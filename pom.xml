@@ -144,7 +144,6 @@
                 <configuration>
                     <excludes>
                         <mainClass>com/github/shredder121/gh_event_api/GHEventApiServer.class</mainClass>
-                        <mixins>com/github/shredder121/gh_event_api/model/json/*</mixins>
                         <innerClass>com/github/shredder121/gh_event_api/filter/GithubMACChecker$*</innerClass>
 
                         <!-- Only an informational filter -->
@@ -205,10 +204,6 @@
                             </group>
                             <group>
                                 <title>API Endpoints</title>
-                                <packages>com.github.shredder121.gh_event_api.controller*</packages>
-                            </group>
-                            <group>
-                                <title>Handlers</title>
                                 <packages>com.github.shredder121.gh_event_api.handler*</packages>
                             </group>
                             <group>

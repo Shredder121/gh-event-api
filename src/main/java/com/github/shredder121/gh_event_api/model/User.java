@@ -15,6 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A GitHub User object.
  *
@@ -27,4 +30,11 @@ public class User {
      * The username of this user.
      */
     String login;
+
+    @JsonCreator
+    User(
+            @JsonProperty("login") String login) {
+
+        this.login = login;
+    }
 }

@@ -16,4 +16,4 @@
 /**
  * The endpoint for the {@code ping} event.
  */
-package com.github.shredder121.gh_event_api.controller.ping;
+package com.github.shredder121.gh_event_api.handler.ping;

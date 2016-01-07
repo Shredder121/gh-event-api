@@ -15,6 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A commit object that is used in the status event.
  *
@@ -42,4 +45,17 @@ public class StatusCommit {
      * The underlying commit details.
      */
     GitCommit commit;
+
+    @JsonCreator
+    StatusCommit(
+            @JsonProperty("sha") String sha,
+            @JsonProperty("url") String url,
+            @JsonProperty("html_url") String htmlUrl,
+            @JsonProperty("commit") GitCommit commit) {
+
+        this.sha = sha;
+        this.url = url;
+        this.htmlUrl = htmlUrl;
+        this.commit = commit;
+    }
 }

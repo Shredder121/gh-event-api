@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 /**
- * The endpoint for the {@code status} event.
+ * The {@code commit_comment} handler interface that can be implemented.
+ *
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#commitcommentevent">The commit_comment event on GitHub</a>
  */
-package com.github.shredder121.gh_event_api.controller.status;
+package com.github.shredder121.gh_event_api.handler.commit_comment;

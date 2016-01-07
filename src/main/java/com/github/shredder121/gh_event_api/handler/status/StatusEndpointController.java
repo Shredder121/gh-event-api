@@ -13,22 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.controller.ping;
+package com.github.shredder121.gh_event_api.handler.status;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import javax.validation.Valid;
+import java.util.Collection;
 
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=ping")
-public class PingEndpointController {
+import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 
-    @RequestMapping
-    public String ping(@Valid @RequestBody PingPayload payload) {
-        return payload.getZen();
+@RestController
+@RequestMapping(method = POST, headers = "X-GitHub-Event=status")
+@ConditionalOnBean(StatusHandler.class)
+public class StatusEndpointController extends AbstractEndpointController<StatusHandler, StatusPayload> {
+
+    @Autowired
+    public StatusEndpointController(Collection<? extends StatusHandler> beans) {
+        super(beans);
+    }
+
+    @Override
+    protected Runnable runnableHandler(StatusHandler handler, StatusPayload payload) {
+        return () -> handler.handle(payload);
     }
 }

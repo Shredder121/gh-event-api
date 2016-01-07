@@ -17,6 +17,9 @@ package com.github.shredder121.gh_event_api.model;
 
 import java.time.ZonedDateTime;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A GitCommit is an underlying commit object, with git metadata.
  *
@@ -40,6 +43,17 @@ public class GitCommit {
      */
     String message;
 
+    @JsonCreator
+    GitCommit(
+            @JsonProperty("author") UserData author,
+            @JsonProperty("committer") UserData committer,
+            @JsonProperty("message") String message) {
+
+        this.author = author;
+        this.committer = committer;
+        this.message = message;
+    }
+
     /**
      * Details on author/committer data.
      */
@@ -60,5 +74,16 @@ public class GitCommit {
          * The date of the commit.
          */
         ZonedDateTime date;
+
+        @JsonCreator
+        UserData(
+                @JsonProperty("name") String name,
+                @JsonProperty("email") String email,
+                @JsonProperty("date") ZonedDateTime date) {
+
+            this.name = name;
+            this.email = email;
+            this.date = date;
+        }
     }
 }

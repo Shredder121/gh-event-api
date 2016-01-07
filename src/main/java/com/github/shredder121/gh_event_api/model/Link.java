@@ -15,6 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A link is a piece of metadata that tells where to find more information.
  *
@@ -24,4 +27,11 @@ package com.github.shredder121.gh_event_api.model;
 public class Link {
 
     String href;
+
+    @JsonCreator
+    Link(
+            @JsonProperty("href") String href) {
+
+        this.href = href;
+    }
 }

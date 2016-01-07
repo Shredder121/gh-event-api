@@ -17,6 +17,9 @@ package com.github.shredder121.gh_event_api.model;
 
 import java.time.ZonedDateTime;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A comment on a part of the commit diff.
  *
@@ -69,4 +72,27 @@ public class CommitComment {
      * The time the comment was last modified.
      */
     ZonedDateTime updatedAt;
+
+    @JsonCreator
+    CommitComment(
+            @JsonProperty("id") Integer id,
+            @JsonProperty("position") Integer position,
+            @JsonProperty("path") String path,
+            @JsonProperty("commit_id") String commitId,
+            @JsonProperty("body") String body,
+            @JsonProperty("url") String url,
+            @JsonProperty("html_url") String htmlUrl,
+            @JsonProperty("created_at") ZonedDateTime createdAt,
+            @JsonProperty("updated_at") ZonedDateTime updatedAt) {
+
+        this.id = id;
+        this.position = position;
+        this.path = path;
+        this.commitId = commitId;
+        this.body = body;
+        this.url = url;
+        this.htmlUrl = htmlUrl;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

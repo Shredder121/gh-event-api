@@ -13,28 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.model.json;
+package com.github.shredder121.gh_event_api.handler.ping;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.shredder121.gh_event_api.model.Link;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-/**
- * Mirror object for {@link Link}.
- *
- * @author Shredder121
- */
-abstract class LinkMixin {
+import javax.validation.Valid;
 
-    /**
-     * {@link #LinkMixin(java.lang.String)}
-     * is a mirrored constructor for
-     * {@link Link#Link(java.lang.String)}.
-     *
-     * @param href the href to inject
-     */
-    @JsonCreator
-    LinkMixin(
-            @JsonProperty("href") String href) {
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(method = POST, headers = "X-GitHub-Event=ping")
+public class PingEndpointController {
+
+    @RequestMapping
+    public String ping(@Valid @RequestBody PingPayload payload) {
+        return payload.getZen();
     }
 }

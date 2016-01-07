@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * Jackson mirrors of the model classes.
+ * Jackson configuration.
  */
 package com.github.shredder121.gh_event_api.model.json;

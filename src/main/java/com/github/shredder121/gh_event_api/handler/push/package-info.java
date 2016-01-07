@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * The {code push} handler interface that can be implemented.
+ * The {@code push} handler interface that can be implemented.
  *
  * @see <a href="https://developer.github.com/v3/activity/events/types/#pushevent">The push event on GitHub</a>
  */

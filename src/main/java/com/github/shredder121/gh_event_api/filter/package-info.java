@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * The endpoint for the {@code push} event.
+ * Various filters for processing incoming requests.
  */
-package com.github.shredder121.gh_event_api.controller.push;
+package com.github.shredder121.gh_event_api.filter;

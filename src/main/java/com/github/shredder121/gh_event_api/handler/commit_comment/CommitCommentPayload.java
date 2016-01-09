@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.commit_comment;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.shredder121.gh_event_api.model.CommitComment;
@@ -32,22 +34,22 @@ public class CommitCommentPayload {
     /**
      * The action that took place.
      */
-    String action;
+    @NotNull String action;
 
     /**
      * The comment itself.
      */
-    CommitComment comment;
+    @NotNull CommitComment comment;
 
     /**
      * The Repository the commit belongs to.
      */
-    Repository repository;
+    @NotNull Repository repository;
 
     /**
      * The actor commenting on the commit.
      */
-    User sender;
+    @NotNull User sender;
 
     @JsonCreator
     CommitCommentPayload(

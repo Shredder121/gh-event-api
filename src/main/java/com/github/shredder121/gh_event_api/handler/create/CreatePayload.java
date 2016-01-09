@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.create;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -30,17 +32,17 @@ public class CreatePayload {
      * The type of the object being created.
      * Can be one of 'repository', 'branch' or 'tag'.
      */
-    String refType;
+    @NotNull String refType;
 
     /**
      * The git ref (or null if only a repository was created).
      */
-    String ref;
+    @NotNull String ref;
 
     /**
      * The name of the repository's default branch.
      */
-    String masterBranch;
+    @NotNull String masterBranch;
 
     /**
      * The repository's current description.

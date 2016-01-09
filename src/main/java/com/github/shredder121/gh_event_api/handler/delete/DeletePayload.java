@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.delete;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -30,12 +32,12 @@ public class DeletePayload {
      * The type of the object being deleted.
      * Can be 'branch' or 'tag'.
      */
-    String refType;
+    @NotNull String refType;
 
     /**
      * The full git ref.
      */
-    String ref;
+    @NotNull String ref;
 
     @JsonCreator
     DeletePayload(

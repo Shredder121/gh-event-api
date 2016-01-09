@@ -18,6 +18,8 @@ package com.github.shredder121.gh_event_api.handler;
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
 
+import java.util.Map;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -29,6 +31,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 import com.github.shredder121.gh_event_api.handler.create.CreateHandler;
+import com.google.common.collect.ImmutableMap;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebIntegrationTest({"secret=secret", "spring.main.show-banner=false"})
@@ -41,7 +44,7 @@ public class HmacBehaviorTest {
         given().headers(
                 "X-GitHub-Event", "create",
                 "X-Hub-Signature", "bogus")
-        .and().body("{}").with().contentType(JSON)
+        .and().body(getBody()).with().contentType(JSON)
         .expect().statusCode(HttpStatus.FORBIDDEN.value())
         .when().post();
     }
@@ -49,7 +52,7 @@ public class HmacBehaviorTest {
     @Test
     public void testHmacMissing() {
         given().headers("X-GitHub-Event", "create")
-        .and().body("{}").with().contentType(JSON)
+        .and().body(getBody()).with().contentType(JSON)
         .expect().statusCode(HttpStatus.NOT_FOUND.value())
         .when().post();
     }
@@ -58,10 +61,18 @@ public class HmacBehaviorTest {
     public void testHmacOkay() {
         given().headers(
                 "X-GitHub-Event", "create",
-                "X-Hub-Signature", "sha1=5d61605c3feea9799210ddcb71307d4ba264225f")
-        .and().body("{}").with().contentType(JSON)
+                "X-Hub-Signature", "sha1=95932ea97b74d2dac6d67ae73bf1af6f43ce6db3")
+        .and().body(getBody()).with().contentType(JSON)
         .expect().statusCode(HttpStatus.OK.value())
         .when().post();
+    }
+
+    private static Map<String, Object> getBody() {
+        return ImmutableMap.of(
+                "ref_type", "tag",
+                "ref", "0.1",
+                "master_branch", "master",
+                "description", "");
     }
 
     @Bean

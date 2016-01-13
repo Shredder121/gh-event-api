@@ -15,12 +15,11 @@
  */
 package com.github.shredder121.gh_event_api.handler.pull_request_review_comment;
 
-import java.util.Map;
-
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.shredder121.gh_event_api.model.Comment;
 import com.github.shredder121.gh_event_api.model.PullRequest;
 
 /**
@@ -45,13 +44,13 @@ public class PullRequestReviewCommentPayload {
     /**
      * the comment itself.
      */
-    @NotNull Map<String, Object> comment;
+    @NotNull Comment comment;
 
     @JsonCreator
     PullRequestReviewCommentPayload(
             @JsonProperty("action") String action,
             @JsonProperty("pull_request") PullRequest pullRequest,
-            @JsonProperty("comment") Map<String, Object> comment) {
+            @JsonProperty("comment") Comment comment) {
 
         this.action = action;
         this.pullRequest = pullRequest;

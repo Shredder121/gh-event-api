@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Shredder121
  */
 @lombok.Value
-public class CommitComment {
+public class Comment {
 
     /**
      * The id of the comment, for GitHub bookkeeping.
@@ -74,7 +74,7 @@ public class CommitComment {
     ZonedDateTime updatedAt;
 
     @JsonCreator
-    CommitComment(
+    Comment(
             @JsonProperty("id") Integer id,
             @JsonProperty("position") Integer position,
             @JsonProperty("path") String path,

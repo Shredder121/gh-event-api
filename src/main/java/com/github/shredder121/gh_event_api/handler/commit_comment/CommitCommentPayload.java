@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.shredder121.gh_event_api.model.CommitComment;
+import com.github.shredder121.gh_event_api.model.Comment;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.User;
 
@@ -39,7 +39,7 @@ public class CommitCommentPayload {
     /**
      * The comment itself.
      */
-    @NotNull CommitComment comment;
+    @NotNull Comment comment;
 
     /**
      * The Repository the commit belongs to.
@@ -54,7 +54,7 @@ public class CommitCommentPayload {
     @JsonCreator
     CommitCommentPayload(
             @JsonProperty("action") String action,
-            @JsonProperty("comment") CommitComment comment,
+            @JsonProperty("comment") Comment comment,
             @JsonProperty("repository") Repository repository,
             @JsonProperty("sender") User sender) {
 

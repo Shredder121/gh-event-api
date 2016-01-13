@@ -20,6 +20,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
+import com.github.shredder121.gh_event_api.model.Comment;
 import com.github.shredder121.gh_event_api.model.PullRequest;
 
 class TestHandler extends AbstractTestHandlerBean implements PullRequestReviewCommentHandler {
@@ -32,8 +33,8 @@ class TestHandler extends AbstractTestHandlerBean implements PullRequestReviewCo
                 property(PullRequest::getTitle, is("Update the README with new information"))
         ));
         errorCollector.checkThat(payload.getComment(), allOf(
-                property(map -> map.get("body"), is("Maybe you should use more emojji on this line.")),
-                property(map -> map.get("path"), is("README.md"))));
+                property(Comment::getBody, is("Maybe you should use more emojji on this line.")),
+                property(Comment::getPath, is("README.md"))));
 
         countDownLatch.countDown();
     }

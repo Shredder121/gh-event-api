@@ -15,5 +15,11 @@
  */
 /**
  * The endpoint for the {@code ping} event.
+ *
+ * <p>
+ * Note that it is not possible to write custom handlers for this event.
+ * </p>
+ *
+ * @see <a href="https://developer.github.com/webhooks/#ping-event">The ping event on GitHub</a>
  */
 package com.github.shredder121.gh_event_api.handler.ping;

@@ -26,6 +26,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 
+/**
+ * Endpoint controller for {@code status} events.
+ *
+ * This controller is bound to {@link StatusHandler}
+ * and will only be enabled when there are any on the component scan path.
+ *
+ * @author Shredder121
+ */
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=status")
 @ConditionalOnBean(StatusHandler.class)

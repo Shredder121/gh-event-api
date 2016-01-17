@@ -29,10 +29,10 @@ import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=delete")
 @ConditionalOnBean(DeleteHandler.class)
-public class DeleteEndpointController extends AbstractEndpointController<DeleteHandler, DeletePayload> {
+class DeleteEndpointController extends AbstractEndpointController<DeleteHandler, DeletePayload> {
 
     @Autowired
-    public DeleteEndpointController(Collection<? extends DeleteHandler> beans) {
+    DeleteEndpointController(Collection<? extends DeleteHandler> beans) {
         super(beans);
     }
 

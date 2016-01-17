@@ -29,7 +29,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=issues")
 @ConditionalOnBean(IssuesHandler.class)
-public class IssuesEndpointController extends AbstractEndpointController<IssuesHandler, IssuesPayload> {
+class IssuesEndpointController extends AbstractEndpointController<IssuesHandler, IssuesPayload> {
 
     @Autowired
     public IssuesEndpointController(Collection<? extends IssuesHandler> beans) {

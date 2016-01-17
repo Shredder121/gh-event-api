@@ -29,10 +29,10 @@ import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=create")
 @ConditionalOnBean(CreateHandler.class)
-public class CreateEndpointController extends AbstractEndpointController<CreateHandler, CreatePayload> {
+class CreateEndpointController extends AbstractEndpointController<CreateHandler, CreatePayload> {
 
     @Autowired
-    public CreateEndpointController(Collection<? extends CreateHandler> beans) {
+    CreateEndpointController(Collection<? extends CreateHandler> beans) {
         super(beans);
     }
 

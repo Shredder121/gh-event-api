@@ -29,10 +29,10 @@ import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=pull_request")
 @ConditionalOnBean(PullRequestHandler.class)
-public class PullRequestEndpointController extends AbstractEndpointController<PullRequestHandler, PullRequestPayload> {
+class PullRequestEndpointController extends AbstractEndpointController<PullRequestHandler, PullRequestPayload> {
 
     @Autowired
-    public PullRequestEndpointController(Collection<? extends PullRequestHandler> beans) {
+    PullRequestEndpointController(Collection<? extends PullRequestHandler> beans) {
         super(beans);
     }
 

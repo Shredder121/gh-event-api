@@ -29,10 +29,10 @@ import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=commit_comment")
 @ConditionalOnBean(CommitCommentHandler.class)
-public class CommitCommentEndpointController extends AbstractEndpointController<CommitCommentHandler, CommitCommentPayload> {
+class CommitCommentEndpointController extends AbstractEndpointController<CommitCommentHandler, CommitCommentPayload> {
 
     @Autowired
-    public CommitCommentEndpointController(Collection<? extends CommitCommentHandler> beans) {
+    CommitCommentEndpointController(Collection<? extends CommitCommentHandler> beans) {
         super(beans);
     }
 

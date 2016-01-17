@@ -29,7 +29,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=fork")
 @ConditionalOnBean(ForkHandler.class)
-public class ForkEndpointController extends AbstractEndpointController<ForkHandler, ForkPayload> {
+class ForkEndpointController extends AbstractEndpointController<ForkHandler, ForkPayload> {
 
     @Autowired
     public ForkEndpointController(Collection<? extends ForkHandler> beans) {

@@ -29,10 +29,10 @@ import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=status")
 @ConditionalOnBean(StatusHandler.class)
-public class StatusEndpointController extends AbstractEndpointController<StatusHandler, StatusPayload> {
+class StatusEndpointController extends AbstractEndpointController<StatusHandler, StatusPayload> {
 
     @Autowired
-    public StatusEndpointController(Collection<? extends StatusHandler> beans) {
+    StatusEndpointController(Collection<? extends StatusHandler> beans) {
         super(beans);
     }
 

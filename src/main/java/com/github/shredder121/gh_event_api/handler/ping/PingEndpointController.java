@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=ping")
-public class PingEndpointController {
+class PingEndpointController {
 
     @RequestMapping
     public String ping(@Valid @RequestBody PingPayload payload) {

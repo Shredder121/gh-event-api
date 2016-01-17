@@ -37,7 +37,7 @@ import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
  * @author Shredder121
  */
 @Component
-public class GithubMDCInsertingServletFilter extends MDCInsertingServletFilter {
+class GithubMDCInsertingServletFilter extends MDCInsertingServletFilter {
 
     private static final String GITHUB_DELIVERY_HEADER = "X-GitHub-Delivery";
     private static final String GITHUB_EVENT_HEADER = "X-GitHub-Event";

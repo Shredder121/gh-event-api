@@ -14,10 +14,10 @@ import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=watch")
 @ConditionalOnBean(WatchHandler.class)
-public class WatchEndpointController extends AbstractEndpointController<WatchHandler, WatchPayload> {
+class WatchEndpointController extends AbstractEndpointController<WatchHandler, WatchPayload> {
 
     @Autowired
-    public WatchEndpointController(Collection<? extends WatchHandler> beans) {
+    WatchEndpointController(Collection<? extends WatchHandler> beans) {
         super(beans);
     }
 

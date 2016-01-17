@@ -29,10 +29,10 @@ import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 @RestController
 @RequestMapping(method = POST, headers = "X-GitHub-Event=push")
 @ConditionalOnBean(PushHandler.class)
-public class PushEndpointController extends AbstractEndpointController<PushHandler, PushPayload> {
+class PushEndpointController extends AbstractEndpointController<PushHandler, PushPayload> {
 
     @Autowired
-    public PushEndpointController(Collection<? extends PushHandler> beans) {
+    PushEndpointController(Collection<? extends PushHandler> beans) {
         super(beans);
     }
 

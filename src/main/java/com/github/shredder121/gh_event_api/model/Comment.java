@@ -39,6 +39,12 @@ public class Comment {
     Integer position;
 
     /**
+     * The original line number of the comment in the diff.
+     * (Only applicable to pull request review comments)
+     */
+    Integer originalPosition;
+
+    /**
      * The relative path of the file that is being commented on.
      */
     String path;
@@ -49,9 +55,21 @@ public class Comment {
     String commitId;
 
     /**
+     * The commit hash the comment was originally for.
+     * (Only applicable to pull request review comments)
+     */
+    String originalCommitId;
+
+    /**
      * The body of the comment.
      */
     String body;
+
+    /**
+     * The part of the diff that was commented on.
+     * (Only applicable to pull request review comments)
+     */
+    String diffHunk;
 
     /**
      * The (API) URL to view this commit comment.
@@ -77,9 +95,12 @@ public class Comment {
     Comment(
             @JsonProperty("id") Integer id,
             @JsonProperty("position") Integer position,
+            @JsonProperty("original_position") Integer originalPosition,
             @JsonProperty("path") String path,
             @JsonProperty("commit_id") String commitId,
+            @JsonProperty("original_commit_id") String originalCommitId,
             @JsonProperty("body") String body,
+            @JsonProperty("diff_hunk") String diffHunk,
             @JsonProperty("url") String url,
             @JsonProperty("html_url") String htmlUrl,
             @JsonProperty("created_at") ZonedDateTime createdAt,
@@ -87,9 +108,12 @@ public class Comment {
 
         this.id = id;
         this.position = position;
+        this.originalPosition = originalPosition;
         this.path = path;
         this.commitId = commitId;
+        this.originalCommitId = originalCommitId;
         this.body = body;
+        this.diffHunk = diffHunk;
         this.url = url;
         this.htmlUrl = htmlUrl;
         this.createdAt = createdAt;

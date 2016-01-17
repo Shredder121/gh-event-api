@@ -24,10 +24,6 @@ import com.github.shredder121.gh_event_api.model.PullRequest;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.User;
 
-import lombok.AccessLevel;
-import lombok.Setter;
-import lombok.experimental.NonFinal;
-
 /**
  * The payload passed when a {@code pull_request} event is received.
  *
@@ -72,8 +68,6 @@ public class PullRequestPayload {
      *
      * @return the label if included, else {@code null}.
      */
-    @NonFinal
-    @Setter(AccessLevel.PRIVATE)
     Label label;
 
     /**
@@ -85,8 +79,6 @@ public class PullRequestPayload {
      *
      * @return the user if included, else {@code null}.
      */
-    @NonFinal
-    @Setter(AccessLevel.PRIVATE)
     User user;
 
     @JsonCreator
@@ -95,12 +87,16 @@ public class PullRequestPayload {
             @JsonProperty("number") Integer number,
             @JsonProperty("pull_request") PullRequest pullRequest,
             @JsonProperty("repository") Repository repository,
-            @JsonProperty("sender") User sender) {
+            @JsonProperty("sender") User sender,
+            @JsonProperty("label") Label label,
+            @JsonProperty("user") User user) {
 
         this.action = action;
         this.number = number;
         this.pullRequest = pullRequest;
         this.repository = repository;
         this.sender = sender;
+        this.label = label;
+        this.user = user;
     }
 }

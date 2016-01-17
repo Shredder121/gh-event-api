@@ -17,7 +17,7 @@ package com.github.shredder121.gh_event_api.model;
 
 import static org.hamcrest.Matchers.is;
 
-public class CommitCommentSerializationTest extends AbstractSerializationTest<CommitComment> {
+public class CommitCommentSerializationTest extends AbstractSerializationTest<Comment> {
 
     private static final String SAMPLE_COMMIT_COMMENT
             = "{\n"
@@ -53,7 +53,7 @@ public class CommitCommentSerializationTest extends AbstractSerializationTest<Co
             + "}";
 
     public CommitCommentSerializationTest() {
-        super(CommitComment.class);
+        super(Comment.class);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class CommitCommentSerializationTest extends AbstractSerializationTest<Co
     }
 
     @Override
-    protected void checkDeserialized(CommitComment comment) {
+    protected void checkDeserialized(Comment comment) {
         errorCollector.checkThat(comment.getBody(), is("This is a really good change! :+1:"));
         errorCollector.checkThat(comment.getCommitId(), is("9049f1265b7d61be4a8904a9a27120d2064dab3b"));
     }

@@ -13,54 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.handler.commit_comment;
+package com.github.shredder121.gh_event_api.handler.pull_request_review_comment;
 
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.shredder121.gh_event_api.model.Comment;
-import com.github.shredder121.gh_event_api.model.Repository;
-import com.github.shredder121.gh_event_api.model.User;
+import com.github.shredder121.gh_event_api.model.PullRequest;
 
 /**
- * The payload passed when a {@code commit_comment} event is received.
+ * The payload passed when a {@code pull_request_review_comment} event is received.
  *
  * @author Shredder121
  */
 @lombok.Value
-public class CommitCommentPayload {
+public class PullRequestReviewCommentPayload {
 
     /**
-     * The action that took place.
+     * The action that was performed on the comment.
+     * Currently, can only be "created".
      */
     @NotNull String action;
 
     /**
-     * The comment itself.
+     * The pull request the comment belongs to.
+     */
+    @NotNull PullRequest pullRequest;
+
+    /**
+     * the comment itself.
      */
     @NotNull Comment comment;
 
-    /**
-     * The Repository the commit belongs to.
-     */
-    @NotNull Repository repository;
-
-    /**
-     * The actor commenting on the commit.
-     */
-    @NotNull User sender;
-
     @JsonCreator
-    CommitCommentPayload(
+    PullRequestReviewCommentPayload(
             @JsonProperty("action") String action,
-            @JsonProperty("comment") Comment comment,
-            @JsonProperty("repository") Repository repository,
-            @JsonProperty("sender") User sender) {
+            @JsonProperty("pull_request") PullRequest pullRequest,
+            @JsonProperty("comment") Comment comment) {
 
         this.action = action;
+        this.pullRequest = pullRequest;
         this.comment = comment;
-        this.repository = repository;
-        this.sender = sender;
     }
 }

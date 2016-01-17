@@ -23,7 +23,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
-import com.github.shredder121.gh_event_api.model.CommitComment;
+import com.github.shredder121.gh_event_api.model.Comment;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.User;
 
@@ -33,7 +33,7 @@ class TestHandler extends AbstractTestHandlerBean implements CommitCommentHandle
     public void handle(CommitCommentPayload payload) {
         errorCollector.checkThat(payload.getAction(), is("created"));
 
-        CommitComment comment = payload.getComment();
+        Comment comment = payload.getComment();
         errorCollector.checkThat(comment.getId(), is(11056394));
         errorCollector.checkThat("This is a comment on the overall commit", comment.getPath(), is(nullValue()));
         errorCollector.checkThat("This is a comment on the overall commit", comment.getPosition(), is(nullValue()));

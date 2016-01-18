@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 import java.util.Collection;
 import java.util.concurrent.ForkJoinPool;
 
@@ -47,7 +49,17 @@ public abstract class AbstractEndpointController<H, P> {
         this.handlers = ImmutableSet.copyOf(beans);
     }
 
-    @RequestMapping
+    /**
+     * Handle the incoming payload.
+     *
+     * <p>
+     * Upon receipt of a payload, the specialized payload
+     * {@link com.github.shredder121.gh_event_api.handler handlers} are called that are registered for that particular event.
+     * </p>
+     *
+     * @param payload the payload received
+     */
+    @RequestMapping(method = POST)
     public void handle(@Valid @RequestBody P payload) {
         logger.debug("{} handlers", handlers.size());
         for (H handler : handlers) {
@@ -55,5 +67,12 @@ public abstract class AbstractEndpointController<H, P> {
         }
     }
 
+    /**
+     * Adapt a [handler + payload] combination to a {@code Runnable}.
+     *
+     * @param handler the handler that handles the payload
+     * @param payload the payload
+     * @return the {@code Runnable} adapter for the handler
+     */
     protected abstract Runnable runnableHandler(H handler, P payload);
 }

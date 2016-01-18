@@ -15,8 +15,6 @@
  */
 package com.github.shredder121.gh_event_api.handler.pull_request;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +24,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 
+/**
+ * Endpoint controller for {@code pull_request} events.
+ *
+ * This controller is bound to {@link PullRequestHandler}
+ * and will only be enabled when there are any on the component scan path.
+ *
+ * @author Shredder121
+ */
 @RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=pull_request")
+@RequestMapping(headers = "X-GitHub-Event=pull_request")
 @ConditionalOnBean(PullRequestHandler.class)
-public class PullRequestEndpointController extends AbstractEndpointController<PullRequestHandler, PullRequestPayload> {
+class PullRequestEndpointController extends AbstractEndpointController<PullRequestHandler, PullRequestPayload> {
 
     @Autowired
-    public PullRequestEndpointController(Collection<? extends PullRequestHandler> beans) {
+    PullRequestEndpointController(Collection<? extends PullRequestHandler> beans) {
         super(beans);
     }
 

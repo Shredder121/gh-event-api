@@ -23,11 +23,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * In order to confirm correct configuration gh-event-api
+ * echoes GitHub's {@code ping} event back.
+ *
+ * @author Shredder121
+ */
 @RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=ping")
-public class PingEndpointController {
+@RequestMapping(headers = "X-GitHub-Event=ping")
+class PingEndpointController {
 
-    @RequestMapping
+    /**
+     * Handle the {@link PingPayload} by echoing the {@link PingPayload#getZen()}.
+     *
+     * @param payload the incoming payload
+     * @return the zen
+     */
+    @RequestMapping(method = POST)
     public String ping(@Valid @RequestBody PingPayload payload) {
         return payload.getZen();
     }

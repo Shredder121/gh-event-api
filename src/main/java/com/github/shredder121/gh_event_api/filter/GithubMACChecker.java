@@ -55,7 +55,7 @@ import ch.qos.logback.core.encoder.ByteArrayUtil;
  * @author Shredder121
  */
 @Component
-public class GithubMACChecker extends OncePerRequestFilter {
+class GithubMACChecker extends OncePerRequestFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(GithubMACChecker.class);
 

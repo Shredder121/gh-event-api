@@ -15,8 +15,6 @@
  */
 package com.github.shredder121.gh_event_api.handler.fork;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +24,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 
+/**
+ * Endpoint controller for {@code fork} events.
+ *
+ * This controller is bound to {@link ForkHandler}
+ * and will only be enabled when there are any on the component scan path.
+ *
+ * @author Shredder121
+ */
 @RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=fork")
+@RequestMapping(headers = "X-GitHub-Event=fork")
 @ConditionalOnBean(ForkHandler.class)
-public class ForkEndpointController extends AbstractEndpointController<ForkHandler, ForkPayload> {
+class ForkEndpointController extends AbstractEndpointController<ForkHandler, ForkPayload> {
 
     @Autowired
     public ForkEndpointController(Collection<? extends ForkHandler> beans) {

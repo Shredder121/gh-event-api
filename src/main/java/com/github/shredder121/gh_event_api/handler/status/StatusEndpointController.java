@@ -15,8 +15,6 @@
  */
 package com.github.shredder121.gh_event_api.handler.status;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +24,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 
+/**
+ * Endpoint controller for {@code status} events.
+ *
+ * This controller is bound to {@link StatusHandler}
+ * and will only be enabled when there are any on the component scan path.
+ *
+ * @author Shredder121
+ */
 @RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=status")
+@RequestMapping(headers = "X-GitHub-Event=status")
 @ConditionalOnBean(StatusHandler.class)
-public class StatusEndpointController extends AbstractEndpointController<StatusHandler, StatusPayload> {
+class StatusEndpointController extends AbstractEndpointController<StatusHandler, StatusPayload> {
 
     @Autowired
-    public StatusEndpointController(Collection<? extends StatusHandler> beans) {
+    StatusEndpointController(Collection<? extends StatusHandler> beans) {
         super(beans);
     }
 

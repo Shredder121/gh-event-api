@@ -15,8 +15,6 @@
  */
 package com.github.shredder121.gh_event_api.handler.issues;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +24,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 
+/**
+ * Endpoint controller for {@code issues} events.
+ *
+ * This controller is bound to {@link IssuesHandler}
+ * and will only be enabled when there are any on the component scan path.
+ *
+ * @author Shredder121
+ */
 @RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=issues")
+@RequestMapping(headers = "X-GitHub-Event=issues")
 @ConditionalOnBean(IssuesHandler.class)
-public class IssuesEndpointController extends AbstractEndpointController<IssuesHandler, IssuesPayload> {
+class IssuesEndpointController extends AbstractEndpointController<IssuesHandler, IssuesPayload> {
 
     @Autowired
     public IssuesEndpointController(Collection<? extends IssuesHandler> beans) {

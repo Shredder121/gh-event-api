@@ -15,8 +15,6 @@
  */
 package com.github.shredder121.gh_event_api.handler.create;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +24,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 
+/**
+ * Endpoint controller for {@code create} events.
+ *
+ * This controller is bound to {@link CreateHandler}
+ * and will only be enabled when there are any on the component scan path.
+ *
+ * @author Shredder121
+ */
 @RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=create")
+@RequestMapping(headers = "X-GitHub-Event=create")
 @ConditionalOnBean(CreateHandler.class)
-public class CreateEndpointController extends AbstractEndpointController<CreateHandler, CreatePayload> {
+class CreateEndpointController extends AbstractEndpointController<CreateHandler, CreatePayload> {
 
     @Autowired
-    public CreateEndpointController(Collection<? extends CreateHandler> beans) {
+    CreateEndpointController(Collection<? extends CreateHandler> beans) {
         super(beans);
     }
 

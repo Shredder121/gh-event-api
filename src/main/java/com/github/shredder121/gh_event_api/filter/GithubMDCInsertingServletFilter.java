@@ -53,7 +53,7 @@ class GithubMDCInsertingServletFilter extends MDCInsertingServletFilter {
         }
     }
 
-    private Closeable customHeaders(Closer closer, HttpServletRequest request) {
+    private static Closeable customHeaders(Closer closer, HttpServletRequest request) {
         closer.register(closeableHeader(request, GITHUB_DELIVERY_HEADER));
         closer.register(closeableHeader(request, GITHUB_EVENT_HEADER));
         return closer;

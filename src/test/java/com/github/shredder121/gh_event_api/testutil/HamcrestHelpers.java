@@ -28,6 +28,9 @@ import org.hamcrest.TypeSafeMatcher;
  */
 public class HamcrestHelpers {
 
+    private HamcrestHelpers() {
+    }
+
     /**
      * Before matching via hamcrest, select a variable with a lambda expression.
      *

@@ -15,8 +15,6 @@
  */
 package com.github.shredder121.gh_event_api.handler.pull_request_review_comment;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +25,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 
 /**
- * Endpoint for the {code pull_request_review_comment} event.
+ * Endpoint controller for {@code pull_request_review_comment} events.
+ *
+ * This controller is bound to {@link PullRequestReviewCommentHandler}
+ * and will only be enabled when there are any on the component scan path.
  *
  * @author Shredder121
  */
 @RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=pull_request_review_comment")
+@RequestMapping(headers = "X-GitHub-Event=pull_request_review_comment")
 @ConditionalOnBean(PullRequestReviewCommentHandler.class)
-public class PullRequestReviewCommentEndpointController extends AbstractEndpointController<PullRequestReviewCommentHandler, PullRequestReviewCommentPayload> {
+class PullRequestReviewCommentEndpointController extends AbstractEndpointController<PullRequestReviewCommentHandler, PullRequestReviewCommentPayload> {
 
     @Autowired
-    public PullRequestReviewCommentEndpointController(Collection<? extends PullRequestReviewCommentHandler> beans) {
+    PullRequestReviewCommentEndpointController(Collection<? extends PullRequestReviewCommentHandler> beans) {
         super(beans);
     }
 

@@ -15,8 +15,6 @@
  */
 package com.github.shredder121.gh_event_api.handler.issues;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +33,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
  * @author Shredder121
  */
 @RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=issues")
+@RequestMapping(headers = "X-GitHub-Event=issues")
 @ConditionalOnBean(IssuesHandler.class)
 class IssuesEndpointController extends AbstractEndpointController<IssuesHandler, IssuesPayload> {
 

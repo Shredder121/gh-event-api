@@ -15,8 +15,6 @@
  */
 package com.github.shredder121.gh_event_api.handler.create;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +33,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
  * @author Shredder121
  */
 @RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=create")
+@RequestMapping(headers = "X-GitHub-Event=create")
 @ConditionalOnBean(CreateHandler.class)
 class CreateEndpointController extends AbstractEndpointController<CreateHandler, CreatePayload> {
 

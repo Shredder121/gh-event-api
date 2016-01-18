@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 import java.util.Collection;
 import java.util.concurrent.ForkJoinPool;
 
@@ -57,7 +59,7 @@ public abstract class AbstractEndpointController<H, P> {
      *
      * @param payload the payload received
      */
-    @RequestMapping
+    @RequestMapping(method = POST)
     public void handle(@Valid @RequestBody P payload) {
         logger.debug("{} handlers", handlers.size());
         for (H handler : handlers) {

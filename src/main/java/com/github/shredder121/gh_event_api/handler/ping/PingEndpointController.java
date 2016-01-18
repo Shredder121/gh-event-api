@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Shredder121
  */
 @RestController
-@RequestMapping(method = POST, headers = "X-GitHub-Event=ping")
+@RequestMapping(headers = "X-GitHub-Event=ping")
 class PingEndpointController {
 
     /**
@@ -39,7 +39,7 @@ class PingEndpointController {
      * @param payload the incoming payload
      * @return the zen
      */
-    @RequestMapping
+    @RequestMapping(method = POST)
     public String ping(@Valid @RequestBody PingPayload payload) {
         return payload.getZen();
     }

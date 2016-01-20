@@ -16,6 +16,7 @@
 package com.github.shredder121.gh_event_api.handler.push;
 
 import static com.google.common.collect.Iterables.getOnlyElement;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import java.util.Collection;
@@ -28,12 +29,22 @@ class TestHandler extends AbstractTestHandlerBean implements PushHandler {
     @Override
     public void handle(PushPayload payload) {
         errorCollector.checkThat(payload.getRef(), is("refs/heads/changes"));
+
         errorCollector.checkThat(payload.getBefore(), is("9049f1265b7d61be4a8904a9a27120d2064dab3b"));
+
         errorCollector.checkThat(payload.getAfter(), is("0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c"));
+
+        errorCollector.checkThat(payload.getCreated(), is(false));
+
+        errorCollector.checkThat(payload.getDeleted(), is(false));
+
+        errorCollector.checkThat(payload.getForced(), is(false));
 
         Collection<PushCommit> commits = payload.getCommits();
         PushCommit commit = getOnlyElement(commits);
         errorCollector.checkThat(commit.getMessage(), is("Update README.md"));
+
+        errorCollector.checkThat(payload.getHeadCommit(), is(equalTo(commit)));
 
         countDownLatch.countDown();
     }

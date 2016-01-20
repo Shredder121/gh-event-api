@@ -18,6 +18,8 @@ public class TestHandler extends AbstractTestHandlerBean implements WatchHandler
                 property(Repository::getFullName, is("baxterthehacker/public-repo"))
         ));
 
+        errorCollector.checkThat(payload.getSender().getLogin(), is("baxterthehacker"));
+
         countDownLatch.countDown();
     }
 }

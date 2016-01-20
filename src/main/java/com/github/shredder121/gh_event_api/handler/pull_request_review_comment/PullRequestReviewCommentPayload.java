@@ -21,6 +21,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.shredder121.gh_event_api.model.Comment;
 import com.github.shredder121.gh_event_api.model.PullRequest;
+import com.github.shredder121.gh_event_api.model.Repository;
+import com.github.shredder121.gh_event_api.model.User;
 
 /**
  * The payload passed when a {@code pull_request_review_comment} event is received.
@@ -46,14 +48,28 @@ public class PullRequestReviewCommentPayload {
      */
     @NotNull Comment comment;
 
+    /**
+     * The repository of the pull request being commented on.
+     */
+    @NotNull Repository repository;
+
+    /**
+     * The user that invoked the action.
+     */
+    @NotNull User sender;
+
     @JsonCreator
     PullRequestReviewCommentPayload(
             @JsonProperty("action") String action,
             @JsonProperty("pull_request") PullRequest pullRequest,
-            @JsonProperty("comment") Comment comment) {
+            @JsonProperty("comment") Comment comment,
+            @JsonProperty("repository") Repository repository,
+            @JsonProperty("sender") User sender) {
 
         this.action = action;
         this.pullRequest = pullRequest;
         this.comment = comment;
+        this.repository = repository;
+        this.sender = sender;
     }
 }

@@ -31,35 +31,63 @@ import com.google.common.collect.ImmutableList;
 public class PushPayload {
 
     /**
-     * The name of the branch that is pushed
+     * The name of the branch that is pushed.
      */
     @NotNull String ref;
 
     /**
-     * The SHA hash before the push
+     * The SHA hash before the push.
      */
     @NotNull String before;
 
     /**
-     * The SHA hash after the push
+     * The SHA hash after the push.
      */
     @NotNull String after;
 
     /**
-     * The commits being pushed
+     * Whether the push created the {@link #ref ref}.
+     */
+    @NotNull Boolean created;
+
+    /**
+     * Whether the push deleted the {@link #ref ref}.
+     */
+    @NotNull Boolean deleted;
+
+    /**
+     * Whether the push was a force push.
+     */
+    @NotNull Boolean forced;
+
+    /**
+     * The commits being pushed.
      */
     @NotNull ImmutableList<PushCommit> commits;
+
+    /**
+     * The first commit in this push.
+     */
+    PushCommit headCommit;
 
     @JsonCreator
     PushPayload(
             @JsonProperty("ref") String ref,
             @JsonProperty("before") String before,
             @JsonProperty("after") String after,
-            @JsonProperty("commits") ImmutableList<PushCommit> commits) {
+            @JsonProperty("created") Boolean created,
+            @JsonProperty("deleted") Boolean deleted,
+            @JsonProperty("forced") Boolean forced,
+            @JsonProperty("commits") ImmutableList<PushCommit> commits,
+            @JsonProperty("head_commit") PushCommit headCommit) {
 
         this.ref = ref;
         this.before = before;
         this.after = after;
+        this.created = created;
+        this.deleted = deleted;
+        this.forced = forced;
         this.commits = commits;
+        this.headCommit = headCommit;
     }
 }

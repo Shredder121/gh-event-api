@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.shredder121.gh_event_api.model.Repository;
+import com.github.shredder121.gh_event_api.model.User;
 
 /**
  * The payload passed when a {@code watch} event is received.
@@ -40,12 +41,19 @@ public class WatchPayload {
      */
     @NotNull Repository repository;
 
+    /**
+     * The user that forked the repository.
+     */
+    @NotNull User sender;
+
     @JsonCreator
     WatchPayload(
             @JsonProperty("action") String action,
-            @JsonProperty("repository") Repository repository) {
+            @JsonProperty("repository") Repository repository,
+            @JsonProperty("sender") User sender) {
 
         this.action = action;
         this.repository = repository;
+        this.sender = sender;
     }
 }

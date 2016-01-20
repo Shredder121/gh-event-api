@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.shredder121.gh_event_api.model.Issue;
 import com.github.shredder121.gh_event_api.model.Label;
+import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.User;
 
 /**
@@ -42,6 +43,16 @@ public class IssuesPayload {
     @NotNull Issue issue;
 
     /**
+     * The repository the issue belongs to.
+     */
+    @NotNull Repository repository;
+
+    /**
+     * The user that created the issue.
+     */
+    @NotNull User sender;
+
+    /**
      * The optional user who was assigned or unassigned from the issue.
      */
     User assignee;
@@ -55,11 +66,15 @@ public class IssuesPayload {
     IssuesPayload(
             @JsonProperty("action") String action,
             @JsonProperty("issue") Issue issue,
+            @JsonProperty("repository") Repository repository,
+            @JsonProperty("sender") User sender,
             @JsonProperty("assignee") User assignee,
             @JsonProperty("label") Label label) {
 
         this.action = action;
         this.issue = issue;
+        this.repository = repository;
+        this.sender = sender;
         this.assignee = assignee;
         this.label = label;
     }

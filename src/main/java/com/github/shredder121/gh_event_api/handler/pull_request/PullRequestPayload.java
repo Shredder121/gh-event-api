@@ -57,8 +57,6 @@ public class PullRequestPayload {
      */
     @NotNull User sender;
 
-    //contextual properties
-
     /**
      * If the {@link #action action} of the event is
      * {@code labeled}

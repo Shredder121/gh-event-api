@@ -17,8 +17,8 @@ package com.github.shredder121.gh_event_api.handler.pull_request_review_comment;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.Comment;
 import com.github.shredder121.gh_event_api.model.PullRequest;
 import com.github.shredder121.gh_event_api.model.Repository;
@@ -30,6 +30,8 @@ import com.github.shredder121.gh_event_api.model.User;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
 public class PullRequestReviewCommentPayload {
 
     /**
@@ -57,19 +59,4 @@ public class PullRequestReviewCommentPayload {
      * The user that invoked the action.
      */
     @NotNull User sender;
-
-    @JsonCreator
-    PullRequestReviewCommentPayload(
-            @JsonProperty("action") String action,
-            @JsonProperty("pull_request") PullRequest pullRequest,
-            @JsonProperty("comment") Comment comment,
-            @JsonProperty("repository") Repository repository,
-            @JsonProperty("sender") User sender) {
-
-        this.action = action;
-        this.pullRequest = pullRequest;
-        this.comment = comment;
-        this.repository = repository;
-        this.sender = sender;
-    }
 }

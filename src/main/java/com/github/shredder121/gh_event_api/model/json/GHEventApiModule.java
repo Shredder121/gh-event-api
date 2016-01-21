@@ -19,10 +19,10 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
+import com.fasterxml.jackson.module.paranamer.ParanamerModule;
 
 /**
- * The Jackson Module that links the model objects with its
- * {@link com.github.shredder121.gh_event_api.model.json mirror object}.
+ * The Jackson Module that configures the way Jackson should deserialize classes.
  *
  * @author Shredder121
  */
@@ -39,5 +39,7 @@ class GHEventApiModule extends SimpleModule {
         super.setupModule(context);
         // https://github.com/spring-projects/spring-boot/issues/4490
         new GuavaModule().setupModule(context);
+
+        new ParanamerModule().setupModule(context);
     }
 }

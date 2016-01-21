@@ -17,8 +17,8 @@ package com.github.shredder121.gh_event_api.handler.ping;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 /**
  * The payload passed when a {@code ping} event is received.
@@ -28,6 +28,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
 public class PingPayload {
 
     /**
@@ -35,11 +37,4 @@ public class PingPayload {
      * Will be echoed back to GitHub to indicate successful configuration.
      */
     @NotNull String zen;
-
-    @JsonCreator
-    PingPayload(
-            @JsonProperty("zen") String zen) {
-
-        this.zen = zen;
-    }
 }

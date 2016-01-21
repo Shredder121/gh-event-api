@@ -17,8 +17,8 @@ package com.github.shredder121.gh_event_api.handler.push;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.PushCommit;
 import com.google.common.collect.ImmutableList;
 
@@ -28,6 +28,8 @@ import com.google.common.collect.ImmutableList;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
 public class PushPayload {
 
     /**
@@ -69,25 +71,4 @@ public class PushPayload {
      * The first commit in this push.
      */
     PushCommit headCommit;
-
-    @JsonCreator
-    PushPayload(
-            @JsonProperty("ref") String ref,
-            @JsonProperty("before") String before,
-            @JsonProperty("after") String after,
-            @JsonProperty("created") Boolean created,
-            @JsonProperty("deleted") Boolean deleted,
-            @JsonProperty("forced") Boolean forced,
-            @JsonProperty("commits") ImmutableList<PushCommit> commits,
-            @JsonProperty("head_commit") PushCommit headCommit) {
-
-        this.ref = ref;
-        this.before = before;
-        this.after = after;
-        this.created = created;
-        this.deleted = deleted;
-        this.forced = forced;
-        this.commits = commits;
-        this.headCommit = headCommit;
-    }
 }

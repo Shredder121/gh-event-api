@@ -19,8 +19,8 @@ import java.time.ZonedDateTime;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.StatusBranch;
 import com.github.shredder121.gh_event_api.model.StatusCommit;
@@ -33,6 +33,8 @@ import com.google.common.collect.ImmutableList;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
 public class StatusPayload {
 
     /**
@@ -105,35 +107,4 @@ public class StatusPayload {
      * The user that triggered the status change.
      */
     @NotNull User sender;
-
-    @JsonCreator
-    StatusPayload(
-            @JsonProperty("id") Integer id,
-            @JsonProperty("sha") String sha,
-            @JsonProperty("name") String name,
-            @JsonProperty("context") String context,
-            @JsonProperty("state") String state,
-            @JsonProperty("description") String description,
-            @JsonProperty("target_url") String targetUrl,
-            @JsonProperty("commit") StatusCommit commit,
-            @JsonProperty("branches") ImmutableList<StatusBranch> branches,
-            @JsonProperty("created_at") ZonedDateTime createdAt,
-            @JsonProperty("updated_at") ZonedDateTime updatedAt,
-            @JsonProperty("repository") Repository repository,
-            @JsonProperty("sender") User sender) {
-
-        this.id = id;
-        this.sha = sha;
-        this.name = name;
-        this.context = context;
-        this.state = state;
-        this.description = description;
-        this.targetUrl = targetUrl;
-        this.commit = commit;
-        this.branches = branches;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.repository = repository;
-        this.sender = sender;
-    }
 }

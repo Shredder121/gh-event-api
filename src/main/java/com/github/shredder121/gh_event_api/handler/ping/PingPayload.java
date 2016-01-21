@@ -19,6 +19,9 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.Repository;
+import com.github.shredder121.gh_event_api.model.User;
+import com.google.common.collect.ImmutableMap;
 
 /**
  * The payload passed when a {@code ping} event is received.
@@ -37,4 +40,24 @@ public class PingPayload {
      * Will be echoed back to GitHub to indicate successful configuration.
      */
     @NotNull String zen;
+
+    /**
+     * The id of the newly created hook.
+     */
+    @NotNull Integer hookId;
+
+    /**
+     * The hook's configuration.
+     */
+    @NotNull ImmutableMap<String, Object> hook;
+
+    /**
+     * The repository that the hook belongs to.
+     */
+    @NotNull Repository repository;
+
+    /**
+     * The user that created the hook.
+     */
+    @NotNull User sender;
 }

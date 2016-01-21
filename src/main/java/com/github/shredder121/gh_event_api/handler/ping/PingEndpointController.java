@@ -19,6 +19,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +35,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(headers = "X-GitHub-Event=ping")
 class PingEndpointController {
 
+    private static final Logger logger = LoggerFactory.getLogger(PingEndpointController.class);
+
     /**
      * Handle the {@link PingPayload} by echoing the {@link PingPayload#getZen()}.
      *
@@ -41,6 +45,7 @@ class PingEndpointController {
      */
     @RequestMapping(method = POST)
     public String ping(@Valid @RequestBody PingPayload payload) {
+        logger.info("received Ping event - {}", payload);
         return payload.getZen();
     }
 }

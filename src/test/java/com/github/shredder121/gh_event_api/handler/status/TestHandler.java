@@ -64,9 +64,13 @@ class TestHandler extends AbstractTestHandlerBean implements StatusHandler {
                 ))
         ));
 
+        errorCollector.checkThat(payload.getUpdatedAt(), is(payload.getCreatedAt()));
+
         Repository repository = payload.getRepository();
         errorCollector.checkThat(repository.getName(), is("public-repo"));
         errorCollector.checkThat(repository.getFullName(), is("baxterthehacker/public-repo"));
+
+        errorCollector.checkThat(payload.getSender().getLogin(), is("baxterthehacker"));
 
         countDownLatch.countDown();
     }

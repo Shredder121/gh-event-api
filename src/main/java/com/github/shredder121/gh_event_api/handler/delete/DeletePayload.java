@@ -17,8 +17,10 @@ package com.github.shredder121.gh_event_api.handler.delete;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.Repository;
+import com.github.shredder121.gh_event_api.model.User;
 
 /**
  * The payload passed when a {@code delete} event is received.
@@ -26,6 +28,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
 public class DeletePayload {
 
     /**
@@ -39,12 +43,18 @@ public class DeletePayload {
      */
     @NotNull String ref;
 
-    @JsonCreator
-    DeletePayload(
-            @JsonProperty("ref_type") String refType,
-            @JsonProperty("ref") String ref) {
+    /**
+     * The type of account that deleted the object.
+     */
+    @NotNull String pusherType;
 
-        this.refType = refType;
-        this.ref = ref;
-    }
+    /**
+     * The repository where the object was deleted.
+     */
+    @NotNull Repository repository;
+
+    /**
+     * The user that deleted the object.
+     */
+    @NotNull User sender;
 }

@@ -25,17 +25,27 @@ import org.hamcrest.Matcher;
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 import com.github.shredder121.gh_event_api.model.Comment;
 import com.github.shredder121.gh_event_api.model.PullRequest;
+import com.github.shredder121.gh_event_api.model.Repository;
 
 class TestHandler extends AbstractTestHandlerBean implements PullRequestReviewCommentHandler {
 
     @Override
     public void handle(PullRequestReviewCommentPayload payload) {
         errorCollector.checkThat(payload.getAction(), is("created"));
+
         errorCollector.checkThat(payload.getPullRequest(), allOf(
                 property(PullRequest::getNumber, is(1)),
                 property(PullRequest::getTitle, is("Update the README with new information"))
         ));
+
         errorCollector.checkThat(payload.getComment(), commentMatchers());
+
+        errorCollector.checkThat(payload.getRepository(), allOf(
+                property(Repository::getFullName, is("baxterthehacker/public-repo")),
+                property(Repository::getName, is("public-repo"))
+        ));
+
+        errorCollector.checkThat(payload.getSender().getLogin(), is("baxterthehacker"));
 
         countDownLatch.countDown();
     }

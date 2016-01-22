@@ -29,9 +29,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 import com.github.shredder121.gh_event_api.handler.create.CreateHandler;
 import com.google.common.collect.ImmutableMap;
+import com.jayway.restassured.internal.mapping.Jackson2Mapper;
+import com.jayway.restassured.mapper.ObjectMapper;
+import com.jayway.restassured.mapper.factory.DefaultJackson2ObjectMapperFactory;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebIntegrationTest({"secret=secret", "spring.main.show-banner=false"})
@@ -39,12 +43,17 @@ import com.google.common.collect.ImmutableMap;
 @DirtiesContext
 public class HmacBehaviorTest {
 
+    private static final ObjectMapper restAssuredMapper = new Jackson2Mapper(
+            (clazz, charset) -> new DefaultJackson2ObjectMapperFactory()
+                    .create(clazz, charset)
+                    .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS));
+
     @Test
     public void testHmacIncorrect() {
         given().headers(
                 "X-GitHub-Event", "create",
                 "X-Hub-Signature", "bogus")
-        .and().body(getBody()).with().contentType(JSON)
+        .and().body(getBody(), restAssuredMapper).with().contentType(JSON)
         .expect().statusCode(HttpStatus.FORBIDDEN.value())
         .when().post();
     }
@@ -52,7 +61,7 @@ public class HmacBehaviorTest {
     @Test
     public void testHmacMissing() {
         given().headers("X-GitHub-Event", "create")
-        .and().body(getBody()).with().contentType(JSON)
+        .and().body(getBody(), restAssuredMapper).with().contentType(JSON)
         .expect().statusCode(HttpStatus.NOT_FOUND.value())
         .when().post();
     }
@@ -61,18 +70,22 @@ public class HmacBehaviorTest {
     public void testHmacOkay() {
         given().headers(
                 "X-GitHub-Event", "create",
-                "X-Hub-Signature", "sha1=95932ea97b74d2dac6d67ae73bf1af6f43ce6db3")
-        .and().body(getBody()).with().contentType(JSON)
+                "X-Hub-Signature", "sha1=807810001d379cceefed1898c5cacee2b0462b6c")
+        .and().body(getBody(), restAssuredMapper).with().contentType(JSON)
         .expect().statusCode(HttpStatus.OK.value())
         .when().post();
     }
 
     private static Map<String, Object> getBody() {
-        return ImmutableMap.of(
-                "ref_type", "tag",
-                "ref", "0.1",
-                "master_branch", "master",
-                "description", "");
+        return ImmutableMap.<String, Object>builder()
+                .put("ref_type", "tag")
+                .put("ref", "0.1")
+                .put("master_branch", "master")
+                .put("description", "")
+                .put("pusher_type", "user")
+                .put("repository", new Object())
+                .put("sender", new Object())
+                .build();
     }
 
     @Bean

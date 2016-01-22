@@ -17,8 +17,11 @@ package com.github.shredder121.gh_event_api.handler.ping;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.Repository;
+import com.github.shredder121.gh_event_api.model.User;
+import com.google.common.collect.ImmutableMap;
 
 /**
  * The payload passed when a {@code ping} event is received.
@@ -28,6 +31,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
 public class PingPayload {
 
     /**
@@ -36,10 +41,23 @@ public class PingPayload {
      */
     @NotNull String zen;
 
-    @JsonCreator
-    PingPayload(
-            @JsonProperty("zen") String zen) {
+    /**
+     * The id of the newly created hook.
+     */
+    @NotNull Integer hookId;
 
-        this.zen = zen;
-    }
+    /**
+     * The hook's configuration.
+     */
+    @NotNull ImmutableMap<String, Object> hook;
+
+    /**
+     * The repository that the hook belongs to.
+     */
+    @NotNull Repository repository;
+
+    /**
+     * The user that created the hook.
+     */
+    @NotNull User sender;
 }

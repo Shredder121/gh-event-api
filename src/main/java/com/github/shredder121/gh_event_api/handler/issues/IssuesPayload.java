@@ -17,10 +17,11 @@ package com.github.shredder121.gh_event_api.handler.issues;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.Issue;
 import com.github.shredder121.gh_event_api.model.Label;
+import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.User;
 
 /**
@@ -29,6 +30,8 @@ import com.github.shredder121.gh_event_api.model.User;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
 public class IssuesPayload {
 
     /**
@@ -42,6 +45,16 @@ public class IssuesPayload {
     @NotNull Issue issue;
 
     /**
+     * The repository the issue belongs to.
+     */
+    @NotNull Repository repository;
+
+    /**
+     * The user that created the issue.
+     */
+    @NotNull User sender;
+
+    /**
      * The optional user who was assigned or unassigned from the issue.
      */
     User assignee;
@@ -50,17 +63,4 @@ public class IssuesPayload {
      * The optional label that was added or removed from the issue.
      */
     Label label;
-
-    @JsonCreator
-    IssuesPayload(
-            @JsonProperty("action") String action,
-            @JsonProperty("issue") Issue issue,
-            @JsonProperty("assignee") User assignee,
-            @JsonProperty("label") Label label) {
-
-        this.action = action;
-        this.issue = issue;
-        this.assignee = assignee;
-        this.label = label;
-    }
 }

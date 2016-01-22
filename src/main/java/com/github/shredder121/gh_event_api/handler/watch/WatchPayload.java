@@ -17,9 +17,10 @@ package com.github.shredder121.gh_event_api.handler.watch;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.Repository;
+import com.github.shredder121.gh_event_api.model.User;
 
 /**
  * The payload passed when a {@code watch} event is received.
@@ -27,6 +28,8 @@ import com.github.shredder121.gh_event_api.model.Repository;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
 public class WatchPayload {
 
     /**
@@ -40,12 +43,8 @@ public class WatchPayload {
      */
     @NotNull Repository repository;
 
-    @JsonCreator
-    WatchPayload(
-            @JsonProperty("action") String action,
-            @JsonProperty("repository") Repository repository) {
-
-        this.action = action;
-        this.repository = repository;
-    }
+    /**
+     * The user that forked the repository.
+     */
+    @NotNull User sender;
 }

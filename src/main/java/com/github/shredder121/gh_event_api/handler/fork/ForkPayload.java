@@ -17,8 +17,8 @@ package com.github.shredder121.gh_event_api.handler.fork;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.User;
 
@@ -28,6 +28,8 @@ import com.github.shredder121.gh_event_api.model.User;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
 public class ForkPayload {
 
     /**
@@ -44,15 +46,4 @@ public class ForkPayload {
      * The actor forking the Repository.
      */
     @NotNull User sender;
-
-    @JsonCreator
-    ForkPayload(
-            @JsonProperty("forkee") Repository forkee,
-            @JsonProperty("repository") Repository repository,
-            @JsonProperty("sender") User sender) {
-
-        this.forkee = forkee;
-        this.repository = repository;
-        this.sender = sender;
-    }
 }

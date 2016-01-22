@@ -15,9 +15,12 @@
  */
 package com.github.shredder121.gh_event_api.handler.delete;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
+import com.github.shredder121.gh_event_api.model.Repository;
 
 class TestHandler extends AbstractTestHandlerBean implements DeleteHandler {
 
@@ -25,6 +28,14 @@ class TestHandler extends AbstractTestHandlerBean implements DeleteHandler {
     public void handle(DeletePayload payload) {
         errorCollector.checkThat(payload.getRefType(), is("tag"));
         errorCollector.checkThat(payload.getRef(), is("simple-tag"));
+        errorCollector.checkThat(payload.getPusherType(), is("user"));
+
+        errorCollector.checkThat(payload.getRepository(), allOf(
+                property(Repository::getFullName, is("baxterthehacker/public-repo")),
+                property(Repository::getName, is("public-repo"))
+        ));
+
+        errorCollector.checkThat(payload.getSender().getLogin(), is("baxterthehacker"));
 
         countDownLatch.countDown();
     }

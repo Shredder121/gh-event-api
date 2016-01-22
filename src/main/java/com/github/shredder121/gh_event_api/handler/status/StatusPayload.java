@@ -15,13 +15,16 @@
  */
 package com.github.shredder121.gh_event_api.handler.status;
 
+import java.time.ZonedDateTime;
+
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.StatusBranch;
 import com.github.shredder121.gh_event_api.model.StatusCommit;
+import com.github.shredder121.gh_event_api.model.User;
 import com.google.common.collect.ImmutableList;
 
 /**
@@ -30,7 +33,15 @@ import com.google.common.collect.ImmutableList;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
 public class StatusPayload {
+
+    /**
+     * The id of the status, for GitHub bookkeeping.
+     *
+     */
+    @NotNull Integer id;
 
     /**
      * The Commit SHA.
@@ -78,30 +89,22 @@ public class StatusPayload {
     @NotNull ImmutableList<StatusBranch> branches;
 
     /**
+     * The date this status was generated.
+     */
+    @NotNull ZonedDateTime createdAt;
+
+    /**
+     * The date this status was last changed.
+     */
+    @NotNull ZonedDateTime updatedAt;
+
+    /**
      * The repository of the status.
      */
     @NotNull Repository repository;
 
-    @JsonCreator
-    StatusPayload(
-            @JsonProperty("sha") String sha,
-            @JsonProperty("name") String name,
-            @JsonProperty("context") String context,
-            @JsonProperty("state") String state,
-            @JsonProperty("description") String description,
-            @JsonProperty("target_url") String targetUrl,
-            @JsonProperty("commit") StatusCommit commit,
-            @JsonProperty("branches") ImmutableList<StatusBranch> branches,
-            @JsonProperty("repository") Repository repository) {
-
-        this.sha = sha;
-        this.name = name;
-        this.context = context;
-        this.state = state;
-        this.description = description;
-        this.targetUrl = targetUrl;
-        this.commit = commit;
-        this.branches = branches;
-        this.repository = repository;
-    }
+    /**
+     * The user that triggered the status change.
+     */
+    @NotNull User sender;
 }

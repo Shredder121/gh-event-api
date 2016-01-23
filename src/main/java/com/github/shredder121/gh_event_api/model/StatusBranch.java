@@ -15,8 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 
 /**
  * A branch object that is included in StatusPayloads.
@@ -24,6 +25,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(
+        access = lombok.AccessLevel.PACKAGE,
+        onConstructor = @__(@PropertyBasedJsonCreator)
+)
 public class StatusBranch {
 
     /**
@@ -35,13 +41,4 @@ public class StatusBranch {
      * The head commit of the branch.
      */
     StatusCommit commit;
-
-    @JsonCreator
-    StatusBranch(
-            @JsonProperty("name") String name,
-            @JsonProperty("commit") StatusCommit commit) {
-
-        this.name = name;
-        this.commit = commit;
-    }
 }

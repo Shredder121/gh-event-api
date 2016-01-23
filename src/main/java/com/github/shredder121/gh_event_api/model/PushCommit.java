@@ -15,8 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 import com.google.common.collect.ImmutableList;
 
 /**
@@ -25,6 +26,11 @@ import com.google.common.collect.ImmutableList;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(
+        access = lombok.AccessLevel.PACKAGE,
+        onConstructor = @__(@PropertyBasedJsonCreator)
+)
 public class PushCommit {
 
     /**
@@ -61,23 +67,4 @@ public class PushCommit {
      * Files that were modified
      */
     ImmutableList<String> modified;
-
-    @JsonCreator
-    PushCommit(
-            @JsonProperty("id") String id,
-            @JsonProperty("label") String label,
-            @JsonProperty("ref") String ref,
-            @JsonProperty("message") String message,
-            @JsonProperty("added") ImmutableList<String> added,
-            @JsonProperty("removed") ImmutableList<String> removed,
-            @JsonProperty("modified") ImmutableList<String> modified) {
-
-        this.id = id;
-        this.label = label;
-        this.ref = ref;
-        this.message = message;
-        this.added = added;
-        this.removed = removed;
-        this.modified = modified;
-    }
 }

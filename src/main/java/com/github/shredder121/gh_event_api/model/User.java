@@ -15,8 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 
 /**
  * A GitHub User object.
@@ -24,17 +25,30 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(
+        access = lombok.AccessLevel.PACKAGE,
+        onConstructor = @__(@PropertyBasedJsonCreator)
+)
 public class User {
+
+    /**
+     * The id of this user.
+     */
+    Integer id;
 
     /**
      * The username of this user.
      */
     String login;
 
-    @JsonCreator
-    User(
-            @JsonProperty("login") String login) {
+    /**
+     * The (API) URL to view this user.
+     */
+    String url;
 
-        this.login = login;
-    }
+    /**
+     * The (GitHub Web UI) URL to view this user.
+     */
+    String htmlUrl;
 }

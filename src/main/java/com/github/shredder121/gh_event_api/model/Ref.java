@@ -15,8 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 
 /**
  * A ref is a GitHub pointer to a commit.
@@ -24,6 +25,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(
+        access = lombok.AccessLevel.PACKAGE,
+        onConstructor = @__(@PropertyBasedJsonCreator)
+)
 public class Ref {
 
     /**
@@ -50,19 +56,4 @@ public class Ref {
      * The repository the commit resides.
      */
     Repository repo;
-
-    @JsonCreator
-    Ref(
-            @JsonProperty("label") String label,
-            @JsonProperty("ref") String ref,
-            @JsonProperty("sha") String sha,
-            @JsonProperty("user") User user,
-            @JsonProperty("repo") Repository repo) {
-
-        this.label = label;
-        this.ref = ref;
-        this.sha = sha;
-        this.user = user;
-        this.repo = repo;
-    }
 }

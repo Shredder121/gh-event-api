@@ -15,7 +15,7 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class PullRequestSerializationTest extends AbstractSerializationTest<PullRequest> {
 
@@ -335,5 +335,11 @@ public class PullRequestSerializationTest extends AbstractSerializationTest<Pull
     @Override
     protected void checkDeserialized(PullRequest pullRequest) {
         errorCollector.checkThat(pullRequest.getNumber(), is(1));
+
+        errorCollector.checkThat(pullRequest.getLinks(), allOf(
+                hasKey("self"),
+                hasKey("html"),
+                hasKey("comments"),
+                hasKey("commits")));
     }
 }

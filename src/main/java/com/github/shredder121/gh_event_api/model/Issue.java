@@ -17,8 +17,9 @@ package com.github.shredder121.gh_event_api.model;
 
 import java.time.ZonedDateTime;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 import com.google.common.collect.ImmutableList;
 
 /**
@@ -27,6 +28,11 @@ import com.google.common.collect.ImmutableList;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(
+        access = lombok.AccessLevel.PACKAGE,
+        onConstructor = @__(@PropertyBasedJsonCreator)
+)
 public class Issue {
 
     /**
@@ -80,29 +86,4 @@ public class Issue {
      * The moment the issue was last updated.
      */
     ZonedDateTime updatedAt;
-
-    @JsonCreator
-    Issue(
-            @JsonProperty("id") Integer id,
-            @JsonProperty("number") Integer number,
-            @JsonProperty("state") String state,
-            @JsonProperty("locked") Boolean locked,
-            @JsonProperty("title") String title,
-            @JsonProperty("body") String body,
-            @JsonProperty("user") User user,
-            @JsonProperty("labels") ImmutableList<Label> labels,
-            @JsonProperty("created_at") ZonedDateTime createdAt,
-            @JsonProperty("updated_at") ZonedDateTime updatedAt) {
-
-        this.id = id;
-        this.number = number;
-        this.state = state;
-        this.locked = locked;
-        this.title = title;
-        this.body = body;
-        this.user = user;
-        this.labels = labels;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
 }

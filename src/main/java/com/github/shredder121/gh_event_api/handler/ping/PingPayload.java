@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnders
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.User;
+import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 import com.google.common.collect.ImmutableMap;
 
 /**
@@ -32,7 +33,10 @@ import com.google.common.collect.ImmutableMap;
  */
 @lombok.Value
 @JsonNaming(LowerCaseWithUnderscoresStrategy.class)
-@lombok.AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
+@lombok.AllArgsConstructor(
+        access = lombok.AccessLevel.PACKAGE,
+        onConstructor = @__(@PropertyBasedJsonCreator)
+)
 public class PingPayload {
 
     /**

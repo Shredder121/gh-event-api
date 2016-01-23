@@ -17,8 +17,10 @@ package com.github.shredder121.gh_event_api.model;
 
 import java.time.ZonedDateTime;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 import com.google.common.collect.ImmutableMap;
 
 /**
@@ -27,6 +29,11 @@ import com.google.common.collect.ImmutableMap;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(
+        access = lombok.AccessLevel.PACKAGE,
+        onConstructor = @__(@PropertyBasedJsonCreator)
+)
 public class PullRequest {
 
     /**
@@ -67,26 +74,6 @@ public class PullRequest {
     /**
      * Additional links included in the Pull Request.
      */
+    @JsonProperty("_links")
     ImmutableMap<String, Link> links;
-
-    @JsonCreator
-    PullRequest(
-            @JsonProperty("url") String url,
-            @JsonProperty("number") Integer number,
-            @JsonProperty("state") String state,
-            @JsonProperty("locked") Boolean locked,
-            @JsonProperty("title") String title,
-            @JsonProperty("created_at") ZonedDateTime createdAt,
-            @JsonProperty("head") Ref head,
-            @JsonProperty("_links") ImmutableMap<String, Link> links) {
-
-        this.url = url;
-        this.number = number;
-        this.state = state;
-        this.locked = locked;
-        this.title = title;
-        this.createdAt = createdAt;
-        this.head = head;
-        this.links = links;
-    }
 }

@@ -15,13 +15,19 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 
 /**
  * A repository is the location where code is hosted.
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(
+        access = lombok.AccessLevel.PACKAGE,
+        onConstructor = @__(@PropertyBasedJsonCreator)
+)
 public class Repository {
 
     /**
@@ -48,19 +54,4 @@ public class Repository {
      * How many forks there are currently.
      */
     Long forks;
-
-    @JsonCreator
-    Repository(
-            @JsonProperty("name") String name,
-            @JsonProperty("full_name") String fullName,
-            @JsonProperty("owner") User owner,
-            @JsonProperty("forks_count") Long forksCount,
-            @JsonProperty("forks") Long forks) {
-
-        this.name = name;
-        this.fullName = fullName;
-        this.owner = owner;
-        this.forksCount = forksCount;
-        this.forks = forks;
-    }
 }

@@ -25,6 +25,7 @@ import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.StatusBranch;
 import com.github.shredder121.gh_event_api.model.StatusCommit;
 import com.github.shredder121.gh_event_api.model.User;
+import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 import com.google.common.collect.ImmutableList;
 
 /**
@@ -34,7 +35,10 @@ import com.google.common.collect.ImmutableList;
  */
 @lombok.Value
 @JsonNaming(LowerCaseWithUnderscoresStrategy.class)
-@lombok.AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
+@lombok.AllArgsConstructor(
+        access = lombok.AccessLevel.PACKAGE,
+        onConstructor = @__(@PropertyBasedJsonCreator)
+)
 public class StatusPayload {
 
     /**

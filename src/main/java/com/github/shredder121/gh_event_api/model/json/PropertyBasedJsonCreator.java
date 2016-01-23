@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.model;
+package com.github.shredder121.gh_event_api.model.json;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
+import static java.lang.annotation.ElementType.CONSTRUCTOR;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
- * A link is a piece of metadata that tells where to find more information.
+ * Custom annotation that applies a {@link JsonCreator} configuration.
  *
  * @author Shredder121
  */
-@lombok.Value
-@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
-@lombok.AllArgsConstructor(
-        access = lombok.AccessLevel.PACKAGE,
-        onConstructor = @__(@PropertyBasedJsonCreator)
-)
-public class Link {
-
-    String href;
+@Retention(RUNTIME)
+@Target(CONSTRUCTOR)
+@JacksonAnnotationsInside
+@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+public @interface PropertyBasedJsonCreator {
 }

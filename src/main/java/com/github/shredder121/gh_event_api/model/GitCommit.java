@@ -17,8 +17,9 @@ package com.github.shredder121.gh_event_api.model;
 
 import java.time.ZonedDateTime;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 
 /**
  * A GitCommit is an underlying commit object, with git metadata.
@@ -26,6 +27,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(
+        access = lombok.AccessLevel.PACKAGE,
+        onConstructor = @__(@PropertyBasedJsonCreator)
+)
 public class GitCommit {
 
     /**
@@ -43,21 +49,15 @@ public class GitCommit {
      */
     String message;
 
-    @JsonCreator
-    GitCommit(
-            @JsonProperty("author") UserData author,
-            @JsonProperty("committer") UserData committer,
-            @JsonProperty("message") String message) {
-
-        this.author = author;
-        this.committer = committer;
-        this.message = message;
-    }
-
     /**
      * Details on author/committer data.
      */
     @lombok.Value
+    @JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+    @lombok.AllArgsConstructor(
+            access = lombok.AccessLevel.PACKAGE,
+            onConstructor = @__(@PropertyBasedJsonCreator)
+    )
     public static class UserData {
 
         /**
@@ -74,16 +74,5 @@ public class GitCommit {
          * The date of the commit.
          */
         ZonedDateTime date;
-
-        @JsonCreator
-        UserData(
-                @JsonProperty("name") String name,
-                @JsonProperty("email") String email,
-                @JsonProperty("date") ZonedDateTime date) {
-
-            this.name = name;
-            this.email = email;
-            this.date = date;
-        }
     }
 }

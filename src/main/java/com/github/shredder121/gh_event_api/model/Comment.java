@@ -17,8 +17,9 @@ package com.github.shredder121.gh_event_api.model;
 
 import java.time.ZonedDateTime;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 
 /**
  * A comment on a part of the commit diff.
@@ -26,6 +27,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Shredder121
  */
 @lombok.Value
+@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@lombok.AllArgsConstructor(
+        access = lombok.AccessLevel.PACKAGE,
+        onConstructor = @__(@PropertyBasedJsonCreator)
+)
 public class Comment {
 
     /**
@@ -90,33 +96,4 @@ public class Comment {
      * The time the comment was last modified.
      */
     ZonedDateTime updatedAt;
-
-    @JsonCreator
-    Comment(
-            @JsonProperty("id") Integer id,
-            @JsonProperty("position") Integer position,
-            @JsonProperty("original_position") Integer originalPosition,
-            @JsonProperty("path") String path,
-            @JsonProperty("commit_id") String commitId,
-            @JsonProperty("original_commit_id") String originalCommitId,
-            @JsonProperty("body") String body,
-            @JsonProperty("diff_hunk") String diffHunk,
-            @JsonProperty("url") String url,
-            @JsonProperty("html_url") String htmlUrl,
-            @JsonProperty("created_at") ZonedDateTime createdAt,
-            @JsonProperty("updated_at") ZonedDateTime updatedAt) {
-
-        this.id = id;
-        this.position = position;
-        this.originalPosition = originalPosition;
-        this.path = path;
-        this.commitId = commitId;
-        this.originalCommitId = originalCommitId;
-        this.body = body;
-        this.diffHunk = diffHunk;
-        this.url = url;
-        this.htmlUrl = htmlUrl;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
 }

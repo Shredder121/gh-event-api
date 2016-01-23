@@ -23,6 +23,7 @@ import com.github.shredder121.gh_event_api.model.Comment;
 import com.github.shredder121.gh_event_api.model.Issue;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.User;
+import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 
 /**
  * The payload passed when a {@code issue_comment} event is received.
@@ -31,7 +32,10 @@ import com.github.shredder121.gh_event_api.model.User;
  */
 @lombok.Value
 @JsonNaming(LowerCaseWithUnderscoresStrategy.class)
-@lombok.AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
+@lombok.AllArgsConstructor(
+        access = lombok.AccessLevel.PACKAGE,
+        onConstructor = @__(@PropertyBasedJsonCreator)
+)
 public class IssueCommentPayload {
 
     /**

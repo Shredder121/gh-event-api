@@ -17,6 +17,8 @@ package com.github.shredder121.gh_event_api.handler;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.Map;
 
@@ -28,6 +30,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.shredder121.gh_event_api.GHEventApiServer;
@@ -49,12 +53,21 @@ public class HmacBehaviorTest {
                     .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS));
 
     @Test
+    public void testNoFilter() {
+        given()
+                //no additional parameters/headers
+        .expect()
+                .statusCode(HttpStatus.OK.value())
+                .body(is("handled"));
+    }
+
+    @Test
     public void testHmacIncorrect() {
         given().headers(
                 "X-GitHub-Event", "create",
                 "X-Hub-Signature", "bogus")
         .and().body(getBody(), restAssuredMapper).with().contentType(JSON)
-        .expect().statusCode(HttpStatus.FORBIDDEN.value())
+        .expect().statusCode(HttpStatus.NO_CONTENT.value())
         .when().post();
     }
 
@@ -92,5 +105,14 @@ public class HmacBehaviorTest {
     public CreateHandler handlerBean() {
         return payload -> {
         };
+    }
+
+    @RestController
+    public static class TestController {
+
+        @RequestMapping(method = POST)
+        public String handle() {
+            return "handled";
+        }
     }
 }

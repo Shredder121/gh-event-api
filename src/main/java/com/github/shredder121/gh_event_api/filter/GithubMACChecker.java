@@ -15,6 +15,7 @@
  */
 package com.github.shredder121.gh_event_api.filter;
 
+import static com.github.shredder121.gh_event_api.filter.HeaderNames.GITHUB_EVENT_HEADER;
 import static com.github.shredder121.gh_event_api.filter.HeaderNames.GITHUB_SIGNATURE_HEADER;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -78,13 +79,15 @@ class GithubMACChecker extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         String signatureHeader = request.getHeader(GITHUB_SIGNATURE_HEADER);
-        if (macProvider != null) {
+        if (shouldFilter(request)) {
             if (signatureHeader != null) {
                 HttpServletRequest preReadRequest = new PreReadRequest(request);
                 byte[] requestBytes = ByteStreams.toByteArray(preReadRequest.getInputStream());
                 String signatureString = "sha1=" + hexDigest(requestBytes);
                 if (signatureString.hashCode() != signatureHeader.hashCode()) {
-                    response.sendError(HttpStatus.FORBIDDEN.value(), "Invalid MAC");
+                    logger.warn("bad signature {} {}", signatureString, signatureHeader);
+                    response.sendError(HttpStatus.NO_CONTENT.value());
+                    // drops the payload
                 } else {
                     filterChain.doFilter(preReadRequest, response);
                 }
@@ -97,6 +100,10 @@ class GithubMACChecker extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
         }
+    }
+
+    private boolean shouldFilter(HttpServletRequest request) {
+        return macProvider != null && request.getHeader(GITHUB_EVENT_HEADER) != null;
     }
 
     private String hexDigest(byte[] requestBytes) {

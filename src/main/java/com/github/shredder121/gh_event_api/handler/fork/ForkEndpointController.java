@@ -38,7 +38,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 class ForkEndpointController extends AbstractEndpointController<ForkHandler, ForkPayload> {
 
     @Autowired
-    public ForkEndpointController(Collection<? extends ForkHandler> beans) {
+    ForkEndpointController(Collection<? extends ForkHandler> beans) {
         super(beans);
     }
 

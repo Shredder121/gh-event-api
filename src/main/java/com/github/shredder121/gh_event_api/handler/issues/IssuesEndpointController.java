@@ -38,7 +38,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 class IssuesEndpointController extends AbstractEndpointController<IssuesHandler, IssuesPayload> {
 
     @Autowired
-    public IssuesEndpointController(Collection<? extends IssuesHandler> beans) {
+    IssuesEndpointController(Collection<? extends IssuesHandler> beans) {
         super(beans);
     }
 

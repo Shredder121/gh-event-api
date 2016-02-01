@@ -153,6 +153,9 @@
 
                         <!-- Only an informational filter -->
                         <filter>com/github/shredder121/gh_event_api/filter/GithubMDCInsertingServletFilter.class</filter>
+
+                        <!-- Constants related to GitHub's events -->
+                        <headerNames>com/github/shredder121/gh_event_api/filter/HeaderNames.class</headerNames>
                     </excludes>
                 </configuration>
                 <executions>

@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.filter;
 
+import static com.github.shredder121.gh_event_api.filter.HeaderNames.*;
+
 import java.io.Closeable;
 import java.io.IOException;
 
@@ -38,9 +40,6 @@ import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
  */
 @Component
 class GithubMDCInsertingServletFilter extends MDCInsertingServletFilter {
-
-    private static final String GITHUB_DELIVERY_HEADER = "X-GitHub-Delivery";
-    private static final String GITHUB_EVENT_HEADER = "X-GitHub-Event";
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {

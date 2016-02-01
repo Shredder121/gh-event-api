@@ -15,6 +15,7 @@
  */
 package com.github.shredder121.gh_event_api.filter;
 
+import static com.github.shredder121.gh_event_api.filter.HeaderNames.GITHUB_SIGNATURE_HEADER;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.IOException;
@@ -49,7 +50,7 @@ import com.google.common.io.ByteStreams;
 import ch.qos.logback.core.encoder.ByteArrayUtil;
 
 /**
- * A filter that checks the {@link #GITHUB_SIGNATURE_HEADER signature header} to see if the request matches.
+ * A filter that checks the {@link HeaderNames#GITHUB_SIGNATURE_HEADER signature header} to see if the request matches.
  * Specify a {@code secret} property to set up the filter.
  *
  * @author Shredder121
@@ -59,7 +60,6 @@ class GithubMACChecker extends OncePerRequestFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(GithubMACChecker.class);
 
-    private static final String GITHUB_SIGNATURE_HEADER = "X-Hub-Signature";
     private static final String HMAC_SHA1 = "HmacSHA1";
 
     private final Supplier<Mac> macProvider;

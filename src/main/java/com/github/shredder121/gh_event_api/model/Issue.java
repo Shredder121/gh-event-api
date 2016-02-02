@@ -46,6 +46,16 @@ public class Issue {
     Integer number;
 
     /**
+     * The (API) URL to view this issue.
+     */
+    String url;
+
+    /**
+     * The (GitHub Web UI) URL to view this issue.
+     */
+    String htmlUrl;
+
+    /**
      * The issue state.
      *
      * e.g. open, closed

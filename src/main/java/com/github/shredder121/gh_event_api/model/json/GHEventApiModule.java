@@ -15,9 +15,15 @@
  */
 package com.github.shredder121.gh_event_api.model.json;
 
+import java.util.function.Function;
+
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.deser.std.StdDelegatingDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.util.Converter;
+import com.fasterxml.jackson.databind.util.StdConverter;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.fasterxml.jackson.module.paranamer.ParanamerModule;
 
@@ -32,6 +38,8 @@ class GHEventApiModule extends SimpleModule {
 
     public GHEventApiModule() {
         super("GHEventApiServer");
+
+        addDeserializer(MediaType.class, new StdDelegatingDeserializer<>(fromString(MediaType::valueOf)));
     }
 
     @Override
@@ -41,5 +49,15 @@ class GHEventApiModule extends SimpleModule {
         new GuavaModule().setupModule(context);
 
         new ParanamerModule().setupModule(context);
+    }
+
+    private static <T> Converter<String, T> fromString(Function<String, ? extends T> fun) {
+        return new StdConverter<String, T>() {
+
+            @Override
+            public T convert(String value) {
+                return fun.apply(value);
+            }
+        };
     }
 }

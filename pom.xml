@@ -240,6 +240,12 @@
                         <configuration>
                             <disableXmlReport>true</disableXmlReport>
                             <printSummary>false</printSummary>
+                            <properties>
+                                <property>
+                                    <name>listener</name>
+                                    <value>com.github.shredder121.gh_event_api.testutil.TravisFoldListener</value>
+                                </property>
+                            </properties>
                         </configuration>
                     </plugin>
                 </plugins>

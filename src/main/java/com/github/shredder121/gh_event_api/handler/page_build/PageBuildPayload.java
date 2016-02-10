@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.model.User;
 import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 
 /**
- * The payload passed when a {@code push} event is received.
+ * The payload passed when a {@code page_build} event is received.
  *
  * @author Shredder121
  */

@@ -7,7 +7,7 @@ import static org.hamcrest.Matchers.is;
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 import com.github.shredder121.gh_event_api.model.Repository;
 
-public class TestHandler extends AbstractTestHandlerBean implements WatchHandler {
+class TestHandler extends AbstractTestHandlerBean implements WatchHandler {
 
     @Override
     public void handle(WatchPayload payload) {

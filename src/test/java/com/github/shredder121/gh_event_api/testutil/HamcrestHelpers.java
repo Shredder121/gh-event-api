@@ -38,10 +38,12 @@ public class HamcrestHelpers {
      * @param <T> new expression type
      * @param selector the selector to apply
      * @param predicate the next Hamcrest matcher to apply
+     * @param shim to capture the runtime type of the Function's input, we make the compiler insert an array that holds the right type
      * @return the composed matcher
      */
-    public static <O, T> Matcher<O> property(Function<? super O, ? extends T> selector, Matcher<? super T> predicate) {
-        return new TypeSafeMatcher<O>() {
+    @SafeVarargs
+    public static <O, T> Matcher<O> property(Function<? super O, ? extends T> selector, Matcher<? super T> predicate, O... shim) {
+        return new TypeSafeMatcher<O>(shim.getClass().getComponentType()) {
             @Override
             public boolean matchesSafely(O original) {
                 return predicate.matches(selector.apply(original));

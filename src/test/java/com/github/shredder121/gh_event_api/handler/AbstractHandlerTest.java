@@ -40,7 +40,6 @@ import org.junit.runner.RunWith;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
-import org.kohsuke.github.extras.OkHttpConnector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.core.env.Environment;
@@ -51,6 +50,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.fasterxml.jackson.core.util.MinimalPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.shredder121.gh_event_api.testutil.RawGitOkHttpConnector;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 import com.jayway.restassured.RestAssured;
@@ -82,17 +82,10 @@ public abstract class AbstractHandlerTest {
     }
 
     private static GitHub getGitHub() throws IOException {
-        GitHubBuilder builder;
-        try {
-            builder = GitHubBuilder.fromCredentials();
-        } catch (IOException noAuthorizationDetails) {
-            // This is fine, and still gives you 60 requests per hour, so one-off test runs still work
-            builder = new GitHubBuilder();
-        }
         OkHttpClient client = new OkHttpClient();
         client.setCache(new Cache(Paths.get(".", ".cache").toFile(), FileUtils.ONE_MB * 10));
-        return builder
-                .withConnector(new OkHttpConnector(new OkUrlFactory(client)))
+        return new GitHubBuilder()
+                .withConnector(new RawGitOkHttpConnector(new OkUrlFactory(client)))
                 .build();
     }
 

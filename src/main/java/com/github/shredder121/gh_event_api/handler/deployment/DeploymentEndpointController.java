@@ -35,7 +35,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractEndpointController;
 @RestController
 @RequestMapping(headers = "X-GitHub-Event=deployment")
 @ConditionalOnBean(DeploymentHandler.class)
-public class DeploymentEndpointController extends AbstractEndpointController<DeploymentHandler, DeploymentPayload> {
+class DeploymentEndpointController extends AbstractEndpointController<DeploymentHandler, DeploymentPayload> {
 
     @Autowired
     DeploymentEndpointController(Collection<? extends DeploymentHandler> beans) {

@@ -19,6 +19,7 @@ package com.github.shredder121.gh_event_api.handler.push;
  * The handler interface for receiving {@code push} events.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#pushevent">The push event on GitHub</a>
  */
 @FunctionalInterface
 public interface PushHandler {

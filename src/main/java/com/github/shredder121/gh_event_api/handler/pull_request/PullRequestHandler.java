@@ -19,6 +19,7 @@ package com.github.shredder121.gh_event_api.handler.pull_request;
  * The handler interface for receiving {@code pull_request} events.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#pullrequestevent">The pull_request event on GitHub</a>
  */
 @FunctionalInterface
 public interface PullRequestHandler {

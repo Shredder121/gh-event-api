@@ -19,6 +19,7 @@ package com.github.shredder121.gh_event_api.handler.commit_comment;
  * The handler interface for receiving {@code commit_comment} events.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#commitcommentevent">The commit_comment event on GitHub</a>
  */
 @FunctionalInterface
 public interface CommitCommentHandler {

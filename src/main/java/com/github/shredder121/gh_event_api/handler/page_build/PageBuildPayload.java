@@ -28,6 +28,7 @@ import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
  * The payload passed when a {@code page_build} event is received.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#pagebuildevent">The page_build event on GitHub</a>
  */
 @lombok.Value
 @JsonNaming(LowerCaseWithUnderscoresStrategy.class)

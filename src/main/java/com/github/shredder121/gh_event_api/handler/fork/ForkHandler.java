@@ -19,6 +19,7 @@ package com.github.shredder121.gh_event_api.handler.fork;
  * The handler interface for receiving {@code fork} events.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#forkevent">The fork event on GitHub</a>
  */
 @FunctionalInterface
 public interface ForkHandler {

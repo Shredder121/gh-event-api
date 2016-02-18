@@ -19,6 +19,7 @@ package com.github.shredder121.gh_event_api.handler.page_build;
  * The handler interface for receiving {@code page_build} events.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#pagebuildevent">The page_build event on GitHub</a>
  */
 @FunctionalInterface
 public interface PageBuildHandler {

@@ -19,6 +19,7 @@ package com.github.shredder121.gh_event_api.handler.release;
  * The handler interface for receiving {@code release} events.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#releaseevent">The release event on GitHub</a>
  */
 @FunctionalInterface
 public interface ReleaseHandler {

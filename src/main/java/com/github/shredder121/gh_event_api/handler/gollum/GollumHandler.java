@@ -19,6 +19,7 @@ package com.github.shredder121.gh_event_api.handler.gollum;
  * The handler interface for receiving {@code gollum} events.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#gollumevent">The gollum event on GitHub</a>
  */
 @FunctionalInterface
 public interface GollumHandler {

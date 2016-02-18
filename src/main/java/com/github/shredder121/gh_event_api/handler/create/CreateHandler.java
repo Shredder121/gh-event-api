@@ -19,6 +19,7 @@ package com.github.shredder121.gh_event_api.handler.create;
  * The handler interface for receiving {@code create} events.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#createevent">The create event on GitHub</a>
  */
 @FunctionalInterface
 public interface CreateHandler {

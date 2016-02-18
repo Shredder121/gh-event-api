@@ -19,6 +19,7 @@ package com.github.shredder121.gh_event_api.handler.delete;
  * The handler interface for receiving {@code delete} events.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#deleteevent">The delete event on GitHub</a>
  */
 @FunctionalInterface
 public interface DeleteHandler {

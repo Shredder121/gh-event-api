@@ -27,6 +27,7 @@ import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
  * The payload passed when a {@code public} event is received.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#publicevent">The public event on GitHub</a>
  */
 @lombok.Value
 @JsonNaming(LowerCaseWithUnderscoresStrategy.class)

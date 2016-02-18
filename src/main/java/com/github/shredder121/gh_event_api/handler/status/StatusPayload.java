@@ -32,6 +32,7 @@ import com.google.common.collect.ImmutableList;
  * The payload passed when a {@code status} event is received.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#statusevent">The status event on GitHub</a>
  */
 @lombok.Value
 @JsonNaming(LowerCaseWithUnderscoresStrategy.class)

@@ -29,6 +29,7 @@ import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
  * The payload passed when a {@code pull_request_review_comment} event is received.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#pullrequestreviewcommentevent">The pull_request_review_comment event on GitHub</a>
  */
 @lombok.Value
 @JsonNaming(LowerCaseWithUnderscoresStrategy.class)

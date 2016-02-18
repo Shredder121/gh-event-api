@@ -19,6 +19,7 @@ package com.github.shredder121.gh_event_api.handler.status;
  * The handler interface for receiving {@code status} events.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#statusevent">The status event on GitHub</a>
  */
 @FunctionalInterface
 public interface StatusHandler {

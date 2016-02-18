@@ -19,6 +19,7 @@ package com.github.shredder121.gh_event_api.handler.watch;
  * The handler interface for receiving {@code watch} events.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#watchevent">The watch event on GitHub</a>
  */
 @FunctionalInterface
 public interface WatchHandler {

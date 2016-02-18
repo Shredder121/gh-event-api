@@ -19,6 +19,7 @@ package com.github.shredder121.gh_event_api.handler.team_add;
  * The handler interface for receiving {@code team_add} events.
  *
  * @author Shredder121
+ * @see <a href="https://developer.github.com/v3/activity/events/types/#teamaddevent">The team_add event on GitHub</a>
  */
 @FunctionalInterface
 public interface TeamAddHandler {

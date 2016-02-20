@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.Organization;
 import com.github.shredder121.gh_event_api.model.Team;
 import com.github.shredder121.gh_event_api.model.User;
 import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
@@ -58,6 +59,11 @@ public class MembershipPayload {
      * The team for the membership.
      */
     @NotNull Team team;
+
+    /**
+     * The organization the team belongs to.
+     */
+    @NotNull Organization organization;
 
     /**
      * The person that triggered the event.

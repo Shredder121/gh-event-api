@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.Organization;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.Team;
 import com.github.shredder121.gh_event_api.model.User;
@@ -47,6 +48,11 @@ public class TeamAddPayload {
      * The repository that was added to this team.
      */
     @NotNull Repository repository;
+
+    /**
+     * The organization the repository belongs to.
+     */
+    @NotNull Organization organization;
 
     /**
      * The user that triggered the event.

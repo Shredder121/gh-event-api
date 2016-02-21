@@ -16,12 +16,10 @@
 package com.github.shredder121.gh_event_api.handler.create;
 
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 import com.github.shredder121.gh_event_api.model.Repository;
-import com.github.shredder121.gh_event_api.model.User;
 
 class TestHandler extends AbstractTestHandlerBean implements CreateHandler {
 
@@ -37,6 +35,8 @@ class TestHandler extends AbstractTestHandlerBean implements CreateHandler {
                 property(Repository::getFullName, is("baxterthehacker/public-repo")),
                 property(Repository::getName, is("public-repo"))
         ));
+
+        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
 
         errorCollector.checkThat(payload.getSender().getLogin(), is("baxterthehacker"));
 

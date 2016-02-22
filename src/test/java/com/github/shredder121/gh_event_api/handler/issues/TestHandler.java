@@ -16,8 +16,7 @@
 package com.github.shredder121.gh_event_api.handler.issues;
 
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -46,6 +45,8 @@ class TestHandler extends AbstractTestHandlerBean implements IssuesHandler {
                 property(Repository::getFullName, is("baxterthehacker/public-repo")),
                 property(Repository::getName, is("public-repo"))
         ));
+
+        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
 
         errorCollector.checkThat(payload.getIssue(), allOf(
                 property(Issue::getNumber, is(2)),

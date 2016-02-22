@@ -62,6 +62,8 @@ class TestHandler extends AbstractTestHandlerBean implements PullRequestHandler 
         errorCollector.checkThat(repository.getFullName(), is(repo.getFullName()));
         errorCollector.checkThat(repository.getName(), is(repo.getName()));
 
+        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
+
         User sender = payload.getSender();
         errorCollector.checkThat(sender.getLogin(), is("baxterthehacker"));
 

@@ -41,6 +41,8 @@ class TestHandler extends AbstractTestHandlerBean implements GollumHandler {
                 property(Repository::getName, is("public-repo"))
         ));
 
+        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
+
         errorCollector.checkThat(payload.getSender(), allOf(
                 property(User::getId, is(2988)),
                 property(User::getLogin, is("jasonrudolph"))

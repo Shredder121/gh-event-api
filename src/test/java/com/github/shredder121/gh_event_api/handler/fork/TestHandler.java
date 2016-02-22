@@ -32,6 +32,8 @@ class TestHandler extends AbstractTestHandlerBean implements ForkHandler {
         errorCollector.checkThat(repository.getOwner().getLogin(), is("baxterthehacker"));
         errorCollector.checkThat(repository.getForks(), is(1L));
 
+        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
+
         Repository forkee = payload.getForkee();
         errorCollector.checkThat(forkee.getName(), is(repository.getName()));
         errorCollector.checkThat(forkee.getForksCount(), is(0L));

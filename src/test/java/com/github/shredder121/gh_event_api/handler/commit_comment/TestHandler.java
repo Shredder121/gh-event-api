@@ -49,6 +49,8 @@ class TestHandler extends AbstractTestHandlerBean implements CommitCommentHandle
         errorCollector.checkThat(repository.getFullName(), is("baxterthehacker/public-repo"));
         errorCollector.checkThat(repository.getName(), is("public-repo"));
 
+        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
+
         User sender = payload.getSender();
         errorCollector.checkThat(sender.getLogin(), is("baxterthehacker"));
 

@@ -13,20 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.handler.issues;
-
-import javax.validation.constraints.NotNull;
+package com.github.shredder121.gh_event_api.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.github.shredder121.gh_event_api.model.*;
 import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 
 /**
- * The payload passed when an {@code issues} event is received.
+ * An organization is a group of users that operate repositories.
  *
  * @author Shredder121
- * @see <a href="https://developer.github.com/v3/activity/events/types/#issuesevent">The issues event on GitHub</a>
  */
 @lombok.Value
 @JsonNaming(LowerCaseWithUnderscoresStrategy.class)
@@ -34,41 +30,60 @@ import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
         access = lombok.AccessLevel.PACKAGE,
         onConstructor = @__(@PropertyBasedJsonCreator)
 )
-public class IssuesPayload {
+public class Organization {
 
     /**
-     * The action that was performed.
+     * The username/handle of the organization.
      */
-    @NotNull String action;
+    String login;
 
     /**
-     * The issue itself.
+     * The id of this organization.
      */
-    @NotNull Issue issue;
+    Integer id;
 
     /**
-     * The repository the issue belongs to.
+     * This organization's description.
      */
-    @NotNull Repository repository;
+    String description;
 
     /**
-     * The organization the repository belongs to.
-     * Only non-null with organization webhooks.
+     * The (API) URL to view this organization.
      */
-    Organization organization;
+    String url;
 
     /**
-     * The user that created the issue.
+     * The (API) URL to view this organization's repositories.
      */
-    @NotNull User sender;
+    String reposUrl;
 
     /**
-     * The optional user who was assigned or unassigned from the issue.
+     * The (API) URL to view the event time line of this organization.
      */
-    User assignee;
+    String eventsUrl;
 
     /**
-     * The optional label that was added or removed from the issue.
+     * The (API) URL to view the hooks of this organization.
      */
-    Label label;
+    String hooksUrl;
+
+    /**
+     * The (API) URL to view this organization's issues.
+     */
+    String issuesUrl;
+
+    /**
+     * The (API) URL to view the members of this organization.
+     */
+    String membersUrl;
+
+    /**
+     * The (API) URL to view the public members of this organization.
+     */
+    String publicMembersUrl;
+
+    /**
+     * The avatar image of this organization.
+     */
+    String avatarUrl;
 }

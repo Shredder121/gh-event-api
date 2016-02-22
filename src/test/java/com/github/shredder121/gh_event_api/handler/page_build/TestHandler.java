@@ -51,6 +51,8 @@ class TestHandler extends AbstractTestHandlerBean implements PageBuildHandler {
                 property(Repository::getFullName, is("baxterthehacker/public-repo"))
         ));
 
+        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
+
         errorCollector.checkThat(payload.getSender(), allOf(
                 property(User::getId, is(6752317)),
                 property(User::getLogin, is("baxterthehacker")),

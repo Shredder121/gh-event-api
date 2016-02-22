@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.shredder121.gh_event_api.model.Organization;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.User;
 import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
@@ -41,6 +42,12 @@ public class PublicPayload {
      * The repository that was open sourced.
      */
     @NotNull Repository repository;
+
+    /**
+     * The organization the repository belongs to.
+     * Only non-null with organization webhooks.
+     */
+    Organization organization;
 
     /**
      * The user who triggered the event.

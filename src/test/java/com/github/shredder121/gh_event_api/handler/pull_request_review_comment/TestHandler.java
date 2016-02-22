@@ -45,6 +45,8 @@ class TestHandler extends AbstractTestHandlerBean implements PullRequestReviewCo
                 property(Repository::getName, is("public-repo"))
         ));
 
+        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
+
         errorCollector.checkThat(payload.getSender().getLogin(), is("baxterthehacker"));
 
         countDownLatch.countDown();

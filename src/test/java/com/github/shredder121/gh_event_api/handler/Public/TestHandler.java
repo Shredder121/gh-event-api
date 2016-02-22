@@ -16,8 +16,7 @@
 package com.github.shredder121.gh_event_api.handler.Public;
 
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 import com.github.shredder121.gh_event_api.model.Repository;
@@ -31,6 +30,8 @@ class TestHandler extends AbstractTestHandlerBean implements PublicHandler {
                 property(Repository::getName, is("public-repo")),
                 property(Repository::getFullName, is("baxterthehacker/public-repo"))
         ));
+
+        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
 
         errorCollector.checkThat(payload.getSender(), allOf(
                 property(User::getId, is(6752317)),

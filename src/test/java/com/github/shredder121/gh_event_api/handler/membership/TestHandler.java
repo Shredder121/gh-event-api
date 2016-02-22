@@ -22,6 +22,7 @@ import static org.hamcrest.Matchers.is;
 import java.util.Arrays;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
+import com.github.shredder121.gh_event_api.model.Organization;
 import com.github.shredder121.gh_event_api.model.Team;
 import com.github.shredder121.gh_event_api.model.User;
 
@@ -54,6 +55,12 @@ class TestHandler extends AbstractTestHandlerBean implements MembershipHandler {
                 property(Team::getMembersUrl, is("https://api.github.com/teams/123456/members{/member}")),
                 property(Team::getRepositoriesUrl, is("https://api.github.com/teams/123456/repos"))
         )));
+
+        errorCollector.checkThat(payload.getOrganization(), allOf(
+                property(Organization::getId, is(7649605)),
+                property(Organization::getLogin, is("baxterandthehackers")),
+                property(Organization::getUrl, is("https://api.github.com/orgs/baxterandthehackers"))
+        ));
 
         countDownLatch.countDown();
     }

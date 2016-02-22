@@ -15,14 +15,16 @@
  */
 package com.github.shredder121.gh_event_api.handler.push;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
 import static com.google.common.collect.Iterables.getOnlyElement;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 import java.util.Collection;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 import com.github.shredder121.gh_event_api.model.PushCommit;
+import com.github.shredder121.gh_event_api.model.Repository;
+import com.github.shredder121.gh_event_api.model.User;
 
 class TestHandler extends AbstractTestHandlerBean implements PushHandler {
 
@@ -45,6 +47,19 @@ class TestHandler extends AbstractTestHandlerBean implements PushHandler {
         errorCollector.checkThat(commit.getMessage(), is("Update README.md"));
 
         errorCollector.checkThat(payload.getHeadCommit(), is(equalTo(commit)));
+
+        errorCollector.checkThat(payload.getSender(), allOf(
+                property(User::getId, is(6752317)),
+                property(User::getLogin, is("baxterthehacker")),
+                property(User::getHtmlUrl, is("https://github.com/baxterthehacker"))
+        ));
+
+        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
+
+        errorCollector.checkThat(payload.getRepository(), allOf(
+                property(Repository::getName, is("public-repo")),
+                property(Repository::getFullName, is("baxterthehacker/public-repo"))
+        ));
 
         countDownLatch.countDown();
     }

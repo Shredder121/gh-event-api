@@ -20,6 +20,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
+import com.github.shredder121.gh_event_api.model.Organization;
 import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.User;
 
@@ -32,6 +33,12 @@ class TestHandler extends AbstractTestHandlerBean implements RepositoryHandler {
         errorCollector.checkThat(payload.getRepository(), allOf(
                 property(Repository::getFullName, is("baxterandthehackers/new-repository")),
                 property(Repository::getName, is("new-repository"))
+        ));
+
+        errorCollector.checkThat(payload.getOrganization(), allOf(
+                property(Organization::getId, is(7649605)),
+                property(Organization::getLogin, is("baxterandthehackers")),
+                property(Organization::getUrl, is("https://api.github.com/orgs/baxterandthehackers"))
         ));
 
         errorCollector.checkThat(payload.getSender(), allOf(

@@ -15,6 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 public class UserSerializationTest extends AbstractSerializationTest<User> {
@@ -64,6 +67,10 @@ public class UserSerializationTest extends AbstractSerializationTest<User> {
 
     @Override
     protected void checkDeserialized(User user) {
-        errorCollector.checkThat(user.getLogin(), is("octocat"));
+        errorCollector.checkThat(user, allOf(asList(
+                property(User::getId, is(1)),
+                property(User::getLogin, is("octocat")),
+                property(User::getHtmlUrl, is("https://github.com/octocat"))
+        )));
     }
 }

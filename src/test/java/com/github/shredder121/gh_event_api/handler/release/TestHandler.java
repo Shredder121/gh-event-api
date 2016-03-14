@@ -15,35 +15,37 @@
  */
 package com.github.shredder121.gh_event_api.handler.release;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
+
+import org.hamcrest.Matcher;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 import com.github.shredder121.gh_event_api.model.Release;
-import com.github.shredder121.gh_event_api.model.Repository;
 
 class TestHandler extends AbstractTestHandlerBean implements ReleaseHandler {
 
     @Override
     public void handle(ReleasePayload payload) {
-        errorCollector.checkThat(payload.getAction(), is("published"));
+        errorCollector.checkThat(payload, allOf(asList(
+                property(ReleasePayload::getAction, is("published")),
+                property(ReleasePayload::getRelease, releaseMatchers()),
+                property(ReleasePayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO)),
+                property(ReleasePayload::getOrganization, is(nullValue())),
+                property(ReleasePayload::getSender, is(BAXTERTHEHACKER))
+        )));
+        countDownLatch.countDown();
+    }
 
-        errorCollector.checkThat(payload.getRelease(), allOf(
+    private static Matcher<Release> releaseMatchers() {
+        return allOf(
                 property(Release::getId, is(1261438)),
                 property(Release::getAssets, is(empty())),
                 property(Release::getUrl, is("https://api.github.com/repos/baxterthehacker/public-repo/releases/1261438")),
                 property(Release::getAssetsUrl, is("https://api.github.com/repos/baxterthehacker/public-repo/releases/1261438/assets"))
-        ));
-
-        errorCollector.checkThat(payload.getRepository(), allOf(
-                property(Repository::getFullName, is("baxterthehacker/public-repo")),
-                property(Repository::getName, is("public-repo"))
-        ));
-
-        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
-
-        errorCollector.checkThat(payload.getSender().getLogin(), is("baxterthehacker"));
-
-        countDownLatch.countDown();
+        );
     }
 }

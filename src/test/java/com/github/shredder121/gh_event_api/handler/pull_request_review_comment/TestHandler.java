@@ -15,45 +15,42 @@
  */
 package com.github.shredder121.gh_event_api.handler.pull_request_review_comment;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
-
-import java.util.Arrays;
 
 import org.hamcrest.Matcher;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 import com.github.shredder121.gh_event_api.model.Comment;
 import com.github.shredder121.gh_event_api.model.PullRequest;
-import com.github.shredder121.gh_event_api.model.Repository;
 
 class TestHandler extends AbstractTestHandlerBean implements PullRequestReviewCommentHandler {
 
     @Override
     public void handle(PullRequestReviewCommentPayload payload) {
-        errorCollector.checkThat(payload.getAction(), is("created"));
-
-        errorCollector.checkThat(payload.getPullRequest(), allOf(
-                property(PullRequest::getNumber, is(1)),
-                property(PullRequest::getTitle, is("Update the README with new information"))
-        ));
-
-        errorCollector.checkThat(payload.getComment(), commentMatchers());
-
-        errorCollector.checkThat(payload.getRepository(), allOf(
-                property(Repository::getFullName, is("baxterthehacker/public-repo")),
-                property(Repository::getName, is("public-repo"))
-        ));
-
-        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
-
-        errorCollector.checkThat(payload.getSender().getLogin(), is("baxterthehacker"));
-
+        errorCollector.checkThat(payload, allOf(asList(
+                property(PullRequestReviewCommentPayload::getAction, is("created")),
+                property(PullRequestReviewCommentPayload::getPullRequest, pullRequestMatchers()),
+                property(PullRequestReviewCommentPayload::getComment, commentMatchers()),
+                property(PullRequestReviewCommentPayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO)),
+                property(PullRequestReviewCommentPayload::getOrganization, is(nullValue())),
+                property(PullRequestReviewCommentPayload::getSender, is(BAXTERTHEHACKER))
+        )));
         countDownLatch.countDown();
     }
 
+    private static Matcher<PullRequest> pullRequestMatchers() {
+        return allOf(
+                property(PullRequest::getNumber, is(1)),
+                property(PullRequest::getTitle, is("Update the README with new information"))
+        );
+    }
+
     private static Matcher<Comment> commentMatchers() {
-        return allOf(Arrays.asList(
+        return allOf(asList(
                 property(Comment::getBody, is("Maybe you should use more emojji on this line.")),
                 property(Comment::getPath, is("README.md")),
                 property(Comment::getPosition, is(1)),

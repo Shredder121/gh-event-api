@@ -15,38 +15,34 @@
  */
 package com.github.shredder121.gh_event_api.handler.membership;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.Kdaigle.KDAIGLE;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
-import java.util.Arrays;
+import org.hamcrest.Matcher;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
-import com.github.shredder121.gh_event_api.model.Organization;
 import com.github.shredder121.gh_event_api.model.Team;
-import com.github.shredder121.gh_event_api.model.User;
 
 class TestHandler extends AbstractTestHandlerBean implements MembershipHandler {
 
     @Override
     public void handle(MembershipPayload payload) {
-        errorCollector.checkThat(payload.getAction(), is("added"));
+        errorCollector.checkThat(payload, allOf(asList(
+                property(MembershipPayload::getAction, is("added")),
+                property(MembershipPayload::getScope, is("team")),
+                property(MembershipPayload::getMember, is(KDAIGLE)),
+                property(MembershipPayload::getSender, is(BAXTERTHEHACKER)),
+                property(MembershipPayload::getTeam, teamMatchers())
+        )));
+        countDownLatch.countDown();
+    }
 
-        errorCollector.checkThat(payload.getScope(), is("team"));
-
-        errorCollector.checkThat(payload.getMember(), allOf(
-                property(User::getId, is(2501)),
-                property(User::getLogin, is("kdaigle")),
-                property(User::getHtmlUrl, is("https://github.com/kdaigle"))
-        ));
-
-        errorCollector.checkThat(payload.getSender(), allOf(
-                property(User::getId, is(6752317)),
-                property(User::getLogin, is("baxterthehacker")),
-                property(User::getHtmlUrl, is("https://github.com/baxterthehacker"))
-        ));
-
-        errorCollector.checkThat(payload.getTeam(), allOf(Arrays.asList(
+    private static Matcher<Team> teamMatchers() {
+        return allOf(asList(
                 property(Team::getId, is(123456)),
                 property(Team::getName, is("Contractors")),
                 property(Team::getSlug, is("contractors")),
@@ -54,14 +50,6 @@ class TestHandler extends AbstractTestHandlerBean implements MembershipHandler {
                 property(Team::getUrl, is("https://api.github.com/teams/123456")),
                 property(Team::getMembersUrl, is("https://api.github.com/teams/123456/members{/member}")),
                 property(Team::getRepositoriesUrl, is("https://api.github.com/teams/123456/repos"))
-        )));
-
-        errorCollector.checkThat(payload.getOrganization(), allOf(
-                property(Organization::getId, is(7649605)),
-                property(Organization::getLogin, is("baxterandthehackers")),
-                property(Organization::getUrl, is("https://api.github.com/orgs/baxterandthehackers"))
         ));
-
-        countDownLatch.countDown();
     }
 }

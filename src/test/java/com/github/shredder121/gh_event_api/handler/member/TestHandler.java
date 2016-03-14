@@ -15,37 +15,26 @@
  */
 package com.github.shredder121.gh_event_api.handler.member;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.Octocat.OCTOCAT;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
-import com.github.shredder121.gh_event_api.model.Repository;
-import com.github.shredder121.gh_event_api.model.User;
 
 class TestHandler extends AbstractTestHandlerBean implements MemberHandler {
 
     @Override
     public void handle(MemberPayload payload) {
-        errorCollector.checkThat(payload.getAction(), is("added"));
-
-        errorCollector.checkThat(payload.getMember(), allOf(
-                property(User::getId, is(583231)),
-                property(User::getLogin, is("octocat")),
-                property(User::getUrl, is("https://api.github.com/users/octocat"))
-        ));
-
-        errorCollector.checkThat(payload.getRepository(), allOf(
-                property(Repository::getName, is("public-repo")),
-                property(Repository::getFullName, is("baxterthehacker/public-repo"))
-        ));
-
-        errorCollector.checkThat(payload.getSender(), allOf(
-                property(User::getId, is(6752317)),
-                property(User::getLogin, is("baxterthehacker")),
-                property(User::getUrl, is("https://api.github.com/users/baxterthehacker"))
-        ));
-
+        errorCollector.checkThat(payload, allOf(asList(
+                property(MemberPayload::getAction, is("added")),
+                property(MemberPayload::getMember, is(OCTOCAT)),
+                property(MemberPayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO)),
+                property(MemberPayload::getSender, is(BAXTERTHEHACKER))
+        )));
         countDownLatch.countDown();
     }
 }

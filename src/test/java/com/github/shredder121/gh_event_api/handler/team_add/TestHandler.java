@@ -15,38 +15,35 @@
  */
 package com.github.shredder121.gh_event_api.handler.team_add;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterAndTheHackers.*;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
+import org.hamcrest.Matcher;
+
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
-import com.github.shredder121.gh_event_api.model.Organization;
-import com.github.shredder121.gh_event_api.model.Repository;
 import com.github.shredder121.gh_event_api.model.Team;
 
 class TestHandler extends AbstractTestHandlerBean implements TeamAddHandler {
 
     @Override
     public void handle(TeamAddPayload payload) {
-        errorCollector.checkThat(payload.getTeam(), allOf(
+        errorCollector.checkThat(payload, allOf(asList(
+                property(TeamAddPayload::getTeam, teamMatchers()),
+                property(TeamAddPayload::getRepository, is(BAXTERANDTHEHACKERS_PUBLIC_REPO)),
+                property(TeamAddPayload::getOrganization, is(BAXTERANDTHEHACKERS_ORG)),
+                property(TeamAddPayload::getSender, is(BAXTERANDTHEHACKERS))
+        )));
+        countDownLatch.countDown();
+    }
+
+    private static Matcher<Team> teamMatchers() {
+        return allOf(
                 property(Team::getId, is(836012)),
                 property(Team::getName, is("github")),
                 property(Team::getSlug, is("github"))
-        ));
-
-        errorCollector.checkThat(payload.getRepository(), allOf(
-                property(Repository::getName, is("public-repo")),
-                property(Repository::getFullName, is("baxterandthehackers/public-repo"))
-        ));
-
-        errorCollector.checkThat(payload.getOrganization(), allOf(
-                property(Organization::getId, is(7649605)),
-                property(Organization::getLogin, is("baxterandthehackers")),
-                property(Organization::getUrl, is("https://api.github.com/orgs/baxterandthehackers"))
-        ));
-
-        errorCollector.checkThat(payload.getSender().getLogin(), is("baxterandthehackers"));
-
-        countDownLatch.countDown();
+        );
     }
 }

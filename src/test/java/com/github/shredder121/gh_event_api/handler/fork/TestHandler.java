@@ -15,32 +15,25 @@
  */
 package com.github.shredder121.gh_event_api.handler.fork;
 
-import static org.hamcrest.Matchers.*;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterAndTheHackers.BAXTERANDTHEHACKERS;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterAndTheHackers.BAXTERANDTHEHACKERS_PUBLIC_REPO;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
-import com.github.shredder121.gh_event_api.model.Repository;
-import com.github.shredder121.gh_event_api.model.User;
 
 class TestHandler extends AbstractTestHandlerBean implements ForkHandler {
 
     @Override
     public void handle(ForkPayload payload) {
-        User sender = payload.getSender();
-        errorCollector.checkThat(sender.getLogin(), is("baxterandthehackers"));
-
-        Repository repository = payload.getRepository();
-        errorCollector.checkThat(repository.getOwner().getLogin(), is("baxterthehacker"));
-        errorCollector.checkThat(repository.getForks(), is(1L));
-
-        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
-
-        Repository forkee = payload.getForkee();
-        errorCollector.checkThat(forkee.getName(), is(repository.getName()));
-        errorCollector.checkThat(forkee.getForksCount(), is(0L));
-
-        errorCollector.checkThat(forkee.getFullName(), containsString(sender.getLogin()));
-        errorCollector.checkThat(forkee.getForksCount(), is(lessThan(repository.getForksCount())));
-
+        errorCollector.checkThat(payload, allOf(asList(
+                property(ForkPayload::getSender, is(BAXTERANDTHEHACKERS)),
+                property(ForkPayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO)),
+                property(ForkPayload::getForkee, is(BAXTERANDTHEHACKERS_PUBLIC_REPO))
+        )));
         countDownLatch.countDown();
     }
 }

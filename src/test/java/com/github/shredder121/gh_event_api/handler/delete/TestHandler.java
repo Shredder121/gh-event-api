@@ -15,29 +15,26 @@
  */
 package com.github.shredder121.gh_event_api.handler.delete;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
-import com.github.shredder121.gh_event_api.model.Repository;
 
 class TestHandler extends AbstractTestHandlerBean implements DeleteHandler {
 
     @Override
     public void handle(DeletePayload payload) {
-        errorCollector.checkThat(payload.getRefType(), is("tag"));
-        errorCollector.checkThat(payload.getRef(), is("simple-tag"));
-        errorCollector.checkThat(payload.getPusherType(), is("user"));
-
-        errorCollector.checkThat(payload.getRepository(), allOf(
-                property(Repository::getFullName, is("baxterthehacker/public-repo")),
-                property(Repository::getName, is("public-repo"))
-        ));
-
-        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
-
-        errorCollector.checkThat(payload.getSender().getLogin(), is("baxterthehacker"));
-
+        errorCollector.checkThat(payload, allOf(asList(
+                property(DeletePayload::getRefType, is("tag")),
+                property(DeletePayload::getRef, is("simple-tag")),
+                property(DeletePayload::getPusherType, is("user")),
+                property(DeletePayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO)),
+                property(DeletePayload::getOrganization, is(nullValue())),
+                property(DeletePayload::getSender, is(BAXTERTHEHACKER))
+        )));
         countDownLatch.countDown();
     }
 }

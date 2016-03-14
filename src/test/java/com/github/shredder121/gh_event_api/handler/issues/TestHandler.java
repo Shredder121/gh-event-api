@@ -15,47 +15,44 @@
  */
 package com.github.shredder121.gh_event_api.handler.issues;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
+import org.hamcrest.Matcher;
+
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 import com.github.shredder121.gh_event_api.model.Issue;
-import com.github.shredder121.gh_event_api.model.Repository;
 
 class TestHandler extends AbstractTestHandlerBean implements IssuesHandler {
 
     @Override
     public void handle(IssuesPayload payload) {
-        errorCollector.checkThat(payload.getAction(), is("opened"));
+        errorCollector.checkThat(payload, allOf(asList(
+                property(IssuesPayload::getAction, is("opened")),
+                property(IssuesPayload::getIssue, issueMatchers()),
+                property(IssuesPayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO)),
+                property(IssuesPayload::getOrganization, is(nullValue())),
+                property(IssuesPayload::getSender, is(BAXTERTHEHACKER))
+        )));
+        countDownLatch.countDown();
+    }
 
-        errorCollector.checkThat(payload.getIssue(), allOf(
+    private static Matcher<Issue> issueMatchers() {
+        return allOf(asList(
                 property(Issue::getId, is(73464126)),
                 property(Issue::getNumber, is(2)),
+                property(Issue::getState, is("open")),
                 property(Issue::getTitle, is("Spelling error in the README file")),
                 property(Issue::getBody, is("It looks like you accidently spelled 'commit' with two 't's.")),
                 property(Issue::getCreatedAt, is(LocalDateTime.parse("2015-05-05T23:40:28").atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC)))),
                 property(Issue::getUpdatedAt, is(LocalDateTime.parse("2015-05-05T23:40:28").atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC))))
         ));
-
-        errorCollector.checkThat(payload.getRepository(), allOf(
-                property(Repository::getFullName, is("baxterthehacker/public-repo")),
-                property(Repository::getName, is("public-repo"))
-        ));
-
-        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
-
-        errorCollector.checkThat(payload.getIssue(), allOf(
-                property(Issue::getNumber, is(2)),
-                property(Issue::getTitle, is("Spelling error in the README file")),
-                property(Issue::getState, is("open"))
-        ));
-
-        errorCollector.checkThat(payload.getSender().getLogin(), is("baxterthehacker"));
-
-        countDownLatch.countDown();
     }
 }

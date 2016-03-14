@@ -15,50 +15,41 @@
  */
 package com.github.shredder121.gh_event_api.handler.page_build;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
 
-import java.util.Arrays;
+import org.hamcrest.Matcher;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 import com.github.shredder121.gh_event_api.model.PageBuild;
-import com.github.shredder121.gh_event_api.model.Repository;
-import com.github.shredder121.gh_event_api.model.User;
 
 class TestHandler extends AbstractTestHandlerBean implements PageBuildHandler {
 
     @Override
     public void handle(PageBuildPayload payload) {
-        errorCollector.checkThat(payload.getId(), is(15995382));
+        errorCollector.checkThat(payload, allOf(asList(
+                property(PageBuildPayload::getId, is(15995382)),
+                property(PageBuildPayload::getBuild, pageBuildMatchers()),
+                property(PageBuildPayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO)),
+                property(PageBuildPayload::getOrganization, is(nullValue())),
+                property(PageBuildPayload::getSender, is(BAXTERTHEHACKER))
+        )));
+        countDownLatch.countDown();
+    }
 
-        errorCollector.checkThat(payload.getBuild(), allOf(Arrays.asList(
+    private static Matcher<PageBuild> pageBuildMatchers() {
+        return allOf(asList(
                 property(PageBuild::getUrl, is("https://api.github.com/repos/baxterthehacker/public-repo/pages/builds/15995382")),
                 property(PageBuild::getStatus, is("built")),
                 property(PageBuild::getError, hasProperty("message", nullValue())),
-                property(PageBuild::getPusher, allOf(
-                        property(User::getId, is(6752317)),
-                        property(User::getLogin, is("baxterthehacker")),
-                        property(User::getHtmlUrl, is("https://github.com/baxterthehacker"))
-                )),
+                property(PageBuild::getPusher, is(BAXTERTHEHACKER)),
                 property(PageBuild::getCommit, is("053b99542c83021d6b202d1a1f5ecd5ef7084e55")),
                 property(PageBuild::getDuration, is(3790L)),
                 property(PageBuild::getCreatedAt, hasToString(startsWith("2015-05-05T23:40:13Z"))),
                 property(PageBuild::getUpdatedAt, hasToString(startsWith("2015-05-05T23:40:17Z")))
-        )));
-
-        errorCollector.checkThat(payload.getRepository(), allOf(
-                property(Repository::getName, is("public-repo")),
-                property(Repository::getFullName, is("baxterthehacker/public-repo"))
         ));
-
-        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
-
-        errorCollector.checkThat(payload.getSender(), allOf(
-                property(User::getId, is(6752317)),
-                property(User::getLogin, is("baxterthehacker")),
-                property(User::getHtmlUrl, is("https://github.com/baxterthehacker"))
-        ));
-
-        countDownLatch.countDown();
     }
 }

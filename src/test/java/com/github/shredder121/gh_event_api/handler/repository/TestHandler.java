@@ -15,38 +15,26 @@
  */
 package com.github.shredder121.gh_event_api.handler.repository;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterAndTheHackers.BAXTERANDTHEHACKERS_NEW_REPOSITORY;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterAndTheHackers.BAXTERANDTHEHACKERS_ORG;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
-import com.github.shredder121.gh_event_api.model.Organization;
-import com.github.shredder121.gh_event_api.model.Repository;
-import com.github.shredder121.gh_event_api.model.User;
 
 class TestHandler extends AbstractTestHandlerBean implements RepositoryHandler {
 
     @Override
     public void handle(RepositoryPayload payload) {
-        errorCollector.checkThat(payload.getAction(), is("created"));
-
-        errorCollector.checkThat(payload.getRepository(), allOf(
-                property(Repository::getFullName, is("baxterandthehackers/new-repository")),
-                property(Repository::getName, is("new-repository"))
-        ));
-
-        errorCollector.checkThat(payload.getOrganization(), allOf(
-                property(Organization::getId, is(7649605)),
-                property(Organization::getLogin, is("baxterandthehackers")),
-                property(Organization::getUrl, is("https://api.github.com/orgs/baxterandthehackers"))
-        ));
-
-        errorCollector.checkThat(payload.getSender(), allOf(
-                property(User::getId, is(6752317)),
-                property(User::getLogin, is("baxterthehacker")),
-                property(User::getHtmlUrl, is("https://github.com/baxterthehacker"))
-        ));
-
+        errorCollector.checkThat(payload, allOf(asList(
+                property(RepositoryPayload::getAction, is("created")),
+                property(RepositoryPayload::getRepository, is(BAXTERANDTHEHACKERS_NEW_REPOSITORY)),
+                property(RepositoryPayload::getOrganization, is(BAXTERANDTHEHACKERS_ORG)),
+                property(RepositoryPayload::getSender, is(BAXTERTHEHACKER))
+        )));
         countDownLatch.countDown();
     }
 }

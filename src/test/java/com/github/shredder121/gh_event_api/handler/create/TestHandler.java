@@ -15,31 +15,28 @@
  */
 package com.github.shredder121.gh_event_api.handler.create;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
-import com.github.shredder121.gh_event_api.model.Repository;
 
 class TestHandler extends AbstractTestHandlerBean implements CreateHandler {
 
     @Override
     public void handle(CreatePayload payload) {
-        errorCollector.checkThat(payload.getDescription(), is(""));
-        errorCollector.checkThat(payload.getRefType(), is("tag"));
-        errorCollector.checkThat(payload.getRef(), is("0.0.1"));
-        errorCollector.checkThat(payload.getMasterBranch(), is("master"));
-        errorCollector.checkThat(payload.getPusherType(), is("user"));
-
-        errorCollector.checkThat(payload.getRepository(), allOf(
-                property(Repository::getFullName, is("baxterthehacker/public-repo")),
-                property(Repository::getName, is("public-repo"))
-        ));
-
-        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
-
-        errorCollector.checkThat(payload.getSender().getLogin(), is("baxterthehacker"));
-
+        errorCollector.checkThat(payload, allOf(asList(
+                property(CreatePayload::getDescription, is("")),
+                property(CreatePayload::getRefType, is("tag")),
+                property(CreatePayload::getRef, is("0.0.1")),
+                property(CreatePayload::getMasterBranch, is("master")),
+                property(CreatePayload::getPusherType, is("user")),
+                property(CreatePayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO)),
+                property(CreatePayload::getOrganization, is(nullValue())),
+                property(CreatePayload::getSender, is(BAXTERTHEHACKER))
+        )));
         countDownLatch.countDown();
     }
 }

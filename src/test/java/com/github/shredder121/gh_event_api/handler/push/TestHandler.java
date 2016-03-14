@@ -15,52 +15,48 @@
  */
 package com.github.shredder121.gh_event_api.handler.push;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
-import static com.google.common.collect.Iterables.getOnlyElement;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
 
-import java.util.Collection;
+import org.hamcrest.Matcher;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 import com.github.shredder121.gh_event_api.model.PushCommit;
-import com.github.shredder121.gh_event_api.model.Repository;
-import com.github.shredder121.gh_event_api.model.User;
 
 class TestHandler extends AbstractTestHandlerBean implements PushHandler {
 
     @Override
     public void handle(PushPayload payload) {
-        errorCollector.checkThat(payload.getRef(), is("refs/heads/changes"));
-
-        errorCollector.checkThat(payload.getBefore(), is("9049f1265b7d61be4a8904a9a27120d2064dab3b"));
-
-        errorCollector.checkThat(payload.getAfter(), is("0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c"));
-
-        errorCollector.checkThat(payload.getCreated(), is(false));
-
-        errorCollector.checkThat(payload.getDeleted(), is(false));
-
-        errorCollector.checkThat(payload.getForced(), is(false));
-
-        Collection<PushCommit> commits = payload.getCommits();
-        PushCommit commit = getOnlyElement(commits);
-        errorCollector.checkThat(commit.getMessage(), is("Update README.md"));
-
-        errorCollector.checkThat(payload.getHeadCommit(), is(equalTo(commit)));
-
-        errorCollector.checkThat(payload.getSender(), allOf(
-                property(User::getId, is(6752317)),
-                property(User::getLogin, is("baxterthehacker")),
-                property(User::getHtmlUrl, is("https://github.com/baxterthehacker"))
-        ));
-
-        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
-
-        errorCollector.checkThat(payload.getRepository(), allOf(
-                property(Repository::getName, is("public-repo")),
-                property(Repository::getFullName, is("baxterthehacker/public-repo"))
-        ));
-
+        errorCollector.checkThat(payload, allOf(asList(
+                property(PushPayload::getRef, is("refs/heads/changes")),
+                property(PushPayload::getBefore, is("9049f1265b7d61be4a8904a9a27120d2064dab3b")),
+                property(PushPayload::getAfter, is("0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c")),
+                property(PushPayload::getCreated, is(false)),
+                property(PushPayload::getDeleted, is(false)),
+                property(PushPayload::getForced, is(false)),
+                property(PushPayload::getCommits, commitsMatchers()),
+                property(PushPayload::getHeadCommit, headCommitMatchers()),
+                property(PushPayload::getSender, is(BAXTERTHEHACKER)),
+                property(PushPayload::getOrganization, is(nullValue())),
+                property(PushPayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO))
+        )));
         countDownLatch.countDown();
+    }
+
+    private static Matcher<Iterable<? extends PushCommit>> commitsMatchers() {
+        return contains(
+                allOf(asList(
+                        property(PushCommit::getMessage, is("Update README.md"))
+                ))
+        );
+    }
+
+    private static Matcher<PushCommit> headCommitMatchers() {
+        return allOf(asList(
+                property(PushCommit::getMessage, is("Update README.md"))
+        ));
     }
 }

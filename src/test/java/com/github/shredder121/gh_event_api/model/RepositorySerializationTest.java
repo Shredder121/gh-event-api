@@ -15,6 +15,7 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
 import static org.hamcrest.Matchers.is;
 
 public class RepositorySerializationTest extends AbstractSerializationTest<Repository> {
@@ -119,7 +120,6 @@ public class RepositorySerializationTest extends AbstractSerializationTest<Repos
 
     @Override
     protected void checkDeserialized(Repository repository) {
-        errorCollector.checkThat(repository.getFullName(), is("baxterthehacker/public-repo"));
-        errorCollector.checkThat(repository.getName(), is("public-repo"));
+        errorCollector.checkThat(repository, is(BAXTERTHEHACKER_PUBLIC_REPO));
     }
 }

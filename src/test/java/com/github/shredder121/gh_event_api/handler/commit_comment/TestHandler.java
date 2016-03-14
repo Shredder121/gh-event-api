@@ -15,6 +15,10 @@
  */
 package com.github.shredder121.gh_event_api.handler.commit_comment;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
 
 import java.time.LocalDateTime;
@@ -22,38 +26,40 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
+import org.hamcrest.Matcher;
+
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 import com.github.shredder121.gh_event_api.model.Comment;
-import com.github.shredder121.gh_event_api.model.Repository;
-import com.github.shredder121.gh_event_api.model.User;
 
 class TestHandler extends AbstractTestHandlerBean implements CommitCommentHandler {
 
+    private final ZonedDateTime commentTime
+            = LocalDateTime.parse("2015-05-05T23:40:29")
+            .atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC));
+
     @Override
     public void handle(CommitCommentPayload payload) {
-        errorCollector.checkThat(payload.getAction(), is("created"));
-
-        Comment comment = payload.getComment();
-        errorCollector.checkThat(comment.getId(), is(11056394));
-        errorCollector.checkThat("This is a comment on the overall commit", comment.getPath(), is(nullValue()));
-        errorCollector.checkThat("This is a comment on the overall commit", comment.getPosition(), is(nullValue()));
-        errorCollector.checkThat(comment.getUrl(), containsString(String.valueOf(comment.getId())));
-        errorCollector.checkThat(comment.getHtmlUrl(), containsString(comment.getCommitId()));
-        errorCollector.checkThat(comment.getBody(), is("This is a really good change! :+1:"));
-
-        ZonedDateTime commentTime = LocalDateTime.parse("2015-05-05T23:40:29").atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC));
-        errorCollector.checkThat(comment.getCreatedAt(), is(commentTime));
-        errorCollector.checkThat(comment.getUpdatedAt(), is(commentTime));
-
-        Repository repository = payload.getRepository();
-        errorCollector.checkThat(repository.getFullName(), is("baxterthehacker/public-repo"));
-        errorCollector.checkThat(repository.getName(), is("public-repo"));
-
-        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
-
-        User sender = payload.getSender();
-        errorCollector.checkThat(sender.getLogin(), is("baxterthehacker"));
-
+        errorCollector.checkThat(payload, allOf(asList(
+                property(CommitCommentPayload::getAction, is("created")),
+                property(CommitCommentPayload::getComment, commentMatchers()),
+                property(CommitCommentPayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO)),
+                property(CommitCommentPayload::getOrganization, is(nullValue())),
+                property(CommitCommentPayload::getSender, is(BAXTERTHEHACKER))
+        )));
         countDownLatch.countDown();
+    }
+
+    private Matcher<Comment> commentMatchers() {
+        return allOf(asList(
+                property(Comment::getId, is(11056394)),
+                property(Comment::getCommitId, is("9049f1265b7d61be4a8904a9a27120d2064dab3b")),
+                property(Comment::getPath, is(nullValue())),
+                property(Comment::getPosition, is(nullValue())),
+                property(Comment::getBody, is("This is a really good change! :+1:")),
+                property(Comment::getUrl, containsString("11056394")),
+                property(Comment::getHtmlUrl, containsString("9049f1265b7d61be4a8904a9a27120d2064dab3b")),
+                property(Comment::getCreatedAt, is(commentTime)),
+                property(Comment::getUpdatedAt, is(commentTime))
+        ));
     }
 }

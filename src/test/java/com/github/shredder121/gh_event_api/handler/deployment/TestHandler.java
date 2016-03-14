@@ -15,22 +15,34 @@
  */
 package com.github.shredder121.gh_event_api.handler.deployment;
 
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
 
-import java.util.Arrays;
 import java.util.Map;
+
+import org.hamcrest.Matcher;
 
 import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 import com.github.shredder121.gh_event_api.model.Deployment;
-import com.github.shredder121.gh_event_api.model.Repository;
-import com.github.shredder121.gh_event_api.model.User;
 
 class TestHandler extends AbstractTestHandlerBean implements DeploymentHandler {
 
     @Override
     public void handle(DeploymentPayload payload) {
-        errorCollector.checkThat(payload.getDeployment(), allOf(Arrays.asList(
+        errorCollector.checkThat(payload, allOf(asList(
+                property(DeploymentPayload::getDeployment, deploymentMatchers()),
+                property(DeploymentPayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO)),
+                property(DeploymentPayload::getOrganization, is(nullValue())),
+                property(DeploymentPayload::getSender, is(BAXTERTHEHACKER))
+        )));
+        countDownLatch.countDown();
+    }
+
+    public static Matcher<Deployment> deploymentMatchers() {
+        return allOf(asList(
                 property(Deployment::getId, is(710692)),
                 property(Deployment::getRef, is("master")),
                 property(Deployment::getSha, is("9049f1265b7d61be4a8904a9a27120d2064dab3b")),
@@ -38,28 +50,9 @@ class TestHandler extends AbstractTestHandlerBean implements DeploymentHandler {
                 property(Deployment::getPayload, is(any(Map.class))),
                 property(Deployment::getEnvironment, is("production")),
                 property(Deployment::getDescription, is(nullValue())),
-                property(Deployment::getCreator, allOf(
-                        property(User::getId, is(6752317)),
-                        property(User::getLogin, is("baxterthehacker")),
-                        property(User::getHtmlUrl, is("https://github.com/baxterthehacker"))
-                )),
+                property(Deployment::getCreator, is(BAXTERTHEHACKER)),
                 property(Deployment::getCreatedAt, hasToString(startsWith("2015-05-05T23:40:38Z"))),
                 property(Deployment::getUpdatedAt, hasToString(startsWith("2015-05-05T23:40:38Z")))
-        )));
-
-        errorCollector.checkThat(payload.getRepository(), allOf(
-                property(Repository::getName, is("public-repo")),
-                property(Repository::getFullName, is("baxterthehacker/public-repo"))
         ));
-
-        errorCollector.checkThat(payload.getOrganization(), is(nullValue()));
-
-        errorCollector.checkThat(payload.getSender(), allOf(
-                property(User::getId, is(6752317)),
-                property(User::getLogin, is("baxterthehacker")),
-                property(User::getHtmlUrl, is("https://github.com/baxterthehacker"))
-        ));
-
-        countDownLatch.countDown();
     }
 }

@@ -15,15 +15,13 @@
  */
 package com.github.shredder121.gh_event_api.handler.commit_comment;
 
+import static com.github.shredder121.gh_event_api.testutil.DateTimeHelpers.dt;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 import org.hamcrest.Matcher;
@@ -33,9 +31,7 @@ import com.github.shredder121.gh_event_api.model.Comment;
 
 class TestHandler extends AbstractTestHandlerBean implements CommitCommentHandler {
 
-    private final ZonedDateTime commentTime
-            = LocalDateTime.parse("2015-05-05T23:40:29")
-            .atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC));
+    private final ZonedDateTime commentTime = dt("2015-05-05", "23:40:29");
 
     @Override
     public void handle(CommitCommentPayload payload) {

@@ -15,15 +15,12 @@
  */
 package com.github.shredder121.gh_event_api.handler.pull_request;
 
+import static com.github.shredder121.gh_event_api.testutil.DateTimeHelpers.dt;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 
 import org.hamcrest.Matcher;
 
@@ -54,7 +51,7 @@ class TestHandler extends AbstractTestHandlerBean implements PullRequestHandler 
                 property(PullRequest::getNumber, is(1)),
                 property(PullRequest::getLocked, is(false)),
                 property(PullRequest::getNumber, is(payload.getNumber())),
-                property(PullRequest::getCreatedAt, is(LocalDateTime.parse("2015-05-05T23:40:27").atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC)))),
+                property(PullRequest::getCreatedAt, is(dt("2015-05-05", "23:40:27"))),
                 property(PullRequest::getLocked, is(false)),
                 property(PullRequest::getState, is("open")),
                 property(PullRequest::getTitle, is("Update the README with new information")),

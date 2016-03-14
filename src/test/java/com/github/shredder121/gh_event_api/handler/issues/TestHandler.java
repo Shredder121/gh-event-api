@@ -15,15 +15,12 @@
  */
 package com.github.shredder121.gh_event_api.handler.issues;
 
+import static com.github.shredder121.gh_event_api.testutil.DateTimeHelpers.dt;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 
 import org.hamcrest.Matcher;
 
@@ -51,8 +48,8 @@ class TestHandler extends AbstractTestHandlerBean implements IssuesHandler {
                 property(Issue::getState, is("open")),
                 property(Issue::getTitle, is("Spelling error in the README file")),
                 property(Issue::getBody, is("It looks like you accidently spelled 'commit' with two 't's.")),
-                property(Issue::getCreatedAt, is(LocalDateTime.parse("2015-05-05T23:40:28").atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC)))),
-                property(Issue::getUpdatedAt, is(LocalDateTime.parse("2015-05-05T23:40:28").atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC))))
+                property(Issue::getCreatedAt, is(dt("2015-05-05", "23:40:28"))),
+                property(Issue::getUpdatedAt, is(dt("2015-05-05", "23:40:28")))
         ));
     }
 }

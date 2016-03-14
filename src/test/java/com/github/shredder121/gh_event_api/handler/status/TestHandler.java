@@ -15,15 +15,12 @@
  */
 package com.github.shredder121.gh_event_api.handler.status;
 
+import static com.github.shredder121.gh_event_api.testutil.DateTimeHelpers.dt;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 
 import org.hamcrest.Matcher;
 
@@ -97,7 +94,7 @@ class TestHandler extends AbstractTestHandlerBean implements StatusHandler {
         return allOf(
                 property(UserData::getName, is("baxterthehacker")),
                 property(UserData::getEmail, is("baxterthehacker@users.noreply.github.com")),
-                property(UserData::getDate, is(LocalDateTime.parse("2015-05-05T23:40:12").atZone(ZoneId.ofOffset("GMT", ZoneOffset.UTC))))
+                property(UserData::getDate, is(dt("2015-05-05", "23:40:12")))
         );
     }
 

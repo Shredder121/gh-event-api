@@ -17,8 +17,6 @@ package com.github.shredder121.gh_event_api.handler;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,11 +24,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.DisableOnDebug;
 import org.junit.rules.ErrorCollector;
+import org.junit.rules.TestRule;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GitHub;
@@ -87,6 +87,9 @@ public abstract class AbstractHandlerTest {
     @Rule
     public final ErrorCollector errorCollector = new ErrorCollector();
 
+    @Rule
+    public final TestRule timeout = new DisableOnDebug(Timeout.seconds(10));
+
     protected final CountDownLatch completion = new CountDownLatch(1);
 
     @Autowired
@@ -105,20 +108,15 @@ public abstract class AbstractHandlerTest {
     }
 
     @Test
-    public void test() {
+    public void test() throws InterruptedException {
         given().headers(
                 "X-GitHub-Event", event,
                 "X-Hub-Signature", "sha1=" + hmac)
         .and().body(getBody()).with().contentType(JSON)
         .expect().statusCode(HttpStatus.OK.value())
         .when().post();
-    }
 
-    @After
-    public void awaitCompletion() throws InterruptedException {
-        if (!completion.await(10, SECONDS)) {
-            fail("Timeout during execution");
-        }
+        completion.await();
     }
 
     private String getBody() {

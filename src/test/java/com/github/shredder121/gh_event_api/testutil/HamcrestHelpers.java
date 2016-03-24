@@ -107,7 +107,8 @@ public class HamcrestHelpers {
         public static final Matcher<User> BAXTERTHEHACKER = allOf(asList(
                 property(User::getId, is(6752317)),
                 property(User::getLogin, is("baxterthehacker")),
-                property(User::getHtmlUrl, is("https://github.com/baxterthehacker"))
+                property(User::getHtmlUrl, is("https://github.com/baxterthehacker")),
+                property(User::isSiteAdmin, is(false))
         ));
 
         public static final Matcher<Repository> BAXTERTHEHACKER_PUBLIC_REPO = allOf(asList(
@@ -125,7 +126,8 @@ public class HamcrestHelpers {
         public static final Matcher<User> JASONRUDOLPH = allOf(asList(
                 property(User::getId, is(2988)),
                 property(User::getLogin, is("jasonrudolph")),
-                property(User::getHtmlUrl, is("https://github.com/jasonrudolph"))
+                property(User::getHtmlUrl, is("https://github.com/jasonrudolph")),
+                property(User::isSiteAdmin, is(true))
         ));
     }
 
@@ -137,7 +139,8 @@ public class HamcrestHelpers {
         public static final Matcher<User> KDAIGLE = allOf(asList(
                 property(User::getId, is(2501)),
                 property(User::getLogin, is("kdaigle")),
-                property(User::getHtmlUrl, is("https://github.com/kdaigle"))
+                property(User::getHtmlUrl, is("https://github.com/kdaigle")),
+                property(User::isSiteAdmin, is(true))
         ));
     }
 

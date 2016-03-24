@@ -41,6 +41,21 @@ public class Deployment {
     Integer id;
 
     /**
+     * The (API) URL of this deployment.
+     */
+    String url;
+
+    /**
+     * The (API) URL to view this deployment's statuses.
+     */
+    String statusesUrl;
+
+    /**
+     * The (API) URL to view the repository this deployment is for.
+     */
+    String repositoryUrl;
+
+    /**
      * The ref to deploy.
      * This can be a branch, tag or SHA.
      */

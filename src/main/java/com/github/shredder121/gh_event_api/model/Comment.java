@@ -17,9 +17,11 @@ package com.github.shredder121.gh_event_api.model;
 
 import java.time.ZonedDateTime;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
+import com.google.common.collect.ImmutableMap;
 
 /**
  * A comment on a part of the commit diff.
@@ -88,6 +90,11 @@ public class Comment {
     String htmlUrl;
 
     /**
+     * The user that created the comment.
+     */
+    User user;
+
+    /**
      * The time the comment was created.
      */
     ZonedDateTime createdAt;
@@ -96,4 +103,11 @@ public class Comment {
      * The time the comment was last modified.
      */
     ZonedDateTime updatedAt;
+
+    /**
+     * Additional links included in the Comment.
+     * (Only populated with pull request review comments)
+     */
+    @JsonProperty("_links")
+    ImmutableMap<String, Link> links;
 }

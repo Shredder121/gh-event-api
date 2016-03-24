@@ -15,6 +15,7 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
@@ -51,4 +52,17 @@ public class User {
      * The (GitHub Web UI) URL to view this user.
      */
     String htmlUrl;
+
+    /**
+     * The type of User.
+     * (Payloads can be sent from {@code User}s or {@code Organization}s)
+     */
+    String type;
+
+    /**
+     * Whether the user is the administrator.
+     * (On GitHub.com this means a GitHub employee)
+     */
+    @JsonProperty("site_admin")
+    boolean isSiteAdmin;
 }

@@ -33,6 +33,11 @@ import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 public class Label {
 
     /**
+     * The (API) URL to view this label.
+     */
+    String url;
+
+    /**
      * The name of the label.
      */
     String name;

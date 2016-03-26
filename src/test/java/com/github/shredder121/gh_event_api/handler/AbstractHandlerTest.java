@@ -38,8 +38,8 @@ import org.junit.runner.RunWith;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GitHub;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.test.annotation.DirtiesContext;
@@ -99,8 +99,8 @@ public abstract class AbstractHandlerTest {
     @Autowired
     private AbstractTestHandlerBean handlerBean;
 
-    @Value("${local.server.port}")
-    private int testPort;
+    @Autowired
+    private Environment env;
 
     protected AbstractHandlerTest(String event) {
         this.event = event;
@@ -113,7 +113,7 @@ public abstract class AbstractHandlerTest {
         handlerBean.setCountDownLatch(completion);
         handlerBean.setErrorCollector(errorCollector);
 
-        RestAssured.port = testPort;
+        RestAssured.port = env.getRequiredProperty("local.server.port", int.class);
     }
 
     @After

@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,6 +38,7 @@ import org.junit.runner.RunWith;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GitHub;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -47,9 +49,10 @@ import com.fasterxml.jackson.core.util.MinimalPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
+import com.jayway.restassured.RestAssured;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebIntegrationTest({"spring.main.show-banner=false"})
+@WebIntegrationTest(value = {"spring.main.show-banner=false"}, randomPort = true)
 @DirtiesContext
 public abstract class AbstractHandlerTest {
 
@@ -96,6 +99,9 @@ public abstract class AbstractHandlerTest {
     @Autowired
     private AbstractTestHandlerBean handlerBean;
 
+    @Value("${local.server.port}")
+    private int testPort;
+
     protected AbstractHandlerTest(String event) {
         this.event = event;
         /* This will be the HMAC as reported by https://www.freeformatter.com/hmac-generator.html */
@@ -106,6 +112,13 @@ public abstract class AbstractHandlerTest {
     public final void prepareTest() {
         handlerBean.setCountDownLatch(completion);
         handlerBean.setErrorCollector(errorCollector);
+
+        RestAssured.port = testPort;
+    }
+
+    @After
+    public void resetRestAssured() {
+        RestAssured.reset();
     }
 
     @Test

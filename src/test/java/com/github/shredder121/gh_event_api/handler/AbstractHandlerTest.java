@@ -51,7 +51,7 @@ import com.google.common.collect.Maps;
 @DirtiesContext
 public abstract class AbstractHandlerTest {
 
-    private static final String DEVELOPER_GITHUB_COM_REVISION = "f5713bd67e1885cee9f3c6e41f03386792c5851c";
+    private static final String DEVELOPER_GITHUB_COM_REVISION = "3b80c25d31b03e7503b925b1647502460baea89c";
     private static final Map<String, GHContent> eventPayloadMap;
 
     static {

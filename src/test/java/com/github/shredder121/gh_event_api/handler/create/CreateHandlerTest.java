@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class CreateHandlerTest extends AbstractHandlerTest {
 
     public CreateHandlerTest() {
-        super("create", "692767e05058a25010d4aa30f2c5f324350c9a4c");
+        super("create");
     }
 
     @Bean

@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class WatchHandlerTest extends AbstractHandlerTest {
 
     public WatchHandlerTest() {
-        super("watch", "1c9a8fadfb5e7e3b9424839f3852fe180f85f212");
+        super("watch");
     }
 
     @Bean

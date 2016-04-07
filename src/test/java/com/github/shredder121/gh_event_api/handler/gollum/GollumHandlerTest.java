@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class GollumHandlerTest extends AbstractHandlerTest {
 
     public GollumHandlerTest() {
-        super("gollum", "97d92acf4aa127624fab44370aeb50cf7e615bc5");
+        super("gollum");
     }
 
     @Bean

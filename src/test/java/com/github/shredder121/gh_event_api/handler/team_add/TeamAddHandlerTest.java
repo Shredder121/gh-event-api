@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class TeamAddHandlerTest extends AbstractHandlerTest {
 
     public TeamAddHandlerTest() {
-        super("team_add", "8eedb84b5dc45b5494bf8822682f3c1a07e355df");
+        super("team_add");
     }
 
     @Bean

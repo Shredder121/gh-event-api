@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class PageBuildHandlerTest extends AbstractHandlerTest {
 
     public PageBuildHandlerTest() {
-        super("page_build", "f1cc7607a6f5e425e960c582fe7dcca3c46ea9f0");
+        super("page_build");
     }
 
     @Bean

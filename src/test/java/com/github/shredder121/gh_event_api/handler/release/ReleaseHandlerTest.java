@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class ReleaseHandlerTest extends AbstractHandlerTest {
 
     public ReleaseHandlerTest() {
-        super("release", "6a71ff39e36df0ecc123f823bbb68ed44579dfbd");
+        super("release");
     }
 
     @Bean

@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class PullRequestReviewCommentHandlerTest extends AbstractHandlerTest {
 
     public PullRequestReviewCommentHandlerTest() {
-        super("pull_request_review_comment", "4b63f10a2fff83fa13cc539313c5c9dc1bae42ca");
+        super("pull_request_review_comment");
     }
 
     @Bean

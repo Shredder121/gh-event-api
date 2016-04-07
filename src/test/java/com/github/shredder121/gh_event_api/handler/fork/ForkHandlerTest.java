@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class ForkHandlerTest extends AbstractHandlerTest {
 
     public ForkHandlerTest() {
-        super("fork", "d4f7cde1c2a894a96b9f2c651ee4744e31a01a35");
+        super("fork");
     }
 
     @Bean

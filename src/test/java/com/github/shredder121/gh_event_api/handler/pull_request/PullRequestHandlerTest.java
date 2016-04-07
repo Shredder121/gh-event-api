@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class PullRequestHandlerTest extends AbstractHandlerTest {
 
     public PullRequestHandlerTest() {
-        super("pull_request", "f699b918351c54176c727329312f24560e5c75f4");
+        super("pull_request");
     }
 
     @Bean

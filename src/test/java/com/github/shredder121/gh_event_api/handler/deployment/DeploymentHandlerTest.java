@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class DeploymentHandlerTest extends AbstractHandlerTest {
 
     public DeploymentHandlerTest() {
-        super("deployment", "dfe1d3fa559e6968587c20397f6339db62d0e360");
+        super("deployment");
     }
 
     @Bean

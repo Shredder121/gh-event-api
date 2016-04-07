@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class CommitCommentHandlerTest extends AbstractHandlerTest {
 
     public CommitCommentHandlerTest() {
-        super("commit_comment", "f8e5ceafd15a2389caacd4ac0f75f73c3217d4c3");
+        super("commit_comment");
     }
 
     @Bean

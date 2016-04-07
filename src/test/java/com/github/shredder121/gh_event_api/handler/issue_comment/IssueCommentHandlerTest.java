@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class IssueCommentHandlerTest extends AbstractHandlerTest {
 
     public IssueCommentHandlerTest() {
-        super("issue_comment", "63c8ea0b2d07c8952a0ef86111991070516ce5d1");
+        super("issue_comment");
     }
 
     @Bean

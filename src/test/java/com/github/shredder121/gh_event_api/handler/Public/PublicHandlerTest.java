@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class PublicHandlerTest extends AbstractHandlerTest {
 
     public PublicHandlerTest() {
-        super("public", "997a61f879567b839ce00b231bad3764b0289740");
+        super("public");
     }
 
     @Bean

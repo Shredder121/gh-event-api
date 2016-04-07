@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class RepositoryHandlerTest extends AbstractHandlerTest {
 
     public RepositoryHandlerTest() {
-        super("repository", "6aa770b27e558b8a2c09d278cfae46f137927920");
+        super("repository");
     }
 
     @Bean

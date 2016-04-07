@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class DeleteHandlerTest extends AbstractHandlerTest {
 
     public DeleteHandlerTest() {
-        super("delete", "a3cf1acb5d39266a7431ed35e000b3acebbe3634");
+        super("delete");
     }
 
     @Bean

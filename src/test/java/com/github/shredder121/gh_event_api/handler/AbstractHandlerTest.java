@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler;
 
+import static com.github.shredder121.gh_event_api.TestConstants.DEVELOPER_GITHUB_COM_REVISION;
+import static com.github.shredder121.gh_event_api.TestConstants.HMACS;
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
 
@@ -51,7 +53,6 @@ import com.google.common.collect.Maps;
 @DirtiesContext
 public abstract class AbstractHandlerTest {
 
-    private static final String DEVELOPER_GITHUB_COM_REVISION = "f5713bd67e1885cee9f3c6e41f03386792c5851c";
     private static final Map<String, GHContent> eventPayloadMap;
 
     static {
@@ -95,10 +96,10 @@ public abstract class AbstractHandlerTest {
     @Autowired
     private AbstractTestHandlerBean handlerBean;
 
-    protected AbstractHandlerTest(String event, String hmac) {
+    protected AbstractHandlerTest(String event) {
         this.event = event;
         /* This will be the HMAC as reported by https://www.freeformatter.com/hmac-generator.html */
-        this.hmac = hmac;
+        this.hmac = HMACS.get(event);
     }
 
     @Before

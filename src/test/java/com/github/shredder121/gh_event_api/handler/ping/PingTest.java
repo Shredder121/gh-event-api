@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class PingTest extends AbstractHandlerTest {
 
     public PingTest() {
-        super("ping", "ef61d462314dfd950ad5a6e15798bb5432de4e07");
+        super("ping");
     }
 
     @Bean

@@ -25,7 +25,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 public class MemberHandlerTest extends AbstractHandlerTest {
 
     public MemberHandlerTest() {
-        super("member", "5662335cff0c69570a1dd2aedc27576c1c20a74b");
+        super("member");
     }
 
     @Bean

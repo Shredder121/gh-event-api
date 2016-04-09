@@ -15,12 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.deployment;
 
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
+import com.github.shredder121.gh_event_api.testutil.HmacTest;
 
-import com.github.shredder121.gh_event_api.GHEventApiServer;
-
-@SpringApplicationConfiguration(classes = {HmacDeploymentHandlerTest.class, GHEventApiServer.class})
-@WebIntegrationTest({"secret=secret", "spring.main.show-banner=false"})
+@HmacTest
 public class HmacDeploymentHandlerTest extends DeploymentHandlerTest {
 }

@@ -15,8 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.ping;
 
-import org.springframework.boot.test.WebIntegrationTest;
+import com.github.shredder121.gh_event_api.testutil.HmacTest;
 
-@WebIntegrationTest({"secret=secret", "spring.main.show-banner=false"})
+@HmacTest
 public class HmacPingTest extends PingTest {
 }

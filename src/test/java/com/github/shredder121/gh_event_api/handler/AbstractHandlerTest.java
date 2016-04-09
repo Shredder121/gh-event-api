@@ -51,9 +51,9 @@ import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 import com.jayway.restassured.RestAssured;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebIntegrationTest(value = {"spring.main.show-banner=false"}, randomPort = true)
 @DirtiesContext
+@WebIntegrationTest
+@RunWith(SpringJUnit4ClassRunner.class)
 public abstract class AbstractHandlerTest {
 
     private static final Map<String, GHContent> eventPayloadMap;

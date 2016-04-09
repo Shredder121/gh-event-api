@@ -40,16 +40,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 import com.github.shredder121.gh_event_api.handler.create.CreateHandler;
+import com.github.shredder121.gh_event_api.testutil.HmacTest;
 import com.google.common.collect.ImmutableMap;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.internal.mapping.Jackson2Mapper;
 import com.jayway.restassured.mapper.ObjectMapper;
 import com.jayway.restassured.mapper.factory.DefaultJackson2ObjectMapperFactory;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebIntegrationTest({"secret=secret", "spring.main.show-banner=false"})
-@SpringApplicationConfiguration(classes = {HmacBehaviorTest.class, GHEventApiServer.class})
+@HmacTest
 @DirtiesContext
+@WebIntegrationTest
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = {HmacBehaviorTest.class, GHEventApiServer.class})
 public class HmacBehaviorTest {
 
     private static final ObjectMapper restAssuredMapper = new Jackson2Mapper(

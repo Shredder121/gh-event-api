@@ -13,10 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.shredder121.gh_event_api.handler.release;
+package com.github.shredder121.gh_event_api.testutil;
 
-import com.github.shredder121.gh_event_api.testutil.HmacTest;
+import java.lang.annotation.*;
 
-@HmacTest
-public class HmacReleaseHandlerTest extends ReleaseHandlerTest {
+import org.springframework.test.context.ActiveProfiles;
+
+@Documented
+@ActiveProfiles("hmac")
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface HmacTest {
 }

@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,6 +39,7 @@ import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GitHub;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.test.annotation.DirtiesContext;
@@ -47,10 +49,11 @@ import com.fasterxml.jackson.core.util.MinimalPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
+import com.jayway.restassured.RestAssured;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebIntegrationTest({"spring.main.show-banner=false"})
 @DirtiesContext
+@WebIntegrationTest
+@RunWith(SpringJUnit4ClassRunner.class)
 public abstract class AbstractHandlerTest {
 
     private static final Map<String, GHContent> eventPayloadMap;
@@ -89,12 +92,15 @@ public abstract class AbstractHandlerTest {
     public final ErrorCollector errorCollector = new ErrorCollector();
 
     @Rule
-    public final TestRule timeout = new DisableOnDebug(Timeout.seconds(10));
+    public final TestRule timeout = new DisableOnDebug(Timeout.seconds(30));
 
     protected final CountDownLatch completion = new CountDownLatch(1);
 
     @Autowired
     private AbstractTestHandlerBean handlerBean;
+
+    @Autowired
+    private Environment env;
 
     protected AbstractHandlerTest(String event) {
         this.event = event;
@@ -106,6 +112,13 @@ public abstract class AbstractHandlerTest {
     public final void prepareTest() {
         handlerBean.setCountDownLatch(completion);
         handlerBean.setErrorCollector(errorCollector);
+
+        RestAssured.port = env.getRequiredProperty("local.server.port", int.class);
+    }
+
+    @After
+    public void resetRestAssured() {
+        RestAssured.reset();
     }
 
     @Test

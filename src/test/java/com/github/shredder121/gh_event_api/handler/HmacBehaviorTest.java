@@ -22,11 +22,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.Map;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -36,21 +40,37 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 import com.github.shredder121.gh_event_api.handler.create.CreateHandler;
+import com.github.shredder121.gh_event_api.testutil.HmacTest;
 import com.google.common.collect.ImmutableMap;
+import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.internal.mapping.Jackson2Mapper;
 import com.jayway.restassured.mapper.ObjectMapper;
 import com.jayway.restassured.mapper.factory.DefaultJackson2ObjectMapperFactory;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebIntegrationTest({"secret=secret", "spring.main.show-banner=false"})
-@SpringApplicationConfiguration(classes = {HmacBehaviorTest.class, GHEventApiServer.class})
+@HmacTest
 @DirtiesContext
+@WebIntegrationTest
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = {HmacBehaviorTest.class, GHEventApiServer.class})
 public class HmacBehaviorTest {
 
     private static final ObjectMapper restAssuredMapper = new Jackson2Mapper(
             (clazz, charset) -> new DefaultJackson2ObjectMapperFactory()
                     .create(clazz, charset)
                     .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS));
+
+    @Autowired
+    private Environment env;
+
+    @Before
+    public void setupRestAssured() {
+        RestAssured.port = env.getRequiredProperty("local.server.port", int.class);
+    }
+
+    @After
+    public void resetRestAssured() {
+        RestAssured.reset();
+    }
 
     @Test
     public void testNoFilter() {

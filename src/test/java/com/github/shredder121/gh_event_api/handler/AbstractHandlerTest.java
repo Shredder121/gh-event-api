@@ -92,7 +92,7 @@ public abstract class AbstractHandlerTest {
     public final ErrorCollector errorCollector = new ErrorCollector();
 
     @Rule
-    public final TestRule timeout = new DisableOnDebug(Timeout.seconds(10));
+    public final TestRule timeout = new DisableOnDebug(Timeout.seconds(30));
 
     protected final CountDownLatch completion = new CountDownLatch(1);
 

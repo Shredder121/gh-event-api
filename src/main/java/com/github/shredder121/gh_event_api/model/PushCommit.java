@@ -39,6 +39,11 @@ public class PushCommit {
     String id;
 
     /**
+     * The Git tree object this commit is attached to.
+     */
+    String treeId;
+
+    /**
      * Label of the commit.
      */
     String label;

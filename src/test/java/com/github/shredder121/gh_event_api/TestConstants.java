@@ -21,7 +21,7 @@ import com.google.common.collect.ImmutableMap;
 
 public class TestConstants {
 
-    public static final String DEVELOPER_GITHUB_COM_REVISION = "3b80c25d31b03e7503b925b1647502460baea89c";
+    public static final String DEVELOPER_GITHUB_COM_REVISION = "20bb66a39d77e07e8aee19ef33d039d4cc6618a4";
 
     /**
      * The HMACs of the payloads as reported by https://www.freeformatter.com/hmac-generator.html
@@ -61,7 +61,7 @@ public class TestConstants {
             .put("pull_request_review_comment",
                     "4b63f10a2fff83fa13cc539313c5c9dc1bae42ca")
             .put("push",
-                    "88287b2946307610bf94056a349b269ed5878982")
+                    "0e58dd2372b6d73d905360184beca4ef7654582d")
             .put("release",
                     "6a71ff39e36df0ecc123f823bbb68ed44579dfbd")
             .put("repository",

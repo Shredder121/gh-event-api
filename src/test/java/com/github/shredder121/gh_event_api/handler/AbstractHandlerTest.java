@@ -22,10 +22,12 @@ import static com.jayway.restassured.http.ContentType.JSON;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,6 +39,7 @@ import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.core.env.Environment;
@@ -47,9 +50,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.fasterxml.jackson.core.util.MinimalPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.shredder121.gh_event_api.testutil.RawGitOkHttpConnector;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 import com.jayway.restassured.RestAssured;
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.OkUrlFactory;
 
 @DirtiesContext
 @WebIntegrationTest
@@ -60,13 +67,7 @@ public abstract class AbstractHandlerTest {
 
     static {
         try {
-            GitHub github;
-            try {
-                github = GitHub.connect();
-            } catch (IOException noAuthorizationDetails) {
-                // This is fine, and still gives you 60 requests per hour, so one-off test runs still work
-                github = GitHub.connectAnonymously();
-            }
+            GitHub github = getGitHub();
 
             List<GHContent> directoryContent = github.getRepository("github/developer.github.com")
                     .getDirectoryContent("lib/webhooks", DEVELOPER_GITHUB_COM_REVISION);
@@ -78,6 +79,14 @@ public abstract class AbstractHandlerTest {
         } catch (IOException ex) {
             throw Throwables.propagate(ex);
         }
+    }
+
+    private static GitHub getGitHub() throws IOException {
+        OkHttpClient client = new OkHttpClient();
+        client.setCache(new Cache(Paths.get(".", ".cache").toFile(), FileUtils.ONE_MB * 10));
+        return new GitHubBuilder()
+                .withConnector(new RawGitOkHttpConnector(new OkUrlFactory(client)))
+                .build();
     }
 
     private static String fileNameWithoutPayloadJsonSuffix(GHContent content) {

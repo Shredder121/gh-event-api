@@ -49,6 +49,8 @@ class TestHandler extends AbstractTestHandlerBean implements PushHandler {
     private static Matcher<Iterable<? extends PushCommit>> commitsMatchers() {
         return contains(
                 allOf(asList(
+                        property(PushCommit::getId, is("0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c")),
+                        property(PushCommit::getTreeId, is("f9d2a07e9488b91af2641b26b9407fe22a451433")),
                         property(PushCommit::getMessage, is("Update README.md"))
                 ))
         );
@@ -56,6 +58,8 @@ class TestHandler extends AbstractTestHandlerBean implements PushHandler {
 
     private static Matcher<PushCommit> headCommitMatchers() {
         return allOf(asList(
+                property(PushCommit::getId, is("0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c")),
+                property(PushCommit::getTreeId, is("f9d2a07e9488b91af2641b26b9407fe22a451433")),
                 property(PushCommit::getMessage, is("Update README.md"))
         ));
     }

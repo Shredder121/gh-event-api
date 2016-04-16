@@ -15,18 +15,18 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.iterableWithSize;
+import static org.hamcrest.Matchers.*;
 
 public class PushCommitSerializationTest extends AbstractSerializationTest<PushCommit> {
 
     private static final String SAMPLE_PUSH_COMMIT
             = "{\n"
-            + "  \"id\": \"e2e9f9a1791c792bb5035031d0ef4df92f5788f9\",\n"
+            + "  \"id\": \"f2591cd0a959f15a3b274a5182f3ccc0e35c1ec9\",\n"
+            + "  \"tree_id\": \"af9847bf3b89671bfe40c9993b4574e2c564c40f\",\n"
             + "  \"distinct\": true,\n"
-            + "  \"message\": \"Remove mixin style jackson configuration\",\n"
-            + "  \"timestamp\": \"2016-01-05T21:08:56+01:00\",\n"
-            + "  \"url\": \"https://github.com/Shredder121/gh-event-api/commit/e2e9f9a1791c792bb5035031d0ef4df92f5788f9\",\n"
+            + "  \"message\": \"Add the .cache folder to gitignore\",\n"
+            + "  \"timestamp\": \"2016-04-09T19:31:07+02:00\",\n"
+            + "  \"url\": \"https://github.com/Shredder121/gh-event-api/commit/f2591cd0a959f15a3b274a5182f3ccc0e35c1ec9\",\n"
             + "  \"author\": {\n"
             + "    \"name\": \"Ruben Dijkstra\",\n"
             + "    \"email\": \"rubendijkstra123@gmail.com\",\n"
@@ -41,33 +41,10 @@ public class PushCommitSerializationTest extends AbstractSerializationTest<PushC
             + "\n"
             + "  ],\n"
             + "  \"removed\": [\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/json/CommitCommentMixin.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/json/GitCommitMixin.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/json/LabelMixin.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/json/LinkMixin.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/json/PullRequestMixin.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/json/PushCommitMixin.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/json/RefMixin.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/json/RepositoryMixin.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/json/StatusBranchMixin.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/json/StatusCommitMixin.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/json/UserMixin.java\"\n"
+            + "\n"
             + "  ],\n"
             + "  \"modified\": [\n"
-            + "    \"pom.xml\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/CommitComment.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/GitCommit.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/Label.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/Link.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/PullRequest.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/PushCommit.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/Ref.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/Repository.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/StatusBranch.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/StatusCommit.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/User.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/json/GHEventApiModule.java\",\n"
-            + "    \"src/main/java/com/github/shredder121/gh_event_api/model/json/package-info.java\"\n"
+            + "    \".gitignore\"\n"
             + "  ]\n"
             + "}";
 
@@ -82,9 +59,14 @@ public class PushCommitSerializationTest extends AbstractSerializationTest<PushC
 
     @Override
     protected void checkDeserialized(PushCommit commit) {
-        errorCollector.checkThat(commit.getMessage(), is("Remove mixin style jackson configuration"));
+        errorCollector.checkThat(commit.getId(), is("f2591cd0a959f15a3b274a5182f3ccc0e35c1ec9"));
+        errorCollector.checkThat(commit.getTreeId(), is("af9847bf3b89671bfe40c9993b4574e2c564c40f"));
+        errorCollector.checkThat(commit.getMessage(), is("Add the .cache folder to gitignore"));
 
-        errorCollector.checkThat(commit.getRemoved(), is(iterableWithSize(11)));
-        errorCollector.checkThat(commit.getModified(), is(iterableWithSize(14)));
+        errorCollector.checkThat(commit.getAdded(), is(empty()));
+        errorCollector.checkThat(commit.getRemoved(), is(empty()));
+        errorCollector.checkThat(commit.getModified(), contains(
+                equalTo(".gitignore")
+        ));
     }
 }

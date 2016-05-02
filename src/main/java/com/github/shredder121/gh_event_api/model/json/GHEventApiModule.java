@@ -25,7 +25,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.Converter;
 import com.fasterxml.jackson.databind.util.StdConverter;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
-import com.fasterxml.jackson.module.paranamer.ParanamerModule;
 
 /**
  * The Jackson Module that configures the way Jackson should deserialize classes.
@@ -47,8 +46,6 @@ class GHEventApiModule extends SimpleModule {
         super.setupModule(context);
         // https://github.com/spring-projects/spring-boot/issues/4490
         new GuavaModule().setupModule(context);
-
-        new ParanamerModule().setupModule(context);
     }
 
     private static <T> Converter<String, T> fromString(Function<String, ? extends T> fun) {

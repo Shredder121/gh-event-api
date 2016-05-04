@@ -1,5 +1,5 @@
 server.port: 0
-spring.main.show-banner: false
+spring.main.banner-mode: "off"
 ---
 spring.profiles: hmac
 secret: secret

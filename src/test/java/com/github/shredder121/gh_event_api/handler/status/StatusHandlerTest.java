@@ -15,13 +15,15 @@
  */
 package com.github.shredder121.gh_event_api.handler.status;
 
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 
-@SpringApplicationConfiguration(classes = {StatusHandlerTest.class, GHEventApiServer.class})
+@SpringBootTest(classes = {StatusHandlerTest.class, GHEventApiServer.class}, webEnvironment = RANDOM_PORT)
 public class StatusHandlerTest extends AbstractHandlerTest {
 
     public StatusHandlerTest() {

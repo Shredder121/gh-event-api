@@ -15,13 +15,15 @@
  */
 package com.github.shredder121.gh_event_api.handler.fork;
 
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 import com.github.shredder121.gh_event_api.handler.AbstractHandlerTest;
 
-@SpringApplicationConfiguration(classes = {ForkHandlerTest.class, GHEventApiServer.class})
+@SpringBootTest(classes = {ForkHandlerTest.class, GHEventApiServer.class}, webEnvironment = RANDOM_PORT)
 public class ForkHandlerTest extends AbstractHandlerTest {
 
     public ForkHandlerTest() {

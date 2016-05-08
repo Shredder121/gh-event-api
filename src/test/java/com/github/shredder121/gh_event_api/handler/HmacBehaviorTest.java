@@ -18,6 +18,7 @@ package com.github.shredder121.gh_event_api.handler;
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.Map;
@@ -27,13 +28,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,9 +51,8 @@ import lombok.experimental.NonFinal;
 
 @HmacTest
 @DirtiesContext
-@WebIntegrationTest
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {HmacBehaviorTest.class, GHEventApiServer.class})
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {HmacBehaviorTest.class, GHEventApiServer.class}, webEnvironment = RANDOM_PORT)
 public class HmacBehaviorTest {
 
     static ObjectMapper restAssuredMapper = new Jackson2Mapper(

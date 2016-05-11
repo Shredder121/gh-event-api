@@ -15,103 +15,101 @@
  */
 package com.github.shredder121.gh_event_api.handler;
 
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.http.ContentType.JSON;
-import static org.hamcrest.Matchers.is;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
+import static com.github.shredder121.gh_event_api.TestConstants.MINIMIZER;
+import static com.github.shredder121.gh_event_api.filter.HeaderNames.GITHUB_EVENT_HEADER;
+import static com.github.shredder121.gh_event_api.filter.HeaderNames.GITHUB_SIGNATURE_HEADER;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.util.Map;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.WebApplicationContext;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.shredder121.gh_event_api.GHEventApiServer;
+import com.github.shredder121.gh_event_api.filter.GithubMACChecker;
+import com.github.shredder121.gh_event_api.filter.GithubMDCInsertingServletFilter;
 import com.github.shredder121.gh_event_api.handler.create.CreateHandler;
 import com.github.shredder121.gh_event_api.testutil.HmacTest;
 import com.google.common.collect.ImmutableMap;
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.internal.mapping.Jackson2Mapper;
-import com.jayway.restassured.mapper.ObjectMapper;
-import com.jayway.restassured.mapper.factory.DefaultJackson2ObjectMapperFactory;
 
 import lombok.experimental.NonFinal;
 
 @HmacTest
 @DirtiesContext
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {HmacBehaviorTest.class, GHEventApiServer.class}, webEnvironment = RANDOM_PORT)
+@SpringBootTest(classes = {HmacBehaviorTest.class, GHEventApiServer.class})
 public class HmacBehaviorTest {
 
-    static ObjectMapper restAssuredMapper = new Jackson2Mapper(
-            (clazz, charset) -> new DefaultJackson2ObjectMapperFactory()
-                    .create(clazz, charset)
-                    .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS));
+    @Autowired
+    @NonFinal ObjectMapper objectMapper;
 
     @Autowired
-    @NonFinal Environment env;
+    @NonFinal MockMvc mvc;
 
     @Before
-    public void setupRestAssured() {
-        RestAssured.port = env.getRequiredProperty("local.server.port", int.class);
+    public void configureObjectMapper() {
+        objectMapper.disable(FAIL_ON_EMPTY_BEANS);
     }
 
-    @After
-    public void resetRestAssured() {
-        RestAssured.reset();
+    @Bean
+    public MockMvc setupMockMvc(WebApplicationContext context, GithubMDCInsertingServletFilter mdcFilter, GithubMACChecker macFilter) {
+
+        return MockMvcBuilders.webAppContextSetup(context)
+                .addFilters(mdcFilter, macFilter)
+                .build();
     }
 
     @Test
-    public void testNoFilter() {
-        given()
+    public void testNoFilter() throws Exception {
+        mvc.perform(post("/")
                 //no additional parameters/headers
-        .expect()
-                .statusCode(HttpStatus.OK.value())
-                .body(is("handled"));
+        ).andExpect(status().isOk()).andExpect(content().string("handled"));
     }
 
     @Test
-    public void testHmacIncorrect() {
-        given().headers(
-                "X-GitHub-Event", "create",
-                "X-Hub-Signature", "bogus")
-        .and().body(getBody(), restAssuredMapper).with().contentType(JSON)
-        .expect().statusCode(HttpStatus.NO_CONTENT.value())
-        .when().post();
+    public void testHmacIncorrect() throws Exception {
+        mvc.perform(post("/")
+                .header(GITHUB_EVENT_HEADER, "create")
+                .header(GITHUB_SIGNATURE_HEADER, "bogus")
+                .content(getContent()).contentType(APPLICATION_JSON)
+        ).andExpect(status().isNoContent());
     }
 
     @Test
-    public void testHmacMissing() {
-        given().headers("X-GitHub-Event", "create")
-        .and().body(getBody(), restAssuredMapper).with().contentType(JSON)
-        .expect().statusCode(HttpStatus.NOT_FOUND.value())
-        .when().post();
+    public void testHmacMissing() throws Exception {
+        mvc.perform(post("/")
+                .header(GITHUB_EVENT_HEADER, "create")
+                .content(getContent()).contentType(APPLICATION_JSON)
+        ).andExpect(status().isNotFound());
     }
 
     @Test
-    public void testHmacOkay() {
-        given().headers(
-                "X-GitHub-Event", "create",
-                "X-Hub-Signature", "sha1=807810001d379cceefed1898c5cacee2b0462b6c")
-        .and().body(getBody(), restAssuredMapper).with().contentType(JSON)
-        .expect().statusCode(HttpStatus.OK.value())
-        .when().post();
+    public void testHmacOkay() throws Exception {
+        mvc.perform(post("/")
+                .header(GITHUB_EVENT_HEADER, "create")
+                .header(GITHUB_SIGNATURE_HEADER, "sha1=807810001d379cceefed1898c5cacee2b0462b6c")
+                .content(getContent()).contentType(APPLICATION_JSON)
+        ).andExpect(status().isOk());
     }
 
-    private static Map<String, Object> getBody() {
-        return ImmutableMap.<String, Object>builder()
+    private String getContent() throws JsonProcessingException {
+        ImmutableMap<String, Object> map = ImmutableMap.<String, Object>builder()
                 .put("ref_type", "tag")
                 .put("ref", "0.1")
                 .put("master_branch", "master")
@@ -120,6 +118,8 @@ public class HmacBehaviorTest {
                 .put("repository", new Object())
                 .put("sender", new Object())
                 .build();
+        return objectMapper.writer(MINIMIZER)
+                .writeValueAsString(map);
     }
 
     @Bean

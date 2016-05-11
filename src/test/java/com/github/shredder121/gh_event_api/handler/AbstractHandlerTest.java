@@ -16,8 +16,11 @@
 package com.github.shredder121.gh_event_api.handler;
 
 import static com.github.shredder121.gh_event_api.TestConstants.*;
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.http.ContentType.JSON;
+import static com.github.shredder121.gh_event_api.filter.HeaderNames.GITHUB_EVENT_HEADER;
+import static com.github.shredder121.gh_event_api.filter.HeaderNames.GITHUB_SIGNATURE_HEADER;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +30,6 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,17 +42,20 @@ import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.shredder121.gh_event_api.filter.GithubMACChecker;
+import com.github.shredder121.gh_event_api.filter.GithubMDCInsertingServletFilter;
 import com.github.shredder121.gh_event_api.testutil.RawGitOkHttpConnector;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
-import com.jayway.restassured.RestAssured;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.OkUrlFactory;
@@ -107,7 +112,7 @@ public abstract class AbstractHandlerTest {
     @NonFinal AbstractTestHandlerBean handlerBean;
 
     @Autowired
-    @NonFinal Environment env;
+    @NonFinal MockMvc mvc;
 
     protected AbstractHandlerTest(String event) {
         this.event = event;
@@ -119,28 +124,29 @@ public abstract class AbstractHandlerTest {
     public final void prepareTest() {
         handlerBean.setCountDownLatch(completion);
         handlerBean.setErrorCollector(errorCollector);
-
-        RestAssured.port = env.getRequiredProperty("local.server.port", int.class);
     }
 
-    @After
-    public void resetRestAssured() {
-        RestAssured.reset();
+    @Bean
+    public MockMvc setupMockMvc(WebApplicationContext context,
+            GithubMDCInsertingServletFilter mdcfilter, GithubMACChecker macFilter) {
+
+        return MockMvcBuilders.webAppContextSetup(context)
+                .addFilters(mdcfilter, macFilter)
+                .build();
     }
 
     @Test
-    public void test() throws InterruptedException {
-        given().headers(
-                "X-GitHub-Event", event,
-                "X-Hub-Signature", "sha1=" + hmac)
-        .and().body(getBody()).with().contentType(JSON)
-        .expect().statusCode(HttpStatus.OK.value())
-        .when().post();
+    public void test() throws Exception {
+        mvc.perform(post("/")
+                .header(GITHUB_EVENT_HEADER, event)
+                .header(GITHUB_SIGNATURE_HEADER, "sha1=" + hmac)
+                .content(getContent()).contentType(APPLICATION_JSON)
+        ).andExpect(status().isOk());
 
         completion.await();
     }
 
-    private String getBody() {
+    private String getContent() {
         GHContent payloadFile = eventPayloadMap.get(event);
         try (InputStream stream = payloadFile.read()) {
             return minimize(stream);

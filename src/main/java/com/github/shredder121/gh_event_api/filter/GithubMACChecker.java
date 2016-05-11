@@ -44,6 +44,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Throwables;
 import com.google.common.io.ByteSource;
 import com.google.common.io.ByteStreams;
@@ -57,7 +58,8 @@ import ch.qos.logback.core.encoder.ByteArrayUtil;
  * @author Shredder121
  */
 @Component
-class GithubMACChecker extends OncePerRequestFilter {
+@VisibleForTesting
+public class GithubMACChecker extends OncePerRequestFilter {
 
     static Logger logger = LoggerFactory.getLogger(GithubMACChecker.class);
 

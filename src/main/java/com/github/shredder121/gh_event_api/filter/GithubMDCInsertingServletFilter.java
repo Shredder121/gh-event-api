@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.io.Closer;
 
 import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
@@ -39,7 +40,8 @@ import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
  * @author Shredder121
  */
 @Component
-class GithubMDCInsertingServletFilter extends MDCInsertingServletFilter {
+@VisibleForTesting
+public class GithubMDCInsertingServletFilter extends MDCInsertingServletFilter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {

@@ -15,7 +15,6 @@
  */
 package com.github.shredder121.gh_event_api.handler;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.Collection;
 import java.util.concurrent.ForkJoinPool;
@@ -26,8 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.core.task.support.TaskExecutorAdapter;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -59,7 +58,7 @@ public abstract class AbstractEndpointController<H, P> {
      *
      * @param payload the payload received
      */
-    @RequestMapping(method = POST)
+    @PostMapping
     public void handle(@Valid @RequestBody P payload) {
         logger.debug("{} handlers", handlers.size());
         for (H handler : handlers) {

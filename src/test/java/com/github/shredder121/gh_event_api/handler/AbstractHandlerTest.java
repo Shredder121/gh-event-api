@@ -15,8 +15,7 @@
  */
 package com.github.shredder121.gh_event_api.handler;
 
-import static com.github.shredder121.gh_event_api.TestConstants.DEVELOPER_GITHUB_COM_REVISION;
-import static com.github.shredder121.gh_event_api.TestConstants.HMACS;
+import static com.github.shredder121.gh_event_api.TestConstants.*;
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
 
@@ -47,7 +46,6 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.fasterxml.jackson.core.util.MinimalPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.shredder121.gh_event_api.testutil.RawGitOkHttpConnector;
 import com.google.common.base.Throwables;
@@ -154,6 +152,6 @@ public abstract class AbstractHandlerTest {
     public String minimize(final InputStream stream) throws IOException {
         ObjectMapper mapper = Jackson2ObjectMapperBuilder.json().build();
         Map<String, Object> content = mapper.reader().forType(Map.class).readValue(stream);
-        return mapper.writer(new MinimalPrettyPrinter(null/*minimizes*/)).writeValueAsString(content);
+        return mapper.writer(MINIMIZER).writeValueAsString(content);
     }
 }

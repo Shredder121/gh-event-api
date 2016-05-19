@@ -17,7 +17,7 @@ package com.github.shredder121.gh_event_api.handler.pull_request_review_comment;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.*;
 import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
@@ -29,7 +29,7 @@ import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#pullrequestreviewcommentevent">The pull_request_review_comment event on GitHub</a>
  */
 @lombok.Value
-@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@JsonNaming(SnakeCaseStrategy.class)
 @lombok.RequiredArgsConstructor(
         access = lombok.AccessLevel.MODULE,
         onConstructor = @__(@PropertyBasedJsonCreator)

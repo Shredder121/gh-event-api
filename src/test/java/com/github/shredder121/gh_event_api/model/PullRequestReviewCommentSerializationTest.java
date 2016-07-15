@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.*;
 
 public class PullRequestReviewCommentSerializationTest extends AbstractSerializationTest<Comment> {
 
-    private static final String SAMPLE_PULL_REQUEST_REVIEW_COMMENT
+    static String SAMPLE_PULL_REQUEST_REVIEW_COMMENT
             = "{\n"
             + "  \"url\": \"https://api.github.com/repos/Shredder121/gh-event-api/pulls/comments/49949630\",\n"
             + "  \"id\": 49949630,\n"

@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 public class OrganizationSerializationTest extends AbstractSerializationTest<Organization> {
 
-    private static final String SAMPLE_ORGANIZATION
+    static String SAMPLE_ORGANIZATION
             = "{\n"
             + "  \"login\": \"Shredder121-me\",\n"
             + "  \"id\": 15276443,\n"

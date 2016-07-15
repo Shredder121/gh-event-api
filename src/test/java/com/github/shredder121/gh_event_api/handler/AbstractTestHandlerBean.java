@@ -22,10 +22,12 @@ import org.junit.rules.ErrorCollector;
 import com.github.shredder121.gh_event_api.testutil.CountDownLatchAware;
 import com.github.shredder121.gh_event_api.testutil.ErrorCollectorAware;
 
+import lombok.experimental.NonFinal;
+
 public abstract class AbstractTestHandlerBean implements CountDownLatchAware, ErrorCollectorAware {
 
-    protected CountDownLatch countDownLatch;
-    protected ErrorCollector errorCollector;
+    @NonFinal protected CountDownLatch countDownLatch;
+    @NonFinal protected ErrorCollector errorCollector;
 
     @Override
     public void setCountDownLatch(CountDownLatch countDownLatch) {

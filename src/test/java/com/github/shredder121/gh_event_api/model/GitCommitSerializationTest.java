@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.is;
 
 public class GitCommitSerializationTest extends AbstractSerializationTest<GitCommit> {
 
-    private static final String SAMPLE_GIT_COMMIT
+    static String SAMPLE_GIT_COMMIT
             = "{\n"
             + "  \"author\": {\n"
             + "    \"name\": \"baxterthehacker\",\n"

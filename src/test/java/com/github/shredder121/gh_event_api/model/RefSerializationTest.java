@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.is;
 
 public class RefSerializationTest extends AbstractSerializationTest<Ref> {
 
-    private static final String SAMPLE_REF
+    static String SAMPLE_REF
             = "{\n"
             + "  \"label\": \"baxterthehacker:changes\",\n"
             + "  \"ref\": \"changes\",\n"

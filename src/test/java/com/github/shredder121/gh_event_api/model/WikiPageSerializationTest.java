@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.*;
 
 public class WikiPageSerializationTest extends AbstractSerializationTest<WikiPage> {
 
-    private static final String SAMPLE_WIKI_PAGE
+    static String SAMPLE_WIKI_PAGE
             = "{\n"
             + "  \"page_name\": \"Home\",\n"
             + "  \"title\": \"Home\",\n"

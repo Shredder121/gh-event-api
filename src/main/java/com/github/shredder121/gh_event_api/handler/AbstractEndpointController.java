@@ -40,10 +40,10 @@ import com.google.common.collect.ImmutableSet;
  */
 public abstract class AbstractEndpointController<H, P> {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
-    private final Collection<? extends H> handlers;
+    TaskExecutor executor = new TaskExecutorAdapter(ForkJoinPool.commonPool());
+    Collection<? extends H> handlers;
 
     protected AbstractEndpointController(Collection<? extends H> beans) {
         this.handlers = ImmutableSet.copyOf(beans);

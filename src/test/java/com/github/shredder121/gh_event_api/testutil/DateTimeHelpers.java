@@ -17,20 +17,18 @@ package com.github.shredder121.gh_event_api.testutil;
 
 import java.time.*;
 
+@lombok.experimental.UtilityClass
 public class DateTimeHelpers {
 
-    private DateTimeHelpers() {
-    }
-
-    public static ZonedDateTime dt(String date, String time) {
+    public ZonedDateTime dt(String date, String time) {
         return ZonedDateTime.of(d(date), t(time), ZoneId.ofOffset("GMT", ZoneOffset.UTC));
     }
 
-    public static LocalDate d(String date) {
+    public LocalDate d(String date) {
         return LocalDate.parse(date);
     }
 
-    public static LocalTime t(String time) {
+    public LocalTime t(String time) {
         return LocalTime.parse(time);
     }
 }

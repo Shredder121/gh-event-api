@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.is;
 
 public class StatusCommitSerializationTest extends AbstractSerializationTest<StatusCommit> {
 
-    private static final String SAMPLE_STATUS_COMMIT
+    static String SAMPLE_STATUS_COMMIT
             = "{\n"
             + "  \"sha\": \"9049f1265b7d61be4a8904a9a27120d2064dab3b\",\n"
             + "  \"url\": \"https://api.github.com/repos/baxterthehacker/public-repo/commits/9049f1265b7d61be4a8904a9a27120d2064dab3b\"\n"

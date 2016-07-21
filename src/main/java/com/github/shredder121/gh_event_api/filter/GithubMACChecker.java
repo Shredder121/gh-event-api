@@ -59,11 +59,11 @@ import ch.qos.logback.core.encoder.ByteArrayUtil;
 @Component
 class GithubMACChecker extends OncePerRequestFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(GithubMACChecker.class);
+    static Logger logger = LoggerFactory.getLogger(GithubMACChecker.class);
 
-    private static final String HMAC_SHA1 = "HmacSHA1";
+    static String HMAC_SHA1 = "HmacSHA1";
 
-    private final Supplier<Mac> macProvider;
+    Supplier<Mac> macProvider;
 
     @Autowired
     public GithubMACChecker(Environment env) {
@@ -112,13 +112,10 @@ class GithubMACChecker extends OncePerRequestFilter {
     }
 
     // Extracted since the HmacSHA1 implementation is present, this allows JaCoCo to ignore the catch
+    @lombok.RequiredArgsConstructor(access = lombok.AccessLevel.PRIVATE)
     private static final class MacProvider implements Supplier<Mac> {
 
-        private final Key key;
-
-        private MacProvider(Key key) {
-            this.key = key;
-        }
+        Key key;
 
         @Override
         public Mac get() {
@@ -134,7 +131,7 @@ class GithubMACChecker extends OncePerRequestFilter {
 
     private static class PreReadRequest extends HttpServletRequestWrapper {
 
-        private final byte[] input;
+        byte[] input;
 
         public PreReadRequest(HttpServletRequest request) throws IOException {
             super(request);
@@ -149,7 +146,7 @@ class GithubMACChecker extends OncePerRequestFilter {
 
     private static class PreReadServletInputStream extends ServletInputStream {
 
-        private final InputStream backingInputStream;
+        InputStream backingInputStream;
 
         public PreReadServletInputStream(byte[] input) throws IOException {
             this.backingInputStream = ByteSource.wrap(input).openStream();

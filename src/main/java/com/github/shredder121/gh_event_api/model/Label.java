@@ -26,11 +26,16 @@ import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
  */
 @lombok.Value
 @JsonNaming(LowerCaseWithUnderscoresStrategy.class)
-@lombok.AllArgsConstructor(
-        access = lombok.AccessLevel.PACKAGE,
+@lombok.RequiredArgsConstructor(
+        access = lombok.AccessLevel.PROTECTED,
         onConstructor = @__(@PropertyBasedJsonCreator)
 )
 public class Label {
+
+    /**
+     * The (API) URL to view this label.
+     */
+    String url;
 
     /**
      * The name of the label.

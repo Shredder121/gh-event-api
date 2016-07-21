@@ -58,12 +58,14 @@ import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.OkUrlFactory;
 
+import lombok.experimental.NonFinal;
+
 @DirtiesContext
 @WebIntegrationTest
 @RunWith(SpringJUnit4ClassRunner.class)
 public abstract class AbstractHandlerTest {
 
-    private static final Map<String, GHContent> eventPayloadMap;
+    static Map<String, GHContent> eventPayloadMap;
 
     static {
         try {
@@ -94,22 +96,22 @@ public abstract class AbstractHandlerTest {
         return fileName.substring(0, fileName.indexOf('.'));
     }
 
-    private final String event;
-    private final String hmac;
+    String event;
+    String hmac;
 
     @Rule
-    public final ErrorCollector errorCollector = new ErrorCollector();
+    public ErrorCollector errorCollector = new ErrorCollector();
 
     @Rule
-    public final TestRule timeout = new DisableOnDebug(Timeout.seconds(30));
+    public TestRule timeout = new DisableOnDebug(Timeout.seconds(30));
 
-    protected final CountDownLatch completion = new CountDownLatch(1);
-
-    @Autowired
-    private AbstractTestHandlerBean handlerBean;
+    protected CountDownLatch completion = new CountDownLatch(1);
 
     @Autowired
-    private Environment env;
+    @NonFinal AbstractTestHandlerBean handlerBean;
+
+    @Autowired
+    @NonFinal Environment env;
 
     protected AbstractHandlerTest(String event) {
         this.event = event;

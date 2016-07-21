@@ -15,12 +15,12 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.*;
 import static org.hamcrest.Matchers.*;
 
 public class ReleaseSerializationTest extends AbstractSerializationTest<Release> {
 
-    public static final String SAMPLE_RELEASE
+    static String SAMPLE_RELEASE
             = "{\n"
             + "  \"url\": \"https://api.github.com/repos/Shredder121/gh-event-api/releases/2525578\",\n"
             + "  \"assets_url\": \"https://api.github.com/repos/Shredder121/gh-event-api/releases/2525578/assets\",\n"

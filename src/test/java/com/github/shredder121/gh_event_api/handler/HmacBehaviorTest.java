@@ -47,6 +47,8 @@ import com.jayway.restassured.internal.mapping.Jackson2Mapper;
 import com.jayway.restassured.mapper.ObjectMapper;
 import com.jayway.restassured.mapper.factory.DefaultJackson2ObjectMapperFactory;
 
+import lombok.experimental.NonFinal;
+
 @HmacTest
 @DirtiesContext
 @WebIntegrationTest
@@ -54,13 +56,13 @@ import com.jayway.restassured.mapper.factory.DefaultJackson2ObjectMapperFactory;
 @SpringApplicationConfiguration(classes = {HmacBehaviorTest.class, GHEventApiServer.class})
 public class HmacBehaviorTest {
 
-    private static final ObjectMapper restAssuredMapper = new Jackson2Mapper(
+    static ObjectMapper restAssuredMapper = new Jackson2Mapper(
             (clazz, charset) -> new DefaultJackson2ObjectMapperFactory()
                     .create(clazz, charset)
                     .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS));
 
     @Autowired
-    private Environment env;
+    @NonFinal Environment env;
 
     @Before
     public void setupRestAssured() {

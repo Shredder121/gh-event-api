@@ -15,6 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
+import java.time.ZonedDateTime;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
@@ -24,11 +27,16 @@ import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
  */
 @lombok.Value
 @JsonNaming(LowerCaseWithUnderscoresStrategy.class)
-@lombok.AllArgsConstructor(
-        access = lombok.AccessLevel.PACKAGE,
+@lombok.RequiredArgsConstructor(
+        access = lombok.AccessLevel.PROTECTED,
         onConstructor = @__(@PropertyBasedJsonCreator)
 )
 public class Repository {
+
+    /**
+     * The id of this repository.
+     */
+    Integer id;
 
     /**
      * The name of the repository.
@@ -39,6 +47,26 @@ public class Repository {
      * The full name of the repository.
      */
     String fullName;
+
+    /**
+     * The description of the repository.
+     */
+    String description;
+
+    /**
+     * The default branch of the repository.
+     */
+    String defaultBranch;
+
+    /**
+     * The homepage of the repository.
+     */
+    String homepage;
+
+    /**
+     * The most prevalent language that
+     */
+    String language;
 
     /**
      * The owner of the repository
@@ -54,4 +82,41 @@ public class Repository {
      * How many forks there are currently.
      */
     Long forks;
+
+    /**
+     * Whether this repository is a fork of another repository.
+     */
+    @JsonProperty("fork")
+    boolean isFork;
+
+    /**
+     * Whether this repository is a private repository.
+     */
+    @JsonProperty("private")
+    boolean isPrivate;
+
+    /**
+     * The (API) URL to view this repository.
+     */
+    String url;
+
+    /**
+     * The (GitHub Web UI) URL to view this repository.
+     */
+    String htmlUrl;
+
+    /**
+     * The time this repository was created.
+     */
+    ZonedDateTime createdAt;
+
+    /**
+     * The time this repository was last updated.
+     */
+    ZonedDateTime updatedAt;
+
+    /**
+     * The time the repository was last pushed to.
+     */
+    ZonedDateTime pushedAt;
 }

@@ -29,8 +29,8 @@ import com.google.common.collect.ImmutableMap;
  */
 @lombok.Value
 @JsonNaming(LowerCaseWithUnderscoresStrategy.class)
-@lombok.AllArgsConstructor(
-        access = lombok.AccessLevel.PACKAGE,
+@lombok.RequiredArgsConstructor(
+        access = lombok.AccessLevel.PROTECTED,
         onConstructor = @__(@PropertyBasedJsonCreator)
 )
 public class Deployment {
@@ -39,6 +39,21 @@ public class Deployment {
      * The id for this deployment, for GitHub bookkeeping.
      */
     Integer id;
+
+    /**
+     * The (API) URL of this deployment.
+     */
+    String url;
+
+    /**
+     * The (API) URL to view this deployment's statuses.
+     */
+    String statusesUrl;
+
+    /**
+     * The (API) URL to view the repository this deployment is for.
+     */
+    String repositoryUrl;
 
     /**
      * The ref to deploy.

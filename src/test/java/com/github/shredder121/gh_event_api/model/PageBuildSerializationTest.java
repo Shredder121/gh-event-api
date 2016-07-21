@@ -15,14 +15,14 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.*;
 import static org.hamcrest.Matchers.*;
 
 import java.util.Arrays;
 
 public class PageBuildSerializationTest extends AbstractSerializationTest<PageBuild> {
 
-    public static final String SAMPLE_PAGE_BUILD
+    static String SAMPLE_PAGE_BUILD
             = "{\n"
             + "  \"url\": \"https://api.github.com/repos/Shredder121-me/Shredder121-me.github.io/pages/builds/25700882\",\n"
             + "  \"status\": \"built\",\n"

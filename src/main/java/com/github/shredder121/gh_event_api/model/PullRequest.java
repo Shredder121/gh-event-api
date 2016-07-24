@@ -31,7 +31,7 @@ import com.google.common.collect.ImmutableMap;
 @lombok.Value
 @JsonNaming(LowerCaseWithUnderscoresStrategy.class)
 @lombok.AllArgsConstructor(
-        access = lombok.AccessLevel.PACKAGE,
+        access = lombok.AccessLevel.MODULE,
         onConstructor = @__(@PropertyBasedJsonCreator)
 )
 public class PullRequest {

@@ -29,7 +29,7 @@ import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 @lombok.Value
 @JsonNaming(LowerCaseWithUnderscoresStrategy.class)
 @lombok.AllArgsConstructor(
-        access = lombok.AccessLevel.PACKAGE,
+        access = lombok.AccessLevel.MODULE,
         onConstructor = @__(@PropertyBasedJsonCreator)
 )
 public class PageBuild {
@@ -81,7 +81,7 @@ public class PageBuild {
     @lombok.Value
     @JsonNaming(LowerCaseWithUnderscoresStrategy.class)
     @lombok.AllArgsConstructor(
-            access = lombok.AccessLevel.PACKAGE,
+            access = lombok.AccessLevel.MODULE,
             onConstructor = @__(@PropertyBasedJsonCreator)
     )
     public static class BuildError {

@@ -29,6 +29,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.shredder121.gh_event_api.GHEventApiServer;
 
+import lombok.experimental.NonFinal;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @IntegrationTest({"spring.main.show-banner=false"})
 @SpringApplicationConfiguration(GHEventApiServer.class)
@@ -40,7 +42,7 @@ public abstract class AbstractSerializationTest<T> {
     private final Class<T> model;
 
     @Autowired
-    private ObjectMapper mapper;
+    @NonFinal ObjectMapper mapper;
 
     protected AbstractSerializationTest(Class<T> model) {
         this.model = model;

@@ -58,6 +58,8 @@ import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.OkUrlFactory;
 
+import lombok.experimental.NonFinal;
+
 @DirtiesContext
 @WebIntegrationTest
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -106,10 +108,10 @@ public abstract class AbstractHandlerTest {
     protected final CountDownLatch completion = new CountDownLatch(1);
 
     @Autowired
-    private AbstractTestHandlerBean handlerBean;
+    @NonFinal AbstractTestHandlerBean handlerBean;
 
     @Autowired
-    private Environment env;
+    @NonFinal Environment env;
 
     protected AbstractHandlerTest(String event) {
         this.event = event;

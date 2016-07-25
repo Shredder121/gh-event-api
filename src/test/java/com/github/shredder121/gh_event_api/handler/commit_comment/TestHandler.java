@@ -31,7 +31,7 @@ import com.github.shredder121.gh_event_api.model.Comment;
 
 class TestHandler extends AbstractTestHandlerBean implements CommitCommentHandler {
 
-    private final ZonedDateTime commentTime = dt("2015-05-05", "23:40:29");
+    ZonedDateTime commentTime = dt("2015-05-05", "23:40:29");
 
     @Override
     public void handle(CommitCommentPayload payload) {

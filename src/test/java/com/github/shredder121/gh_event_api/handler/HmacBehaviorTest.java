@@ -56,7 +56,7 @@ import lombok.experimental.NonFinal;
 @SpringApplicationConfiguration(classes = {HmacBehaviorTest.class, GHEventApiServer.class})
 public class HmacBehaviorTest {
 
-    private static final ObjectMapper restAssuredMapper = new Jackson2Mapper(
+    static ObjectMapper restAssuredMapper = new Jackson2Mapper(
             (clazz, charset) -> new DefaultJackson2ObjectMapperFactory()
                     .create(clazz, charset)
                     .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS));

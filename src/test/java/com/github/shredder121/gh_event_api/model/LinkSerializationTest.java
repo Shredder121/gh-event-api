@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.is;
 
 public class LinkSerializationTest extends AbstractSerializationTest<Link> {
 
-    private static final String SAMPLE_LINK
+    static String SAMPLE_LINK
             = "{\n"
             + "  \"href\": \"https://github.com/baxterthehacker/public-repo/pull/1\"\n"
             + "}";

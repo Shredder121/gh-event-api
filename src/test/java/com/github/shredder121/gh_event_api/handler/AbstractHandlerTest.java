@@ -65,7 +65,7 @@ import lombok.experimental.NonFinal;
 @RunWith(SpringJUnit4ClassRunner.class)
 public abstract class AbstractHandlerTest {
 
-    private static final Map<String, GHContent> eventPayloadMap;
+    static Map<String, GHContent> eventPayloadMap;
 
     static {
         try {
@@ -96,16 +96,16 @@ public abstract class AbstractHandlerTest {
         return fileName.substring(0, fileName.indexOf('.'));
     }
 
-    private final String event;
-    private final String hmac;
+    String event;
+    String hmac;
 
     @Rule
-    public final ErrorCollector errorCollector = new ErrorCollector();
+    public ErrorCollector errorCollector = new ErrorCollector();
 
     @Rule
-    public final TestRule timeout = new DisableOnDebug(Timeout.seconds(30));
+    public TestRule timeout = new DisableOnDebug(Timeout.seconds(30));
 
-    protected final CountDownLatch completion = new CountDownLatch(1);
+    protected CountDownLatch completion = new CountDownLatch(1);
 
     @Autowired
     @NonFinal AbstractTestHandlerBean handlerBean;

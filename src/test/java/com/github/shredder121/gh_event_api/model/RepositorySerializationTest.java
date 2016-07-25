@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.is;
 
 public class RepositorySerializationTest extends AbstractSerializationTest<Repository> {
 
-    private static final String SAMPLE_REPOSITORY
+    static String SAMPLE_REPOSITORY
             = "{\n"
             + "  \"id\": 35129377,\n"
             + "  \"name\": \"public-repo\",\n"

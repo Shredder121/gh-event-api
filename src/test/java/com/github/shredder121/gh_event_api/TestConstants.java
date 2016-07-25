@@ -21,12 +21,12 @@ import com.google.common.collect.ImmutableMap;
 
 public class TestConstants {
 
-    public static final String DEVELOPER_GITHUB_COM_REVISION = "20bb66a39d77e07e8aee19ef33d039d4cc6618a4";
+    public static String DEVELOPER_GITHUB_COM_REVISION = "20bb66a39d77e07e8aee19ef33d039d4cc6618a4";
 
     /**
      * The HMACs of the payloads as reported by https://www.freeformatter.com/hmac-generator.html
      */
-    public static final Map<String, String> HMACS
+    public static Map<String, String> HMACS
             = ImmutableMap.<String, String>builder()
             .put("commit_comment",
                     "f8e5ceafd15a2389caacd4ac0f75f73c3217d4c3")

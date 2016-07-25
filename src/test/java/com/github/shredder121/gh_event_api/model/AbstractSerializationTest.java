@@ -34,19 +34,16 @@ import lombok.experimental.NonFinal;
 @RunWith(SpringJUnit4ClassRunner.class)
 @IntegrationTest({"spring.main.show-banner=false"})
 @SpringApplicationConfiguration(GHEventApiServer.class)
+@lombok.RequiredArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public abstract class AbstractSerializationTest<T> {
 
     @Rule
-    public final ErrorCollector errorCollector = new ErrorCollector();
+    public ErrorCollector errorCollector = new ErrorCollector();
 
-    private final Class<T> model;
+    Class<T> model;
 
     @Autowired
     @NonFinal ObjectMapper mapper;
-
-    protected AbstractSerializationTest(Class<T> model) {
-        this.model = model;
-    }
 
     @Test
     public final void deserialize() throws Exception {

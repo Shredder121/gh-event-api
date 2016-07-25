@@ -67,9 +67,7 @@ public class HamcrestHelpers {
         };
     }
 
-    @lombok.experimental.UtilityClass
-    @lombok.experimental.FieldDefaults(level = lombok.AccessLevel.PUBLIC)
-    public class BaxterAndTheHackers {
+    public interface BaxterAndTheHackers {
 
         Matcher<User> BAXTERANDTHEHACKERS = allOf(asList(
                 property(User::getId, is(7649605)),
@@ -96,9 +94,7 @@ public class HamcrestHelpers {
         ));
     }
 
-    @lombok.experimental.UtilityClass
-    @lombok.experimental.FieldDefaults(level = lombok.AccessLevel.PUBLIC)
-    public class BaxterTheHacker {
+    public interface BaxterTheHacker {
 
         Matcher<User> BAXTERTHEHACKER = allOf(asList(
                 property(User::getId, is(6752317)),
@@ -114,9 +110,7 @@ public class HamcrestHelpers {
         ));
     }
 
-    @lombok.experimental.UtilityClass
-    @lombok.experimental.FieldDefaults(level = lombok.AccessLevel.PUBLIC)
-    public class JasonRudolph {
+    public interface JasonRudolph {
 
         Matcher<User> JASONRUDOLPH = allOf(asList(
                 property(User::getId, is(2988)),
@@ -125,9 +119,7 @@ public class HamcrestHelpers {
         ));
     }
 
-    @lombok.experimental.UtilityClass
-    @lombok.experimental.FieldDefaults(level = lombok.AccessLevel.PUBLIC)
-    public class Kdaigle {
+    public interface Kdaigle {
 
         Matcher<User> KDAIGLE = allOf(asList(
                 property(User::getId, is(2501)),
@@ -136,9 +128,7 @@ public class HamcrestHelpers {
         ));
     }
 
-    @lombok.experimental.UtilityClass
-    @lombok.experimental.FieldDefaults(level = lombok.AccessLevel.PUBLIC)
-    public class Octocat {
+    public interface Octocat {
 
         Matcher<User> OCTOCAT = allOf(asList(
                 property(User::getId, is(583231)),

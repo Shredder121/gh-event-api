@@ -44,7 +44,7 @@ class TestHandler extends AbstractTestHandlerBean implements CommitCommentHandle
         countDownLatch.countDown();
     }
 
-    private Matcher<Comment> commentMatchers() {
+    public Matcher<Comment> commentMatchers() {
         return allOf(asList(
                 property(Comment::getId, is(11056394)),
                 property(Comment::getCommitId, is("9049f1265b7d61be4a8904a9a27120d2064dab3b")),

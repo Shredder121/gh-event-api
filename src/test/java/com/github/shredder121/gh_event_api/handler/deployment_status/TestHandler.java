@@ -42,7 +42,7 @@ class TestHandler extends AbstractTestHandlerBean implements DeploymentStatusHan
         countDownLatch.countDown();
     }
 
-    private static Matcher<DeploymentStatus> deploymentStatusMatchers() {
+    public Matcher<DeploymentStatus> deploymentStatusMatchers() {
         return allOf(asList(
                 property(DeploymentStatus::getId, is(1115122)),
                 property(DeploymentStatus::getUrl, is("https://api.github.com/repos/baxterthehacker/public-repo/deployments/710692/statuses/1115122")),
@@ -57,7 +57,7 @@ class TestHandler extends AbstractTestHandlerBean implements DeploymentStatusHan
         ));
     }
 
-    public static Matcher<Deployment> deploymentMatchers() {
+    public Matcher<Deployment> deploymentMatchers() {
         return allOf(asList(
                 property(Deployment::getId, is(710692)),
                 property(Deployment::getRef, is("master")),

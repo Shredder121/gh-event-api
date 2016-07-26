@@ -39,7 +39,7 @@ class TestHandler extends AbstractTestHandlerBean implements GollumHandler {
         countDownLatch.countDown();
     }
 
-    private static Matcher<Iterable<? extends WikiPage>> pagesMatchers() {
+    public Matcher<Iterable<? extends WikiPage>> pagesMatchers() {
         return contains(
                 allOf(asList(
                         property(WikiPage::getAction, is("created")),

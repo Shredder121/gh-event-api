@@ -40,7 +40,7 @@ class TestHandler extends AbstractTestHandlerBean implements DeploymentHandler {
         countDownLatch.countDown();
     }
 
-    public static Matcher<Deployment> deploymentMatchers() {
+    public Matcher<Deployment> deploymentMatchers() {
         return allOf(asList(
                 property(Deployment::getId, is(710692)),
                 property(Deployment::getRef, is("master")),

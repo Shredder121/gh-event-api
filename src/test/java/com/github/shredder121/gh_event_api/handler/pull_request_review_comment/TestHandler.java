@@ -41,14 +41,14 @@ class TestHandler extends AbstractTestHandlerBean implements PullRequestReviewCo
         countDownLatch.countDown();
     }
 
-    private static Matcher<PullRequest> pullRequestMatchers() {
+    public Matcher<PullRequest> pullRequestMatchers() {
         return allOf(
                 property(PullRequest::getNumber, is(1)),
                 property(PullRequest::getTitle, is("Update the README with new information"))
         );
     }
 
-    private static Matcher<Comment> commentMatchers() {
+    public Matcher<Comment> commentMatchers() {
         return allOf(asList(
                 property(Comment::getBody, is("Maybe you should use more emojji on this line.")),
                 property(Comment::getPath, is("README.md")),

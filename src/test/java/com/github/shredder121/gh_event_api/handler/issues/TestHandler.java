@@ -40,7 +40,7 @@ class TestHandler extends AbstractTestHandlerBean implements IssuesHandler {
         countDownLatch.countDown();
     }
 
-    private static Matcher<Issue> issueMatchers() {
+    public Matcher<Issue> issueMatchers() {
         return allOf(asList(
                 property(Issue::getId, is(73464126)),
                 property(Issue::getNumber, is(2)),

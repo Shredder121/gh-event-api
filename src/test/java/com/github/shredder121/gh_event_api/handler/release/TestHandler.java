@@ -39,7 +39,7 @@ class TestHandler extends AbstractTestHandlerBean implements ReleaseHandler {
         countDownLatch.countDown();
     }
 
-    private static Matcher<Release> releaseMatchers() {
+    public Matcher<Release> releaseMatchers() {
         return allOf(
                 property(Release::getId, is(1261438)),
                 property(Release::getAssets, is(empty())),

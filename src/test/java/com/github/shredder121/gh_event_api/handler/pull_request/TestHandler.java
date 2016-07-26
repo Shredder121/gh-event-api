@@ -45,7 +45,7 @@ class TestHandler extends AbstractTestHandlerBean implements PullRequestHandler 
         countDownLatch.countDown();
     }
 
-    private static Matcher<PullRequest> pullRequestMatchers(PullRequestPayload payload) {
+    public Matcher<PullRequest> pullRequestMatchers(PullRequestPayload payload) {
         return allOf(asList(
                 property(PullRequest::getNumber, is(1)),
                 property(PullRequest::getLocked, is(false)),

@@ -39,7 +39,7 @@ class TestHandler extends AbstractTestHandlerBean implements TeamAddHandler {
         countDownLatch.countDown();
     }
 
-    private static Matcher<Team> teamMatchers() {
+    public Matcher<Team> teamMatchers() {
         return allOf(
                 property(Team::getId, is(836012)),
                 property(Team::getName, is("github")),

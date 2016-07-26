@@ -41,7 +41,7 @@ class TestHandler extends AbstractTestHandlerBean implements IssueCommentHandler
         countDownLatch.countDown();
     }
 
-    private static Matcher<Issue> issueMatchers() {
+    public Matcher<Issue> issueMatchers() {
         return allOf(asList(
                 property(Issue::getId, is(73464126)),
                 property(Issue::getNumber, is(2)),
@@ -50,7 +50,7 @@ class TestHandler extends AbstractTestHandlerBean implements IssueCommentHandler
         ));
     }
 
-    private static Matcher<Comment> commentMMatchers() {
+    public Matcher<Comment> commentMMatchers() {
         return allOf(asList(
                 property(Comment::getId, is(99262140)),
                 property(Comment::getBody, is("You are totally right! I'll get this fixed right away."))

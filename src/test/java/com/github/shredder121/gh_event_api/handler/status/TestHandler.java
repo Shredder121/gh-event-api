@@ -50,7 +50,7 @@ class TestHandler extends AbstractTestHandlerBean implements StatusHandler {
         countDownLatch.countDown();
     }
 
-    private static Matcher<Iterable<? extends StatusBranch>> branchesMatchers() {
+    public Matcher<Iterable<? extends StatusBranch>> branchesMatchers() {
         return contains(asList(
                 allOf(asList(
                         property(StatusBranch::getName, is("master")),
@@ -76,7 +76,7 @@ class TestHandler extends AbstractTestHandlerBean implements StatusHandler {
         ));
     }
 
-    private static Matcher<StatusCommit> commitMatchers() {
+    public Matcher<StatusCommit> commitMatchers() {
         return allOf(asList(
                 property(StatusCommit::getSha, is("9049f1265b7d61be4a8904a9a27120d2064dab3b")),
                 property(StatusCommit::getUrl, containsString("9049f1265b7d61be4a8904a9a27120d2064dab3b")),
@@ -89,7 +89,7 @@ class TestHandler extends AbstractTestHandlerBean implements StatusHandler {
         ));
     }
 
-    private static Matcher<UserData> committerAndAuthorMatchers() {
+    public Matcher<UserData> committerAndAuthorMatchers() {
         return allOf(
                 property(UserData::getName, is("baxterthehacker")),
                 property(UserData::getEmail, is("baxterthehacker@users.noreply.github.com")),

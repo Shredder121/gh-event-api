@@ -39,7 +39,7 @@ class TestHandler extends AbstractTestHandlerBean implements PageBuildHandler {
         countDownLatch.countDown();
     }
 
-    private static Matcher<PageBuild> pageBuildMatchers() {
+    public Matcher<PageBuild> pageBuildMatchers() {
         return allOf(asList(
                 property(PageBuild::getUrl, is("https://api.github.com/repos/baxterthehacker/public-repo/pages/builds/15995382")),
                 property(PageBuild::getStatus, is("built")),

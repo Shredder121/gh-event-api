@@ -33,8 +33,8 @@ import com.google.common.collect.ImmutableList;
  */
 @lombok.Value
 @JsonNaming(LowerCaseWithUnderscoresStrategy.class)
-@lombok.AllArgsConstructor(
-        access = lombok.AccessLevel.PACKAGE,
+@lombok.RequiredArgsConstructor(
+        access = lombok.AccessLevel.MODULE,
         onConstructor = @__(@PropertyBasedJsonCreator)
 )
 public class StatusPayload {

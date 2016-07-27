@@ -15,9 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.deployment;
 
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.*;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
 
@@ -41,7 +40,7 @@ class TestHandler extends AbstractTestHandlerBean implements DeploymentHandler {
         countDownLatch.countDown();
     }
 
-    public static Matcher<Deployment> deploymentMatchers() {
+    public Matcher<Deployment> deploymentMatchers() {
         return allOf(asList(
                 property(Deployment::getId, is(710692)),
                 property(Deployment::getRef, is("master")),

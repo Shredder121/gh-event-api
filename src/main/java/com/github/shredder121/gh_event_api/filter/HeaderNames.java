@@ -18,12 +18,9 @@ package com.github.shredder121.gh_event_api.filter;
 /**
  * Header names that {@code gh-event-api} processes.
  */
-public class HeaderNames {
+public interface HeaderNames {
 
-    public static final String GITHUB_DELIVERY_HEADER = "X-GitHub-Delivery";
-    public static final String GITHUB_EVENT_HEADER = "X-GitHub-Event";
-    public static final String GITHUB_SIGNATURE_HEADER = "X-Hub-Signature";
-
-    private HeaderNames() {
-    }
+    String GITHUB_DELIVERY_HEADER = "X-GitHub-Delivery";
+    String GITHUB_EVENT_HEADER = "X-GitHub-Event";
+    String GITHUB_SIGNATURE_HEADER = "X-Hub-Signature";
 }

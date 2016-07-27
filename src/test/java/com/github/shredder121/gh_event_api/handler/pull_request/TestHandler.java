@@ -15,10 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.handler.pull_request;
 
-import static com.github.shredder121.gh_event_api.testutil.DateTimeHelpers.dt;
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static com.github.shredder121.gh_event_api.testutil.DateTimeHelpers.*;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.*;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
 
@@ -46,7 +45,7 @@ class TestHandler extends AbstractTestHandlerBean implements PullRequestHandler 
         countDownLatch.countDown();
     }
 
-    private static Matcher<PullRequest> pullRequestMatchers(PullRequestPayload payload) {
+    public Matcher<PullRequest> pullRequestMatchers(PullRequestPayload payload) {
         return allOf(asList(
                 property(PullRequest::getNumber, is(1)),
                 property(PullRequest::getLocked, is(false)),

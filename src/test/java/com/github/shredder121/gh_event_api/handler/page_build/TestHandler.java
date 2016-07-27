@@ -15,9 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.page_build;
 
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.*;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
 
@@ -40,7 +39,7 @@ class TestHandler extends AbstractTestHandlerBean implements PageBuildHandler {
         countDownLatch.countDown();
     }
 
-    private static Matcher<PageBuild> pageBuildMatchers() {
+    public Matcher<PageBuild> pageBuildMatchers() {
         return allOf(asList(
                 property(PageBuild::getUrl, is("https://api.github.com/repos/baxterthehacker/public-repo/pages/builds/15995382")),
                 property(PageBuild::getStatus, is("built")),

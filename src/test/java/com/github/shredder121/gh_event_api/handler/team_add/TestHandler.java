@@ -16,7 +16,7 @@
 package com.github.shredder121.gh_event_api.handler.team_add;
 
 import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterAndTheHackers.*;
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
@@ -39,7 +39,7 @@ class TestHandler extends AbstractTestHandlerBean implements TeamAddHandler {
         countDownLatch.countDown();
     }
 
-    private static Matcher<Team> teamMatchers() {
+    public Matcher<Team> teamMatchers() {
         return allOf(
                 property(Team::getId, is(836012)),
                 property(Team::getName, is("github")),

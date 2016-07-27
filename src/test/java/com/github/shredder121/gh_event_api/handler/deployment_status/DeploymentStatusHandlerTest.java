@@ -29,7 +29,7 @@ public class DeploymentStatusHandlerTest extends AbstractHandlerTest {
     }
 
     @Bean
-    private TestHandler handlerBean() {
+    public TestHandler handlerBean() {
         return new TestHandler();
     }
 }

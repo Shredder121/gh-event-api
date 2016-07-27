@@ -15,9 +15,9 @@
  */
 package com.github.shredder121.gh_event_api.handler.membership;
 
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.Kdaigle.KDAIGLE;
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.*;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.Kdaigle.*;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
@@ -41,7 +41,7 @@ class TestHandler extends AbstractTestHandlerBean implements MembershipHandler {
         countDownLatch.countDown();
     }
 
-    private static Matcher<Team> teamMatchers() {
+    public Matcher<Team> teamMatchers() {
         return allOf(asList(
                 property(Team::getId, is(123456)),
                 property(Team::getName, is("Contractors")),

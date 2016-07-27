@@ -15,9 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.pull_request_review_comment;
 
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.*;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
 
@@ -42,14 +41,14 @@ class TestHandler extends AbstractTestHandlerBean implements PullRequestReviewCo
         countDownLatch.countDown();
     }
 
-    private static Matcher<PullRequest> pullRequestMatchers() {
+    public Matcher<PullRequest> pullRequestMatchers() {
         return allOf(
                 property(PullRequest::getNumber, is(1)),
                 property(PullRequest::getTitle, is("Update the README with new information"))
         );
     }
 
-    private static Matcher<Comment> commentMatchers() {
+    public Matcher<Comment> commentMatchers() {
         return allOf(asList(
                 property(Comment::getBody, is("Maybe you should use more emojji on this line.")),
                 property(Comment::getPath, is("README.md")),

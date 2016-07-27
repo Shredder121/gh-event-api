@@ -15,14 +15,14 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.*;
 import static org.hamcrest.Matchers.*;
 
 import java.util.Arrays;
 
 public class OrganizationSerializationTest extends AbstractSerializationTest<Organization> {
 
-    private static final String SAMPLE_ORGANIZATION
+    static String SAMPLE_ORGANIZATION
             = "{\n"
             + "  \"login\": \"Shredder121-me\",\n"
             + "  \"id\": 15276443,\n"

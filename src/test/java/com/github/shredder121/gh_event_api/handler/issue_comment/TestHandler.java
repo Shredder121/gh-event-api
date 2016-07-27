@@ -15,9 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.issue_comment;
 
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER;
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.BAXTERTHEHACKER_PUBLIC_REPO;
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.BaxterTheHacker.*;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.*;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.*;
 
@@ -42,7 +41,7 @@ class TestHandler extends AbstractTestHandlerBean implements IssueCommentHandler
         countDownLatch.countDown();
     }
 
-    private static Matcher<Issue> issueMatchers() {
+    public Matcher<Issue> issueMatchers() {
         return allOf(asList(
                 property(Issue::getId, is(73464126)),
                 property(Issue::getNumber, is(2)),
@@ -51,7 +50,7 @@ class TestHandler extends AbstractTestHandlerBean implements IssueCommentHandler
         ));
     }
 
-    private static Matcher<Comment> commentMMatchers() {
+    public Matcher<Comment> commentMMatchers() {
         return allOf(asList(
                 property(Comment::getId, is(99262140)),
                 property(Comment::getBody, is("You are totally right! I'll get this fixed right away."))

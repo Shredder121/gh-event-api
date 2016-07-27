@@ -15,7 +15,7 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.*;
 import static org.hamcrest.Matchers.*;
 
 import java.util.Arrays;
@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class DeploymentSerializationTest extends AbstractSerializationTest<Deployment> {
 
-    private static final String SAMPLE_DEPLOYMENT
+    static String SAMPLE_DEPLOYMENT
             = "{\n"
             + "  \"url\": \"https://api.github.com/repos/Shredder121-me/yummy-octo-turtle/deployments/3640119\",\n"
             + "  \"id\": 3640119,\n"

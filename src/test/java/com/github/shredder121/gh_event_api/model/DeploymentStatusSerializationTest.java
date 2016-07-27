@@ -15,7 +15,7 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.property;
+import static com.github.shredder121.gh_event_api.testutil.HamcrestHelpers.*;
 import static org.hamcrest.Matchers.*;
 
 import java.util.Arrays;
@@ -26,7 +26,7 @@ import java.util.Arrays;
  */
 public class DeploymentStatusSerializationTest extends AbstractSerializationTest<DeploymentStatus> {
 
-    private static final String SAMPLE_DEPLOYMENT_STATUS
+    static String SAMPLE_DEPLOYMENT_STATUS
             = "{\n"
             + "  \"url\": \"https://api.github.com/repos/Shredder121-me/yummy-octo-turtle/deployments/3640119/statuses/6811556\",\n"
             + "  \"id\": 6811556,\n"

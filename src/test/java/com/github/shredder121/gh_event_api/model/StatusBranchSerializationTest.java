@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.is;
 
 public class StatusBranchSerializationTest extends AbstractSerializationTest<StatusBranch> {
 
-    private static final String SAMPLE_STATUS_BRANCH
+    static String SAMPLE_STATUS_BRANCH
             = "{\n"
             + "  \"name\": \"master\",\n"
             + "  \"commit\": {\n"

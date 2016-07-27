@@ -33,10 +33,8 @@ import com.github.shredder121.gh_event_api.model.User;
  *
  * @author Shredder121
  */
+@lombok.experimental.UtilityClass
 public class HamcrestHelpers {
-
-    private HamcrestHelpers() {
-    }
 
     /**
      * Before matching via hamcrest, select a variable with a lambda expression.
@@ -50,7 +48,7 @@ public class HamcrestHelpers {
      * @return the composed matcher
      */
     @SafeVarargs
-    public static <O, T> Matcher<O> property(Function<? super O, ? extends T> selector, Matcher<? super T> predicate, O... shim) {
+    public <O, T> Matcher<O> property(Function<? super O, ? extends T> selector, Matcher<? super T> predicate, O... shim) {
         return new TypeSafeMatcher<O>(shim.getClass().getComponentType()) {
             @Override
             public boolean matchesSafely(O original) {
@@ -69,84 +67,70 @@ public class HamcrestHelpers {
         };
     }
 
-    public static class BaxterAndTheHackers {
+    public interface BaxterAndTheHackers {
 
-        private BaxterAndTheHackers() {
-        }
-
-        public static final Matcher<User> BAXTERANDTHEHACKERS = allOf(asList(
+        Matcher<User> BAXTERANDTHEHACKERS = allOf(asList(
                 property(User::getId, is(7649605)),
                 property(User::getLogin, is("baxterandthehackers")),
                 property(User::getHtmlUrl, is("https://github.com/baxterandthehackers"))
         ));
 
-        public static final Matcher<Organization> BAXTERANDTHEHACKERS_ORG = allOf(asList(
+        Matcher<Organization> BAXTERANDTHEHACKERS_ORG = allOf(asList(
                 property(Organization::getId, is(7649605)),
                 property(Organization::getLogin, is("baxterandthehackers")),
                 property(Organization::getUrl, is("https://api.github.com/orgs/baxterandthehackers"))
         ));
 
-        public static final Matcher<Repository> BAXTERANDTHEHACKERS_NEW_REPOSITORY = allOf(asList(
+        Matcher<Repository> BAXTERANDTHEHACKERS_NEW_REPOSITORY = allOf(asList(
                 property(Repository::getName, is("new-repository")),
                 property(Repository::getFullName, is("baxterandthehackers/new-repository")),
                 property(Repository::getOwner, is(BAXTERANDTHEHACKERS))
         ));
 
-        public static final Matcher<Repository> BAXTERANDTHEHACKERS_PUBLIC_REPO = allOf(asList(
+        Matcher<Repository> BAXTERANDTHEHACKERS_PUBLIC_REPO = allOf(asList(
                 property(Repository::getName, is("public-repo")),
                 property(Repository::getFullName, is("baxterandthehackers/public-repo")),
                 property(Repository::getOwner, is(BAXTERANDTHEHACKERS))
         ));
     }
 
-    public static class BaxterTheHacker {
+    public interface BaxterTheHacker {
 
-        private BaxterTheHacker() {
-        }
-
-        public static final Matcher<User> BAXTERTHEHACKER = allOf(asList(
+        Matcher<User> BAXTERTHEHACKER = allOf(asList(
                 property(User::getId, is(6752317)),
                 property(User::getLogin, is("baxterthehacker")),
                 property(User::getHtmlUrl, is("https://github.com/baxterthehacker"))
         ));
 
-        public static final Matcher<Repository> BAXTERTHEHACKER_PUBLIC_REPO = allOf(asList(
+        Matcher<Repository> BAXTERTHEHACKER_PUBLIC_REPO = allOf(asList(
                 property(Repository::getName, is("public-repo")),
                 property(Repository::getFullName, is("baxterthehacker/public-repo")),
-                property(Repository::getOwner, is(either(BAXTERTHEHACKER).or(anything(/*XXX BUG IN GITHUB*/))))
+                property(Repository::getOwner, is(either(BAXTERTHEHACKER)
+                        .or(anything(/*XXX BUG IN GITHUB*/))))
         ));
     }
 
-    public static class JasonRudolph {
+    public interface JasonRudolph {
 
-        private JasonRudolph() {
-        }
-
-        public static final Matcher<User> JASONRUDOLPH = allOf(asList(
+        Matcher<User> JASONRUDOLPH = allOf(asList(
                 property(User::getId, is(2988)),
                 property(User::getLogin, is("jasonrudolph")),
                 property(User::getHtmlUrl, is("https://github.com/jasonrudolph"))
         ));
     }
 
-    public static class Kdaigle {
+    public interface Kdaigle {
 
-        private Kdaigle() {
-        }
-
-        public static final Matcher<User> KDAIGLE = allOf(asList(
+        Matcher<User> KDAIGLE = allOf(asList(
                 property(User::getId, is(2501)),
                 property(User::getLogin, is("kdaigle")),
                 property(User::getHtmlUrl, is("https://github.com/kdaigle"))
         ));
     }
 
-    public static class Octocat {
+    public interface Octocat {
 
-        private Octocat() {
-        }
-
-        public static final Matcher<User> OCTOCAT = allOf(asList(
+        Matcher<User> OCTOCAT = allOf(asList(
                 property(User::getId, is(583231)),
                 property(User::getLogin, is("octocat")),
                 property(User::getHtmlUrl, is("https://github.com/octocat"))

@@ -49,27 +49,27 @@ public class PushCommit {
     String label;
 
     /**
-     * Ref
+     * The ref name of the commit.
      */
     String ref;
 
     /**
-     * Message
+     * The commit message.
      */
     String message;
 
     /**
-     * Files that were added
+     * Paths that were added.
      */
     ImmutableList<String> added;
 
     /**
-     * Files that were removed
+     * Paths that were removed.
      */
     ImmutableList<String> removed;
 
     /**
-     * Files that were modified
+     * Paths that were modified.
      */
     ImmutableList<String> modified;
 }

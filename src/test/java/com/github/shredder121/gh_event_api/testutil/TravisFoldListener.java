@@ -20,6 +20,7 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.RunListener;
 
 /**
+ * A {@code RunListener} that insert tags for Travis to fold the test output away.
  *
  * @author Shredder121
  */

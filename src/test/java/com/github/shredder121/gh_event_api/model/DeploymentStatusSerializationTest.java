@@ -20,10 +20,6 @@ import static org.hamcrest.Matchers.*;
 
 import java.util.Arrays;
 
-/**
- *
- * @author Shredder121
- */
 public class DeploymentStatusSerializationTest extends AbstractSerializationTest<DeploymentStatus> {
 
     static String SAMPLE_DEPLOYMENT_STATUS

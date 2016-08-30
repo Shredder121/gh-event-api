@@ -41,7 +41,7 @@ public class Repository {
     String fullName;
 
     /**
-     * The owner of the repository
+     * The owner of the repository.
      */
     User owner;
 

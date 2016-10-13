@@ -15,8 +15,6 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
-
 import java.io.IOException;
 
 import org.junit.Rule;
@@ -24,16 +22,15 @@ import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.shredder121.gh_event_api.GHEventApiServer;
 
 import lombok.experimental.NonFinal;
 
+@JsonTest
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = GHEventApiServer.class, webEnvironment = NONE)
 @lombok.RequiredArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public abstract class AbstractSerializationTest<T> {
 

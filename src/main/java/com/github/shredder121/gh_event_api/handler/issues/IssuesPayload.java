@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnders
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.*;
 import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
+import com.google.common.collect.ImmutableList;
 
 /**
  * The payload passed when an {@code issues} event is received.
@@ -64,8 +65,17 @@ public class IssuesPayload {
 
     /**
      * The optional user who was assigned or unassigned from the issue.
+     *
+     * @deprecated deprecated in favor of {@link #getAssignees}, since you can assign multiple people in one action.
+     * @see <a href="https://developer.github.com/changes/2016-5-27-multiple-assignees/">The blog post</a>
      */
+    @Deprecated
     User assignee;
+
+    /**
+     * The optional users who were assigned or unassigned from the issue.
+     */
+    ImmutableList<User> assignees;
 
     /**
      * The optional label that was added or removed from the issue.

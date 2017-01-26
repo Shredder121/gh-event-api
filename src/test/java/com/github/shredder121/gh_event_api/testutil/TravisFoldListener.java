@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Shredder121 & The Querydsl Team (http://www.querydsl.com/team).
+ * Copyright 2017 Shredder121 & The Querydsl Team (http://www.querydsl.com/team).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

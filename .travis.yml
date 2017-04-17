@@ -3,7 +3,9 @@ jdk:
   - oraclejdk8
 
 #validate javadoc
-before_install: mvn -B -q lombok:delombok javadoc:javadoc -Dshow=package
+before_install:
+  - echo $MAVEN_OPTS
+  - mvn --debug lombok:delombok javadoc:javadoc -Dshow=package
 
 install: mvn -B -q install -DskipTests=true
 script: mvn -B -Ptravis test jacoco:report

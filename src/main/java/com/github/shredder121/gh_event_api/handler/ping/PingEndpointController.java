@@ -15,12 +15,11 @@
  */
 package com.github.shredder121.gh_event_api.handler.ping;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,7 +42,7 @@ class PingEndpointController {
      * @param payload the incoming payload
      * @return the zen
      */
-    @RequestMapping(method = POST)
+    @PostMapping
     public String ping(@Valid @RequestBody PingPayload payload) {
         logger.info("received Ping event - {}", payload);
         return payload.getZen();

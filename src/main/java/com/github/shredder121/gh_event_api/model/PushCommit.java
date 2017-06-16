@@ -15,7 +15,7 @@
  */
 package com.github.shredder121.gh_event_api.model;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
 import com.google.common.collect.ImmutableList;
@@ -26,7 +26,7 @@ import com.google.common.collect.ImmutableList;
  * @author Shredder121
  */
 @lombok.Value
-@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@JsonNaming(SnakeCaseStrategy.class)
 @lombok.RequiredArgsConstructor(
         access = lombok.AccessLevel.MODULE,
         onConstructor = @__(@PropertyBasedJsonCreator)

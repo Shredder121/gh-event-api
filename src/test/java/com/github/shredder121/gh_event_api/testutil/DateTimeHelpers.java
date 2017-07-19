@@ -6,7 +6,7 @@ import java.time.*;
 public class DateTimeHelpers {
 
     public ZonedDateTime dt(String date, String time) {
-        return ZonedDateTime.of(d(date), t(time), ZoneId.ofOffset("GMT", ZoneOffset.UTC));
+        return ZonedDateTime.of(d(date), t(time), ZoneId.ofOffset("UTC", ZoneOffset.UTC));
     }
 
     public LocalDate d(String date) {

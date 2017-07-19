@@ -17,9 +17,13 @@ package com.github.shredder121.gh_event_api;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.core.PrettyPrinter;
+import com.fasterxml.jackson.core.util.MinimalPrettyPrinter;
 import com.google.common.collect.ImmutableMap;
 
 public interface TestConstants {
+
+    PrettyPrinter MINIMIZER = new MinimalPrettyPrinter(null/*minimizes*/);
 
     String DEVELOPER_GITHUB_COM_REVISION = "20bb66a39d77e07e8aee19ef33d039d4cc6618a4";
 

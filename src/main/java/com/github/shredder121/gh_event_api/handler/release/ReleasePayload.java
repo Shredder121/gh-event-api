@@ -17,7 +17,7 @@ package com.github.shredder121.gh_event_api.handler.release;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.shredder121.gh_event_api.model.Organization;
 import com.github.shredder121.gh_event_api.model.Release;
@@ -32,7 +32,7 @@ import com.github.shredder121.gh_event_api.model.json.PropertyBasedJsonCreator;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#releaseevent">The release event on GitHub</a>
  */
 @lombok.Value
-@JsonNaming(LowerCaseWithUnderscoresStrategy.class)
+@JsonNaming(SnakeCaseStrategy.class)
 @lombok.RequiredArgsConstructor(
         access = lombok.AccessLevel.MODULE,
         onConstructor = @__(@PropertyBasedJsonCreator)

@@ -7,18 +7,15 @@ import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.boot.test.autoconfigure.json.JsonTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.shredder121.gh_event_api.GHEventApiServer;
 
 import lombok.experimental.NonFinal;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@IntegrationTest({"spring.main.show-banner=false"})
-@SpringApplicationConfiguration(GHEventApiServer.class)
+@JsonTest
+@RunWith(SpringRunner.class)
 @lombok.RequiredArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public abstract class AbstractSerializationTest<T> {
 

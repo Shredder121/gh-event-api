@@ -19,7 +19,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+import org.springframework.util.ClassUtils;
 
 import com.google.common.collect.ObjectArrays;
 
@@ -73,5 +77,21 @@ public class GHEventApiServer {
     public static ConfigurableApplicationContext start(Class<?>[] app, String... args) {
         Class<?>[] apps = ObjectArrays.concat(app, GHEventApiServer.class);
         return SpringApplication.run(apps, args);
+    }
+
+    /**
+     * Code that verifies some necessary classes are on the classpath, and prevents silent execution or unclear error messages.
+     */
+    @EventListener(ContextRefreshedEvent.class)
+    public void verify() {
+        Assert.isTrue(isPresent("com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy"),
+                "GH-Event-API needs Jackson 2.7 or greater");
+
+        Assert.isTrue(isPresent("org.springframework.web.bind.annotation.PostMapping"),
+                "GH-Event-API needs Spring Boot 1.4 (Spring Framework 4.3) or greater");
+    }
+
+    private static boolean isPresent(String className) {
+        return ClassUtils.isPresent(className, GHEventApiServer.class.getClassLoader());
     }
 }

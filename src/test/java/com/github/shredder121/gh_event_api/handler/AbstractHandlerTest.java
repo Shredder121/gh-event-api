@@ -2,6 +2,7 @@ package com.github.shredder121.gh_event_api.handler;
 
 import static com.github.shredder121.gh_event_api.TestConstants.DEVELOPER_GITHUB_COM_REVISION;
 import static com.github.shredder121.gh_event_api.TestConstants.HMACS;
+import static com.google.common.util.concurrent.Uninterruptibles.awaitUninterruptibly;
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
 
@@ -118,7 +119,7 @@ public abstract class AbstractHandlerTest {
     }
 
     @Test
-    public void test() throws InterruptedException {
+    public void test() {
         given().headers(
                 "X-GitHub-Event", event,
                 "X-Hub-Signature", "sha1=" + hmac)
@@ -126,7 +127,7 @@ public abstract class AbstractHandlerTest {
         .expect().statusCode(HttpStatus.OK.value())
         .when().post();
 
-        completion.await();
+        awaitUninterruptibly(completion);
     }
 
     private String getBody() {

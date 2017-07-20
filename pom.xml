@@ -34,7 +34,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <spring.boot.version>1.5.4.RELEASE</spring.boot.version>
+        <spring.boot.version>2.0.0.M2</spring.boot.version>
         <surefire.version>2.18.1</surefire.version>
     </properties>
 
@@ -274,4 +274,17 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <url>http://repo.spring.io/milestone/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <url>http://repo.spring.io/milestone/</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

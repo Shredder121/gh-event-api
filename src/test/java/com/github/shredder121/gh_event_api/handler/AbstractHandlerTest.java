@@ -1,18 +1,19 @@
 package com.github.shredder121.gh_event_api.handler;
 
-import static com.github.shredder121.gh_event_api.TestConstants.DEVELOPER_GITHUB_COM_REVISION;
 import static com.github.shredder121.gh_event_api.TestConstants.HMACS;
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,9 +23,6 @@ import org.junit.rules.ErrorCollector;
 import org.junit.rules.TestRule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
-import org.kohsuke.github.GHContent;
-import org.kohsuke.github.GitHub;
-import org.kohsuke.github.GitHubBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.core.env.Environment;
@@ -35,13 +33,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.fasterxml.jackson.core.util.MinimalPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.shredder121.gh_event_api.testutil.RawGitOkHttpConnector;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 import com.jayway.restassured.RestAssured;
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.OkUrlFactory;
 
 import lombok.experimental.NonFinal;
 
@@ -50,34 +44,25 @@ import lombok.experimental.NonFinal;
 @RunWith(SpringJUnit4ClassRunner.class)
 public abstract class AbstractHandlerTest {
 
-    static Map<String, GHContent> eventPayloadMap;
+    static Map<String, Path> eventPayloadMap;
 
     static {
         try {
-            GitHub github = getGitHub();
+            URI dirUri = AbstractHandlerTest.class.getResource("/payloads").toURI();
 
-            List<GHContent> directoryContent = github.getRepository("github/developer.github.com")
-                    .getDirectoryContent("lib/webhooks", DEVELOPER_GITHUB_COM_REVISION);
+            Iterable<Path> directoryContent = Files.newDirectoryStream(Paths.get(dirUri));
 
             // Map the event name (fileNameWithoutPayloadJsonSuffix) to the event's payload.json file
-            //             push/pull_request/* -> lib/webhooks/*.payload.json
+            //             [push]/[pull_request]/[*] -> payloads/[*].payload.json
             eventPayloadMap = Maps.uniqueIndex(
                     directoryContent, AbstractHandlerTest::fileNameWithoutPayloadJsonSuffix);
-        } catch (IOException ex) {
+        } catch (IOException | URISyntaxException ex) {
             throw Throwables.propagate(ex);
         }
     }
 
-    private static GitHub getGitHub() throws IOException {
-        OkHttpClient client = new OkHttpClient();
-        client.setCache(new Cache(Paths.get(".", ".cache").toFile(), FileUtils.ONE_MB * 10));
-        return new GitHubBuilder()
-                .withConnector(new RawGitOkHttpConnector(new OkUrlFactory(client)))
-                .build();
-    }
-
-    private static String fileNameWithoutPayloadJsonSuffix(GHContent content) {
-        String fileName = content.getName();
+    private static String fileNameWithoutPayloadJsonSuffix(Path file) {
+        String fileName = file.getFileName().toString();
         return fileName.substring(0, fileName.indexOf('.'));
     }
 
@@ -130,8 +115,8 @@ public abstract class AbstractHandlerTest {
     }
 
     private String getBody() {
-        GHContent payloadFile = eventPayloadMap.get(event);
-        try (InputStream stream = payloadFile.read()) {
+        Path payloadFile = eventPayloadMap.get(event);
+        try (InputStream stream = Files.newInputStream(payloadFile)) {
             return minimize(stream);
         } catch (IOException ex) {
             throw Throwables.propagate(ex);

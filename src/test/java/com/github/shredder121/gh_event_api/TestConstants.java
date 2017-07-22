@@ -21,8 +21,6 @@ import com.google.common.collect.ImmutableMap;
 
 public interface TestConstants {
 
-    String DEVELOPER_GITHUB_COM_REVISION = "20bb66a39d77e07e8aee19ef33d039d4cc6618a4";
-
     /**
      * The HMACs of the payloads as reported by https://www.freeformatter.com/hmac-generator.html
      */

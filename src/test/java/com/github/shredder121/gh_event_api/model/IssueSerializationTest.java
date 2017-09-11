@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.isEmptyString;
 
 public class IssueSerializationTest extends AbstractSerializationTest<Issue> {
 
-    static String SAMPLE_ISSUE
+    private static final String SAMPLE_ISSUE
             = "{\n"
             + "  \"url\": \"https://api.github.com/repos/Shredder121-me/yummy-octo-turtle/issues/28\",\n"
             + "  \"labels_url\": \"https://api.github.com/repos/Shredder121-me/yummy-octo-turtle/issues/28/labels{/name}\",\n"

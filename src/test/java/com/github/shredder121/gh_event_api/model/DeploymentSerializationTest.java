@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class DeploymentSerializationTest extends AbstractSerializationTest<Deployment> {
 
-    static String SAMPLE_DEPLOYMENT
+    private static final String SAMPLE_DEPLOYMENT
             = "{\n"
             + "  \"url\": \"https://api.github.com/repos/Shredder121-me/yummy-octo-turtle/deployments/3640119\",\n"
             + "  \"id\": 3640119,\n"

@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.*;
 
 public class PushCommitSerializationTest extends AbstractSerializationTest<PushCommit> {
 
-    static String SAMPLE_PUSH_COMMIT
+    private static final String SAMPLE_PUSH_COMMIT
             = "{\n"
             + "  \"id\": \"f2591cd0a959f15a3b274a5182f3ccc0e35c1ec9\",\n"
             + "  \"tree_id\": \"af9847bf3b89671bfe40c9993b4574e2c564c40f\",\n"

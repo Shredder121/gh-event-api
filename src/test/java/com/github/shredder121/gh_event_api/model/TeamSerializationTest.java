@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.is;
 
 public class TeamSerializationTest extends AbstractSerializationTest<Team> {
 
-    static String SAMPLE_TEAM
+    private static final String SAMPLE_TEAM
             = "{\n"
             + "  \"name\": \"Hackers\",\n"
             + "  \"id\": 1919074,\n"

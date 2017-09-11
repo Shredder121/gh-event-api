@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.is;
 
 public class UserSerializationTest extends AbstractSerializationTest<User> {
 
-    static String SAMPLE_USER
+    private static final String SAMPLE_USER
             = "{\n"
             + "  \"login\": \"octocat\",\n"
             + "  \"id\": 1,\n"

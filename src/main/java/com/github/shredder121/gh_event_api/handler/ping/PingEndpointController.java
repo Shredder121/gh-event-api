@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(headers = "X-GitHub-Event=ping")
 class PingEndpointController {
 
-    static Logger logger = LoggerFactory.getLogger(PingEndpointController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PingEndpointController.class);
 
     /**
      * Handle the {@link PingPayload} by echoing the {@link PingPayload#getZen()}.

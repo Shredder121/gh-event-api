@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.*;
 
 public class PullRequestSerializationTest extends AbstractSerializationTest<PullRequest> {
 
-    static String SAMPLE_PULL_REQUEST
+    private static final String SAMPLE_PULL_REQUEST
             = "{\n"
             + "  \"url\": \"https://api.github.com/repos/baxterthehacker/public-repo/pulls/1\",\n"
             + "  \"id\": 34778301,\n"

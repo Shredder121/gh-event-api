@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.is;
 
 public class CommitCommentSerializationTest extends AbstractSerializationTest<Comment> {
 
-    static String SAMPLE_COMMIT_COMMENT
+    private static final String SAMPLE_COMMIT_COMMENT
             = "{\n"
             + "  \"url\": \"https://api.github.com/repos/baxterthehacker/public-repo/comments/11056394\",\n"
             + "  \"html_url\": \"https://github.com/baxterthehacker/public-repo/commit/9049f1265b7d61be4a8904a9a27120d2064dab3b#commitcomment-11056394\",\n"

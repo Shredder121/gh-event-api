@@ -25,7 +25,7 @@ import org.junit.runner.notification.RunListener;
  */
 public class TravisFoldListener extends RunListener {
 
-    static long ID = System.currentTimeMillis();
+    private static final long ID = System.currentTimeMillis();
 
     @Override
     public void testRunStarted(Description description) throws Exception {

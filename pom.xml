@@ -34,8 +34,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <lombok.version>1.16.10</lombok.version>
-
         <spring.boot.version>1.5.4.RELEASE</spring.boot.version>
         <surefire.version>2.18.1</surefire.version>
     </properties>
@@ -59,7 +57,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
 

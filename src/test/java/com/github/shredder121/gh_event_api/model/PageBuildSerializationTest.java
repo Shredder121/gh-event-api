@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 public class PageBuildSerializationTest extends AbstractSerializationTest<PageBuild> {
 
-    static String SAMPLE_PAGE_BUILD
+    private static final String SAMPLE_PAGE_BUILD
             = "{\n"
             + "  \"url\": \"https://api.github.com/repos/Shredder121-me/Shredder121-me.github.io/pages/builds/25700882\",\n"
             + "  \"status\": \"built\",\n"

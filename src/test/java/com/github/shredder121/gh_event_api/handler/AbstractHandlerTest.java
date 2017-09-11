@@ -66,7 +66,7 @@ import lombok.experimental.NonFinal;
 @RunWith(SpringRunner.class)
 public abstract class AbstractHandlerTest {
 
-    static Map<String, GHContent> eventPayloadMap;
+    private static final Map<String, GHContent> eventPayloadMap;
 
     static {
         try {

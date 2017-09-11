@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.*;
 
 public class ReleaseSerializationTest extends AbstractSerializationTest<Release> {
 
-    static String SAMPLE_RELEASE
+    private static final String SAMPLE_RELEASE
             = "{\n"
             + "  \"url\": \"https://api.github.com/repos/Shredder121/gh-event-api/releases/2525578\",\n"
             + "  \"assets_url\": \"https://api.github.com/repos/Shredder121/gh-event-api/releases/2525578/assets\",\n"

@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.is;
 
 public class LabelSerializationTest extends AbstractSerializationTest<Label> {
 
-    static String SAMPLE_LABEL
+    private static final String SAMPLE_LABEL
             = "{\n"
             + "  \"url\": \"https://api.github.com/repos/Shredder121/gh-event-api/labels/in%20progress\",\n"
             + "  \"name\": \"in progress\",\n"

@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.is;
 
 public class IssueCommentSerializationTest extends AbstractSerializationTest<Comment> {
 
-    static String SAMPLE_ISSUE_COMMENT
+    private static final String SAMPLE_ISSUE_COMMENT
             = "{\n"
             + "  \"url\": \"https://api.github.com/repos/Shredder121-me/yummy-octo-turtle/issues/comments/172632780\",\n"
             + "  \"html_url\": \"https://github.com/Shredder121-me/yummy-octo-turtle/pull/28#issuecomment-172632780\",\n"

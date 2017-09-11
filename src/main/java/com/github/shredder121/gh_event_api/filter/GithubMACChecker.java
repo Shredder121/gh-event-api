@@ -61,9 +61,9 @@ import ch.qos.logback.core.encoder.ByteArrayUtil;
 @VisibleForTesting
 public class GithubMACChecker extends OncePerRequestFilter {
 
-    static Logger logger = LoggerFactory.getLogger(GithubMACChecker.class);
+    private static final Logger logger = LoggerFactory.getLogger(GithubMACChecker.class);
 
-    static String HMAC_SHA1 = "HmacSHA1";
+    private static final String HMAC_SHA1 = "HmacSHA1";
 
     Supplier<Mac> macProvider;
 

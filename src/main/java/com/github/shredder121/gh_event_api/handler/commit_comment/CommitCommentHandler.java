@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.commit_comment;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code commit_comment} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.commit_comment;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#commitcommentevent">The commit_comment event on GitHub</a>
  */
 @FunctionalInterface
-public interface CommitCommentHandler {
-
-    void handle(CommitCommentPayload payload);
+public interface CommitCommentHandler extends Consumer<CommitCommentPayload> {
 }

@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.Public;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code public} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.Public;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#publicevent">The public event on GitHub</a>
  */
 @FunctionalInterface
-public interface PublicHandler {
-
-    void handle(PublicPayload payload);
+public interface PublicHandler extends Consumer<PublicPayload> {
 }

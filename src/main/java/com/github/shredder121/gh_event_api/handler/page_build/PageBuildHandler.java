@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.page_build;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code page_build} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.page_build;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#pagebuildevent">The page_build event on GitHub</a>
  */
 @FunctionalInterface
-public interface PageBuildHandler {
-
-    void handle(PageBuildPayload payload);
+public interface PageBuildHandler extends Consumer<PageBuildPayload> {
 }

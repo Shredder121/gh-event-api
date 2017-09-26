@@ -41,9 +41,4 @@ class PageBuildEndpointController extends AbstractEndpointController<PageBuildHa
     PageBuildEndpointController(Collection<? extends PageBuildHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(PageBuildHandler handler, PageBuildPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

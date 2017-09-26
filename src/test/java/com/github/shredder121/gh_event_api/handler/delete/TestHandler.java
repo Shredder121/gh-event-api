@@ -10,7 +10,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 class TestHandler extends AbstractTestHandlerBean implements DeleteHandler {
 
     @Override
-    public void handle(DeletePayload payload) {
+    public void accept(DeletePayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(DeletePayload::getRefType, is("tag")),
                 property(DeletePayload::getRef, is("simple-tag")),

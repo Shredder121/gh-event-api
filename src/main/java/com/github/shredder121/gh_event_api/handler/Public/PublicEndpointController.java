@@ -41,9 +41,4 @@ class PublicEndpointController extends AbstractEndpointController<PublicHandler,
     PublicEndpointController(Collection<? extends PublicHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(PublicHandler handler, PublicPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

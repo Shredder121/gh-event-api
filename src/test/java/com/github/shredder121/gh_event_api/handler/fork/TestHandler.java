@@ -12,7 +12,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 class TestHandler extends AbstractTestHandlerBean implements ForkHandler {
 
     @Override
-    public void handle(ForkPayload payload) {
+    public void accept(ForkPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(ForkPayload::getSender, is(BAXTERANDTHEHACKERS)),
                 property(ForkPayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO)),

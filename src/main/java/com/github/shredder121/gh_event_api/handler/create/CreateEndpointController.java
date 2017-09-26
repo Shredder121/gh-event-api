@@ -41,9 +41,4 @@ class CreateEndpointController extends AbstractEndpointController<CreateHandler,
     CreateEndpointController(Collection<? extends CreateHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(CreateHandler handler, CreatePayload createPayload) {
-        return () -> handler.handle(createPayload);
-    }
 }

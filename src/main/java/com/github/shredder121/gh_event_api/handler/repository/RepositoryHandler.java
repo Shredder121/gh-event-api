@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.repository;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code repository} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.repository;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#repositoryevent">The repository event on GitHub</a>
  */
 @FunctionalInterface
-public interface RepositoryHandler {
-
-    void handle(RepositoryPayload payload);
+public interface RepositoryHandler extends Consumer<RepositoryPayload> {
 }

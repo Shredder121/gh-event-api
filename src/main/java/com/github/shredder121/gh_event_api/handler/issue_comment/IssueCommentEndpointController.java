@@ -41,9 +41,4 @@ class IssueCommentEndpointController extends AbstractEndpointController<IssueCom
     IssueCommentEndpointController(Collection<? extends IssueCommentHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(IssueCommentHandler handler, IssueCommentPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

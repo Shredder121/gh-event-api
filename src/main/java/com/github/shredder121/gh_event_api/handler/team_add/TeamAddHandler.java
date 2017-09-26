@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.team_add;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code team_add} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.team_add;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#teamaddevent">The team_add event on GitHub</a>
  */
 @FunctionalInterface
-public interface TeamAddHandler {
-
-    void handle(TeamAddPayload payload);
+public interface TeamAddHandler extends Consumer<TeamAddPayload> {
 }

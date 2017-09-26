@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.gollum;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code gollum} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.gollum;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#gollumevent">The gollum event on GitHub</a>
  */
 @FunctionalInterface
-public interface GollumHandler {
-
-    void handle(GollumPayload payload);
+public interface GollumHandler extends Consumer<GollumPayload> {
 }

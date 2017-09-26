@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.issues;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code issues} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.issues;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#issuesevent">The issues event on GitHub</a>
  */
 @FunctionalInterface
-public interface IssuesHandler {
-
-    void handle(IssuesPayload payload);
+public interface IssuesHandler extends Consumer<IssuesPayload> {
 }

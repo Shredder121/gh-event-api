@@ -41,9 +41,4 @@ class PullRequestEndpointController extends AbstractEndpointController<PullReque
     PullRequestEndpointController(Collection<? extends PullRequestHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(PullRequestHandler handler, PullRequestPayload pullRequestPayload) {
-        return () -> handler.handle(pullRequestPayload);
-    }
 }

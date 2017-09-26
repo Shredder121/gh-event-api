@@ -41,9 +41,4 @@ class DeleteEndpointController extends AbstractEndpointController<DeleteHandler,
     DeleteEndpointController(Collection<? extends DeleteHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(DeleteHandler handler, DeletePayload createPayload) {
-        return () -> handler.handle(createPayload);
-    }
 }

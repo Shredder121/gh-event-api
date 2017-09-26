@@ -18,7 +18,7 @@ class TestHandler extends AbstractTestHandlerBean implements CommitCommentHandle
     ZonedDateTime commentTime = dt("2015-05-05", "23:40:29");
 
     @Override
-    public void handle(CommitCommentPayload payload) {
+    public void accept(CommitCommentPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(CommitCommentPayload::getAction, is("created")),
                 property(CommitCommentPayload::getComment, commentMatchers()),

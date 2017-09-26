@@ -14,7 +14,7 @@ import com.github.shredder121.gh_event_api.model.Issue;
 class TestHandler extends AbstractTestHandlerBean implements IssuesHandler {
 
     @Override
-    public void handle(IssuesPayload payload) {
+    public void accept(IssuesPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(IssuesPayload::getAction, is("opened")),
                 property(IssuesPayload::getIssue, issueMatchers()),

@@ -15,7 +15,7 @@ import com.github.shredder121.gh_event_api.model.Team;
 class TestHandler extends AbstractTestHandlerBean implements MembershipHandler {
 
     @Override
-    public void handle(MembershipPayload payload) {
+    public void accept(MembershipPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(MembershipPayload::getAction, is("added")),
                 property(MembershipPayload::getScope, is("team")),

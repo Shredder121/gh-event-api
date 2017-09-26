@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.create;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code create} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.create;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#createevent">The create event on GitHub</a>
  */
 @FunctionalInterface
-public interface CreateHandler {
-
-    void handle(CreatePayload payload);
+public interface CreateHandler extends Consumer<CreatePayload> {
 }

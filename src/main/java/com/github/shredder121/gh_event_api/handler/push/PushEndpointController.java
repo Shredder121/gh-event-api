@@ -41,9 +41,4 @@ class PushEndpointController extends AbstractEndpointController<PushHandler, Pus
     PushEndpointController(Collection<? extends PushHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(PushHandler handler, PushPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

@@ -14,7 +14,7 @@ import com.github.shredder121.gh_event_api.model.Issue;
 class TestHandler extends AbstractTestHandlerBean implements IssueCommentHandler {
 
     @Override
-    public void handle(IssueCommentPayload payload) {
+    public void accept(IssueCommentPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(IssueCommentPayload::getAction, is("created")),
                 property(IssueCommentPayload::getIssue, issueMatchers()),

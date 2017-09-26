@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.member;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code member} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.member;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#memberevent">The member event on GitHub</a>
  */
 @FunctionalInterface
-public interface MemberHandler {
-
-    void handle(MemberPayload payload);
+public interface MemberHandler extends Consumer<MemberPayload> {
 }

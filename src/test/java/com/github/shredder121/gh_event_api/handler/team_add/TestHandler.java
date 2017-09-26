@@ -14,7 +14,7 @@ import com.github.shredder121.gh_event_api.model.Team;
 class TestHandler extends AbstractTestHandlerBean implements TeamAddHandler {
 
     @Override
-    public void handle(TeamAddPayload payload) {
+    public void accept(TeamAddPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(TeamAddPayload::getTeam, teamMatchers()),
                 property(TeamAddPayload::getRepository, is(BAXTERANDTHEHACKERS_PUBLIC_REPO)),

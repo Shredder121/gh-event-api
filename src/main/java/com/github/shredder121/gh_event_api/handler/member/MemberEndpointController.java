@@ -41,9 +41,4 @@ class MemberEndpointController extends AbstractEndpointController<MemberHandler,
     MemberEndpointController(Collection<? extends MemberHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(MemberHandler handler, MemberPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

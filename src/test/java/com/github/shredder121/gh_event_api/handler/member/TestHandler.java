@@ -12,7 +12,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 class TestHandler extends AbstractTestHandlerBean implements MemberHandler {
 
     @Override
-    public void handle(MemberPayload payload) {
+    public void accept(MemberPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(MemberPayload::getAction, is("added")),
                 property(MemberPayload::getMember, is(OCTOCAT)),

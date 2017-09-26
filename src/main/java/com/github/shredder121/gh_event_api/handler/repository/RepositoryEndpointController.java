@@ -41,9 +41,4 @@ class RepositoryEndpointController extends AbstractEndpointController<Repository
     RepositoryEndpointController(Collection<? extends RepositoryHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(RepositoryHandler handler, RepositoryPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

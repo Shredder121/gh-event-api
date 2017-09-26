@@ -17,7 +17,7 @@ import com.github.shredder121.gh_event_api.model.StatusCommit;
 class TestHandler extends AbstractTestHandlerBean implements StatusHandler {
 
     @Override
-    public void handle(StatusPayload payload) {
+    public void accept(StatusPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(StatusPayload::getContext, is("default")),
                 property(StatusPayload::getState, is("success")),

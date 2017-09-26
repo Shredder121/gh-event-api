@@ -41,9 +41,4 @@ class CommitCommentEndpointController extends AbstractEndpointController<CommitC
     CommitCommentEndpointController(Collection<? extends CommitCommentHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(CommitCommentHandler handler, CommitCommentPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

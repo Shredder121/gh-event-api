@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.status;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code status} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.status;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#statusevent">The status event on GitHub</a>
  */
 @FunctionalInterface
-public interface StatusHandler {
-
-    void handle(StatusPayload payload);
+public interface StatusHandler extends Consumer<StatusPayload> {
 }

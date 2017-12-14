@@ -38,7 +38,7 @@ public class Deployment {
     /**
      * The id for this deployment, for GitHub bookkeeping.
      */
-    Integer id;
+    Long id;
 
     /**
      * The ref to deploy.

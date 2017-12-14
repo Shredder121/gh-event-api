@@ -55,7 +55,7 @@ public class PageBuildSerializationTest extends AbstractSerializationTest<PageBu
                 property(PageBuild::getStatus, is("built")),
                 property(PageBuild::getError, hasProperty("message", nullValue())),
                 property(PageBuild::getPusher, allOf(
-                        property(User::getId, is(4105066)),
+                        property(User::getId, is(4105066L)),
                         property(User::getLogin, is("Shredder121")),
                         property(User::getHtmlUrl, is("https://github.com/Shredder121"))
                 )),

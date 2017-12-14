@@ -27,7 +27,7 @@ class TestHandler extends AbstractTestHandlerBean implements DeploymentHandler {
 
     public Matcher<Deployment> deploymentMatchers() {
         return allOf(asList(
-                property(Deployment::getId, is(710692)),
+                property(Deployment::getId, is(710692L)),
                 property(Deployment::getRef, is("master")),
                 property(Deployment::getSha, is("9049f1265b7d61be4a8904a9a27120d2064dab3b")),
                 property(Deployment::getTask, is("deploy")),

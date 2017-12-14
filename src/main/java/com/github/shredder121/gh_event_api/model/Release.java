@@ -38,7 +38,7 @@ public class Release {
     /**
      * The id of the release, for GitHub bookkeeping.
      */
-    Integer id;
+    Long id;
 
     /**
      * The (API) URL to view this release.
@@ -119,7 +119,7 @@ public class Release {
         /**
          * The id of the release, for GitHub bookkeeping.
          */
-        Integer id;
+        Long id;
 
         /**
          * The (API) URL to view this asset.

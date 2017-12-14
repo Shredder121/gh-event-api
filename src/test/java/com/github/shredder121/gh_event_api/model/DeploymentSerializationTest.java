@@ -57,7 +57,7 @@ public class DeploymentSerializationTest extends AbstractSerializationTest<Deplo
     @Override
     protected void checkDeserialized(Deployment deployment) {
         errorCollector.checkThat(deployment, allOf(Arrays.asList(
-                property(Deployment::getId, is(3640119)),
+                property(Deployment::getId, is(3640119L)),
                 property(Deployment::getRef, is("feature")),
                 property(Deployment::getSha, is("bef42899aa30ad50dfcc4465e0aa87af9a7fedb9")),
                 property(Deployment::getTask, is("deploy")),
@@ -65,7 +65,7 @@ public class DeploymentSerializationTest extends AbstractSerializationTest<Deplo
                 property(Deployment::getEnvironment, is("production")),
                 property(Deployment::getDescription, is(nullValue())),
                 property(Deployment::getCreator, allOf(
-                        property(User::getId, is(4105066)),
+                        property(User::getId, is(4105066L)),
                         property(User::getLogin, is("Shredder121")),
                         property(User::getHtmlUrl, is("https://github.com/Shredder121"))
                 )),

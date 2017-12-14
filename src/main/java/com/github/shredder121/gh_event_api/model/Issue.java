@@ -38,7 +38,7 @@ public class Issue {
     /**
      * Unique id given by GitHub.
      */
-    Integer id;
+    Long id;
 
     /**
      * The issue number.

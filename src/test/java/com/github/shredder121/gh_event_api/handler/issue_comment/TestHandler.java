@@ -28,7 +28,7 @@ class TestHandler extends AbstractTestHandlerBean implements IssueCommentHandler
 
     public Matcher<Issue> issueMatchers() {
         return allOf(asList(
-                property(Issue::getId, is(73464126)),
+                property(Issue::getId, is(73464126L)),
                 property(Issue::getNumber, is(2)),
                 property(Issue::getTitle, is("Spelling error in the README file")),
                 property(Issue::getBody, is("It looks like you accidently spelled 'commit' with two 't's."))
@@ -37,7 +37,7 @@ class TestHandler extends AbstractTestHandlerBean implements IssueCommentHandler
 
     public Matcher<Comment> commentMMatchers() {
         return allOf(asList(
-                property(Comment::getId, is(99262140)),
+                property(Comment::getId, is(99262140L)),
                 property(Comment::getBody, is("You are totally right! I'll get this fixed right away."))
         ));
     }

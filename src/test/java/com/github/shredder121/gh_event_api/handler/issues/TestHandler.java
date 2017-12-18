@@ -27,7 +27,7 @@ class TestHandler extends AbstractTestHandlerBean implements IssuesHandler {
 
     public Matcher<Issue> issueMatchers() {
         return allOf(asList(
-                property(Issue::getId, is(73464126)),
+                property(Issue::getId, is(73464126L)),
                 property(Issue::getNumber, is(2)),
                 property(Issue::getState, is("open")),
                 property(Issue::getTitle, is("Spelling error in the README file")),

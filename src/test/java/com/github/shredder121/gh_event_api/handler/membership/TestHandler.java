@@ -28,7 +28,7 @@ class TestHandler extends AbstractTestHandlerBean implements MembershipHandler {
 
     public Matcher<Team> teamMatchers() {
         return allOf(asList(
-                property(Team::getId, is(123456)),
+                property(Team::getId, is(123456L)),
                 property(Team::getName, is("Contractors")),
                 property(Team::getSlug, is("contractors")),
                 property(Team::getPermission, is("admin")),

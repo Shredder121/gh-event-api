@@ -53,7 +53,7 @@ public class UserSerializationTest extends AbstractSerializationTest<User> {
     @Override
     protected void checkDeserialized(User user) {
         errorCollector.checkThat(user, allOf(asList(
-                property(User::getId, is(1)),
+                property(User::getId, is(1L)),
                 property(User::getLogin, is("octocat")),
                 property(User::getHtmlUrl, is("https://github.com/octocat"))
         )));

@@ -42,7 +42,7 @@ public class PageBuildPayload {
     /**
      * The id of the page build, for GitHub bookkeeping.
      */
-    @NotNull Integer id;
+    @NotNull Long id;
 
     /**
      * The page build itself.

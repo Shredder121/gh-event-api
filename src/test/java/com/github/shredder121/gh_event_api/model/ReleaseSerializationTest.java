@@ -88,11 +88,11 @@ public class ReleaseSerializationTest extends AbstractSerializationTest<Release>
 
     @Override
     protected void checkDeserialized(Release release) {
-        errorCollector.checkThat(release.getId(), is(2525578));
+        errorCollector.checkThat(release.getId(), is(2525578L));
 
         errorCollector.checkThat(release.getAssets(), contains(
                 allOf(
-                        property(Release.Asset::getId, is(1263044)),
+                        property(Release.Asset::getId, is(1263044L)),
                         property(Release.Asset::getName, is("gh-event-api-0.4-full.jar")),
                         property(Release.Asset::getContentType, hasToString("application/octet-stream"))
                 )

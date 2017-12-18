@@ -35,7 +35,7 @@ public class User {
     /**
      * The id of this user.
      */
-    Integer id;
+    Long id;
 
     /**
      * The username of this user.

@@ -37,7 +37,7 @@ public class Comment {
     /**
      * The id of the comment, for GitHub bookkeeping.
      */
-    Integer id;
+    Long id;
 
     /**
      * The line index in the diff.

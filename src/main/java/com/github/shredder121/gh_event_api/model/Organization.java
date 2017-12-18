@@ -40,7 +40,7 @@ public class Organization {
     /**
      * The id of this organization.
      */
-    Integer id;
+    Long id;
 
     /**
      * This organization's description.

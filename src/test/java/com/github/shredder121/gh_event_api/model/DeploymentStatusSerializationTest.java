@@ -51,11 +51,11 @@ public class DeploymentStatusSerializationTest extends AbstractSerializationTest
     @Override
     protected void checkDeserialized(DeploymentStatus deploymentStatus) {
         errorCollector.checkThat(deploymentStatus, allOf(Arrays.asList(
-                property(DeploymentStatus::getId, is(6811556)),
+                property(DeploymentStatus::getId, is(6811556L)),
                 property(DeploymentStatus::getUrl, is("https://api.github.com/repos/Shredder121-me/yummy-octo-turtle/deployments/3640119/statuses/6811556")),
                 property(DeploymentStatus::getState, is("success")),
                 property(DeploymentStatus::getCreator, allOf(
-                        property(User::getId, is(4105066)),
+                        property(User::getId, is(4105066L)),
                         property(User::getLogin, is("Shredder121")),
                         property(User::getHtmlUrl, is("https://github.com/Shredder121"))
                 )),

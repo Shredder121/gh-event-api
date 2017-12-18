@@ -35,7 +35,7 @@ public class Team {
     /**
      * The id of the team, for GitHub bookkeeping.
      */
-    Integer id;
+    Long id;
 
     /**
      * The (API) URL to view this team.

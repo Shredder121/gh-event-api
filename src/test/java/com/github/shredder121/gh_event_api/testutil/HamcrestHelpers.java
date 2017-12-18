@@ -55,13 +55,13 @@ public class HamcrestHelpers {
     public interface BaxterAndTheHackers {
 
         Matcher<User> BAXTERANDTHEHACKERS = allOf(asList(
-                property(User::getId, is(7649605)),
+                property(User::getId, is(7649605L)),
                 property(User::getLogin, is("baxterandthehackers")),
                 property(User::getHtmlUrl, is("https://github.com/baxterandthehackers"))
         ));
 
         Matcher<Organization> BAXTERANDTHEHACKERS_ORG = allOf(asList(
-                property(Organization::getId, is(7649605)),
+                property(Organization::getId, is(7649605L)),
                 property(Organization::getLogin, is("baxterandthehackers")),
                 property(Organization::getUrl, is("https://api.github.com/orgs/baxterandthehackers"))
         ));
@@ -82,7 +82,7 @@ public class HamcrestHelpers {
     public interface BaxterTheHacker {
 
         Matcher<User> BAXTERTHEHACKER = allOf(asList(
-                property(User::getId, is(6752317)),
+                property(User::getId, is(6752317L)),
                 property(User::getLogin, is("baxterthehacker")),
                 property(User::getHtmlUrl, is("https://github.com/baxterthehacker"))
         ));
@@ -98,7 +98,7 @@ public class HamcrestHelpers {
     public interface JasonRudolph {
 
         Matcher<User> JASONRUDOLPH = allOf(asList(
-                property(User::getId, is(2988)),
+                property(User::getId, is(2988L)),
                 property(User::getLogin, is("jasonrudolph")),
                 property(User::getHtmlUrl, is("https://github.com/jasonrudolph"))
         ));
@@ -107,7 +107,7 @@ public class HamcrestHelpers {
     public interface Kdaigle {
 
         Matcher<User> KDAIGLE = allOf(asList(
-                property(User::getId, is(2501)),
+                property(User::getId, is(2501L)),
                 property(User::getLogin, is("kdaigle")),
                 property(User::getHtmlUrl, is("https://github.com/kdaigle"))
         ));
@@ -116,7 +116,7 @@ public class HamcrestHelpers {
     public interface Octocat {
 
         Matcher<User> OCTOCAT = allOf(asList(
-                property(User::getId, is(583231)),
+                property(User::getId, is(583231L)),
                 property(User::getLogin, is("octocat")),
                 property(User::getHtmlUrl, is("https://github.com/octocat"))
         ));

@@ -45,7 +45,7 @@ public class IssueCommentSerializationTest extends AbstractSerializationTest<Com
 
     @Override
     protected void checkDeserialized(Comment comment) {
-        errorCollector.checkThat(comment.getId(), is(172632780));
+        errorCollector.checkThat(comment.getId(), is(172632780L));
         errorCollector.checkThat(comment.getBody(), is("What do you think?"));
     }
 }

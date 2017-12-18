@@ -26,7 +26,7 @@ class TestHandler extends AbstractTestHandlerBean implements TeamAddHandler {
 
     public Matcher<Team> teamMatchers() {
         return allOf(
-                property(Team::getId, is(836012)),
+                property(Team::getId, is(836012L)),
                 property(Team::getName, is("github")),
                 property(Team::getSlug, is("github"))
         );

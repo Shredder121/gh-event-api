@@ -43,7 +43,7 @@ public class StatusPayload {
      * The id of the status, for GitHub bookkeeping.
      *
      */
-    @NotNull Integer id;
+    @NotNull Long id;
 
     /**
      * The Commit SHA.

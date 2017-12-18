@@ -35,7 +35,7 @@ public class OrganizationSerializationTest extends AbstractSerializationTest<Org
     protected void checkDeserialized(Organization organization) {
         errorCollector.checkThat(organization, allOf(Arrays.asList(
                 property(Organization::getLogin, is("Shredder121-me")),
-                property(Organization::getId, is(15276443)),
+                property(Organization::getId, is(15276443L)),
                 property(Organization::getUrl, is("https://api.github.com/orgs/Shredder121-me")),
                 property(Organization::getReposUrl, is("https://api.github.com/orgs/Shredder121-me/repos")),
                 property(Organization::getEventsUrl, is("https://api.github.com/orgs/Shredder121-me/events")),

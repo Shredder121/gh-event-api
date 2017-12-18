@@ -38,7 +38,7 @@ public class DeploymentStatus {
     /**
      * The id of the deployment status, for GitHub bookkeeping.
      */
-    Integer id;
+    Long id;
 
     /**
      * The (API) URL to view this deployment status.

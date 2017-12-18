@@ -48,7 +48,7 @@ public class PingPayload {
     /**
      * The id of the newly created hook.
      */
-    @NotNull Integer hookId;
+    @NotNull Long hookId;
 
     /**
      * The hook's configuration.

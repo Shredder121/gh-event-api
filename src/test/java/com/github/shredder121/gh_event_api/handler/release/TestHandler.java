@@ -26,7 +26,7 @@ class TestHandler extends AbstractTestHandlerBean implements ReleaseHandler {
 
     public Matcher<Release> releaseMatchers() {
         return allOf(
-                property(Release::getId, is(1261438)),
+                property(Release::getId, is(1261438L)),
                 property(Release::getAssets, is(empty())),
                 property(Release::getUrl, is("https://api.github.com/repos/baxterthehacker/public-repo/releases/1261438")),
                 property(Release::getAssetsUrl, is("https://api.github.com/repos/baxterthehacker/public-repo/releases/1261438/assets"))

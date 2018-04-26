@@ -10,7 +10,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 class TestHandler extends AbstractTestHandlerBean implements PublicHandler {
 
     @Override
-    public void handle(PublicPayload payload) {
+    public void accept(PublicPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(PublicPayload::getRepository, BAXTERTHEHACKER_PUBLIC_REPO),
                 property(PublicPayload::getOrganization, is(nullValue())),

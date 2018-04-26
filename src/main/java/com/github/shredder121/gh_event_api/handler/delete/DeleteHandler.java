@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.delete;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code delete} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.delete;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#deleteevent">The delete event on GitHub</a>
  */
 @FunctionalInterface
-public interface DeleteHandler {
-
-    void handle(DeletePayload payload);
+public interface DeleteHandler extends Consumer<DeletePayload> {
 }

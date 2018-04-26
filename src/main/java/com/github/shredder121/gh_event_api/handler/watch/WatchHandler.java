@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.watch;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code watch} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.watch;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#watchevent">The watch event on GitHub</a>
  */
 @FunctionalInterface
-public interface WatchHandler {
-
-    void handle(WatchPayload payload);
+public interface WatchHandler extends Consumer<WatchPayload> {
 }

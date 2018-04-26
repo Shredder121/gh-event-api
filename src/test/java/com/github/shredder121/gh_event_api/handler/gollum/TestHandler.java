@@ -14,7 +14,7 @@ import com.github.shredder121.gh_event_api.model.WikiPage;
 class TestHandler extends AbstractTestHandlerBean implements GollumHandler {
 
     @Override
-    public void handle(GollumPayload payload) {
+    public void accept(GollumPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(GollumPayload::getPages, pagesMatchers()),
                 property(GollumPayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO)),

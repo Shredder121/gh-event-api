@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.release;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code release} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.release;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#releaseevent">The release event on GitHub</a>
  */
 @FunctionalInterface
-public interface ReleaseHandler {
-
-    void handle(ReleasePayload payload);
+public interface ReleaseHandler extends Consumer<ReleasePayload> {
 }

@@ -41,9 +41,4 @@ class ReleaseEndpointController extends AbstractEndpointController<ReleaseHandle
     ReleaseEndpointController(Collection<? extends ReleaseHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(ReleaseHandler handler, ReleasePayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

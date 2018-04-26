@@ -16,7 +16,7 @@ import com.github.shredder121.gh_event_api.model.DeploymentStatus;
 class TestHandler extends AbstractTestHandlerBean implements DeploymentStatusHandler {
 
     @Override
-    public void handle(DeploymentStatusPayload payload) {
+    public void accept(DeploymentStatusPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(DeploymentStatusPayload::getDeploymentStatus, deploymentStatusMatchers()),
                 property(DeploymentStatusPayload::getDeployment, deploymentMatchers()),

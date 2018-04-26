@@ -14,7 +14,7 @@ import com.github.shredder121.gh_event_api.model.PullRequest;
 class TestHandler extends AbstractTestHandlerBean implements PullRequestReviewCommentHandler {
 
     @Override
-    public void handle(PullRequestReviewCommentPayload payload) {
+    public void accept(PullRequestReviewCommentPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(PullRequestReviewCommentPayload::getAction, is("created")),
                 property(PullRequestReviewCommentPayload::getPullRequest, pullRequestMatchers()),

@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.pull_request;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code pull_request} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.pull_request;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#pullrequestevent">The pull_request event on GitHub</a>
  */
 @FunctionalInterface
-public interface PullRequestHandler {
-
-    void handle(PullRequestPayload payload);
+public interface PullRequestHandler extends Consumer<PullRequestPayload> {
 }

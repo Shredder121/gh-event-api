@@ -41,9 +41,4 @@ class MembershipEndpointController extends AbstractEndpointController<Membership
     MembershipEndpointController(Collection<? extends MembershipHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(MembershipHandler handler, MembershipPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

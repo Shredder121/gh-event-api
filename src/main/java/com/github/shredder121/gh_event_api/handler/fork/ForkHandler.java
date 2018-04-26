@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.fork;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code fork} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.fork;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#forkevent">The fork event on GitHub</a>
  */
 @FunctionalInterface
-public interface ForkHandler {
-
-    void handle(ForkPayload payload);
+public interface ForkHandler extends Consumer<ForkPayload> {
 }

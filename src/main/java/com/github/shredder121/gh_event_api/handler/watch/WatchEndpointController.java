@@ -41,9 +41,4 @@ class WatchEndpointController extends AbstractEndpointController<WatchHandler, W
     WatchEndpointController(Collection<? extends WatchHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(WatchHandler handler, WatchPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

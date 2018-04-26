@@ -41,9 +41,4 @@ class ForkEndpointController extends AbstractEndpointController<ForkHandler, For
     ForkEndpointController(Collection<? extends ForkHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(ForkHandler handler, ForkPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

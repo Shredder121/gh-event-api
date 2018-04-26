@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.deployment_status;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code deployment_status} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.deployment_status;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#deploymentstatusevent">The deployment_status event on GitHub</a>
  */
 @FunctionalInterface
-public interface DeploymentStatusHandler {
-
-    void handle(DeploymentStatusPayload payload);
+public interface DeploymentStatusHandler extends Consumer<DeploymentStatusPayload> {
 }

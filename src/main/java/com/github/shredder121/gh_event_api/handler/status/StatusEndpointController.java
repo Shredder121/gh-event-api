@@ -41,9 +41,4 @@ class StatusEndpointController extends AbstractEndpointController<StatusHandler,
     StatusEndpointController(Collection<? extends StatusHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(StatusHandler handler, StatusPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

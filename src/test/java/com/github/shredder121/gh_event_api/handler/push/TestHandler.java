@@ -13,7 +13,7 @@ import com.github.shredder121.gh_event_api.model.PushCommit;
 class TestHandler extends AbstractTestHandlerBean implements PushHandler {
 
     @Override
-    public void handle(PushPayload payload) {
+    public void accept(PushPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(PushPayload::getRef, is("refs/heads/changes")),
                 property(PushPayload::getBefore, is("9049f1265b7d61be4a8904a9a27120d2064dab3b")),

@@ -41,9 +41,4 @@ class PullRequestReviewCommentEndpointController extends AbstractEndpointControl
     PullRequestReviewCommentEndpointController(Collection<? extends PullRequestReviewCommentHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(PullRequestReviewCommentHandler handler, PullRequestReviewCommentPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

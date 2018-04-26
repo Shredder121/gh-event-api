@@ -13,7 +13,7 @@ import com.github.shredder121.gh_event_api.model.Release;
 class TestHandler extends AbstractTestHandlerBean implements ReleaseHandler {
 
     @Override
-    public void handle(ReleasePayload payload) {
+    public void accept(ReleasePayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(ReleasePayload::getAction, is("published")),
                 property(ReleasePayload::getRelease, releaseMatchers()),

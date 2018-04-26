@@ -15,7 +15,7 @@ import com.github.shredder121.gh_event_api.model.Deployment;
 class TestHandler extends AbstractTestHandlerBean implements DeploymentHandler {
 
     @Override
-    public void handle(DeploymentPayload payload) {
+    public void accept(DeploymentPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(DeploymentPayload::getDeployment, deploymentMatchers()),
                 property(DeploymentPayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO)),

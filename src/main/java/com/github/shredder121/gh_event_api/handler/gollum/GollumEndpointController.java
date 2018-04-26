@@ -41,9 +41,4 @@ class GollumEndpointController extends AbstractEndpointController<GollumHandler,
     GollumEndpointController(Collection<? extends GollumHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(GollumHandler handler, GollumPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

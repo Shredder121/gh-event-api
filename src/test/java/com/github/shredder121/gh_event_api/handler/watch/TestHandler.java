@@ -10,7 +10,7 @@ import com.github.shredder121.gh_event_api.handler.AbstractTestHandlerBean;
 class TestHandler extends AbstractTestHandlerBean implements WatchHandler {
 
     @Override
-    public void handle(WatchPayload payload) {
+    public void accept(WatchPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(WatchPayload::getAction, is("started")),
                 property(WatchPayload::getRepository, is(BAXTERTHEHACKER_PUBLIC_REPO)),

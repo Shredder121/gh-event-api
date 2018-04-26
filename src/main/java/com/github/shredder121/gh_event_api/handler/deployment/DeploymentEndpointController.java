@@ -41,9 +41,4 @@ class DeploymentEndpointController extends AbstractEndpointController<Deployment
     DeploymentEndpointController(Collection<? extends DeploymentHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(DeploymentHandler handler, DeploymentPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

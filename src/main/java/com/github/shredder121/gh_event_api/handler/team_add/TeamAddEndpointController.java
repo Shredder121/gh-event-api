@@ -41,9 +41,4 @@ class TeamAddEndpointController extends AbstractEndpointController<TeamAddHandle
     TeamAddEndpointController(Collection<? extends TeamAddHandler> beans) {
         super(beans);
     }
-
-    @Override
-    protected Runnable runnableHandler(TeamAddHandler handler, TeamAddPayload payload) {
-        return () -> handler.handle(payload);
-    }
 }

@@ -13,7 +13,7 @@ import com.github.shredder121.gh_event_api.model.PageBuild;
 class TestHandler extends AbstractTestHandlerBean implements PageBuildHandler {
 
     @Override
-    public void handle(PageBuildPayload payload) {
+    public void accept(PageBuildPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(PageBuildPayload::getId, is(15995382L)),
                 property(PageBuildPayload::getBuild, pageBuildMatchers()),

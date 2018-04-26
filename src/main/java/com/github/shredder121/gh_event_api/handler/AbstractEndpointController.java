@@ -19,6 +19,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.Collection;
 import java.util.concurrent.ForkJoinPool;
+import java.util.function.Consumer;
 
 import javax.validation.Valid;
 
@@ -38,7 +39,7 @@ import com.google.common.collect.ImmutableSet;
  * @param <H> the handler type of the concrete controller
  * @param <P> the payload type of the concrete controller
  */
-public abstract class AbstractEndpointController<H, P> {
+public abstract class AbstractEndpointController<H extends Consumer<P>, P> {
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -63,16 +64,7 @@ public abstract class AbstractEndpointController<H, P> {
     public void handle(@Valid @RequestBody P payload) {
         logger.debug("{} handlers", handlers.size());
         for (H handler : handlers) {
-            executor.execute(runnableHandler(handler, payload));
+            executor.execute(() -> handler.accept(payload));
         }
     }
-
-    /**
-     * Adapt a [handler + payload] combination to a {@code Runnable}.
-     *
-     * @param handler the handler that handles the payload
-     * @param payload the payload
-     * @return the {@code Runnable} adapter for the handler
-     */
-    protected abstract Runnable runnableHandler(H handler, P payload);
 }

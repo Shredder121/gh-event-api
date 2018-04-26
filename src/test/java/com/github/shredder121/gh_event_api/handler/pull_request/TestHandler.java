@@ -16,7 +16,7 @@ import com.github.shredder121.gh_event_api.model.Ref;
 class TestHandler extends AbstractTestHandlerBean implements PullRequestHandler {
 
     @Override
-    public void handle(PullRequestPayload payload) {
+    public void accept(PullRequestPayload payload) {
         errorCollector.checkThat(payload, allOf(asList(
                 property(PullRequestPayload::getNumber, is(1)),
                 property(PullRequestPayload::getAction, is("opened")),

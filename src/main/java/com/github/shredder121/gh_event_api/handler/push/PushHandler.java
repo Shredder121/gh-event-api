@@ -15,6 +15,8 @@
  */
 package com.github.shredder121.gh_event_api.handler.push;
 
+import java.util.function.Consumer;
+
 /**
  * The handler interface for receiving {@code push} events.
  *
@@ -22,7 +24,5 @@ package com.github.shredder121.gh_event_api.handler.push;
  * @see <a href="https://developer.github.com/v3/activity/events/types/#pushevent">The push event on GitHub</a>
  */
 @FunctionalInterface
-public interface PushHandler {
-
-    void handle(PushPayload payload);
+public interface PushHandler extends Consumer<PushPayload> {
 }
